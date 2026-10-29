@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZIPPY, C.A. - Movilidad en Calabozo</title>
+    <style>
+        :root {
+            --bg-dark: #0a0a0a;
+            --card-bg: #141414;
+            --gold: #d4af37;
+            --gold-light: #f3e5ab;
+            --text-main: #ffffff;
+            --text-muted: #aaaaaa;
+        }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px;
+        }
+        header {
+            text-align: center;
+            margin-top: 20px;
+        }
+        h1 {
+            color: var(--gold);
+            font-size: 2.2rem;
+            letter-spacing: 2px;
+            margin-bottom: 5px;
+        }
+        p.subtitle {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+        .container {
+            width: 100%;
+            max-width: 450px;
+            background-color: var(--card-bg);
+            border: 1px solid var(--gold);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 20px rgba(212, 175, 55, 0.15);
+            margin: 20px 0;
+        }
+        .btn {
+            width: 100%;
+            background-color: var(--gold);
+            color: var(--bg-dark);
+            font-weight: bold;
+            font-size: 1rem;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: background 0.3s ease;
+        }
+        .btn:hover {
+            background-color: var(--gold-light);
+        }
+        footer {
+            text-align: center;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>ZIPPY, C.A.</h1>
+        <p class="subtitle">Plataforma de Movilidad Segura - Calabozo</p>
+    </header>
+
+    <div class="container">
+        <h2 style="color: var(--gold); margin-bottom: 15px; font-size: 1.3rem;">Bienvenido</h2>
+        <p style="color: var(--text-muted); margin-bottom: 20px; line-height: 1.5;">
+            Conectamos pasajeros y conductores de forma rápida, formal y segura en todo el Estado Guárico.
+        </p>
+        <button class="btn" onclick="alert('Módulo de registro de conductores próximamente')">Registrarse como Conductor</button>
+    </div>
+
+    <footer>
+        &copy; 2026 ZIPPY, C.A. Todos los derechos reservados.
+    </footer>
+
+</body>
+</html>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ZIPPY, C.A. - Plataforma de Movilidad y Encomiendas</title>
+    <title>ZIPPY, C.A. - Movilidad y Encomiendas</title>
     <style>
         :root {
             --bg-dark: #0a0a0a;
@@ -32,16 +32,23 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: space-between;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 480px;
         }
 
         header {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
+            margin-top: 15px;
         }
 
         header h1 {
             color: var(--gold);
-            font-size: 2.2rem;
+            font-size: 2.3rem;
             letter-spacing: 2px;
             font-weight: 800;
         }
@@ -49,98 +56,100 @@
         header p {
             color: var(--text-muted);
             font-size: 0.9rem;
-        }
-
-        /* NAVEGACIÓN POR PESTAÑAS */
-        .nav-tabs {
-            display: flex;
-            width: 100%;
-            max-width: 500px;
-            background-color: var(--card-bg);
-            border: 1px solid var(--gold);
-            border-radius: 10px;
-            overflow: hidden;
-            margin-bottom: 20px;
-        }
-
-        .tab-btn {
-            flex: 1;
-            padding: 12px 5px;
-            background: none;
-            border: none;
-            color: var(--text-muted);
-            font-weight: bold;
-            font-size: 0.8rem;
-            cursor: pointer;
-            transition: 0.3s;
-            text-align: center;
-        }
-
-        .tab-btn.active {
-            background-color: var(--gold);
-            color: var(--bg-dark);
-        }
-
-        .main-container {
-            width: 100%;
-            max-width: 500px;
-        }
-
-        .tab-content {
-            display: none;
-        }
-
-        .tab-content.active {
-            display: block;
+            margin-top: 4px;
         }
 
         .card {
             background-color: var(--card-bg);
             border: 1px solid var(--border-color);
             border-radius: 12px;
-            padding: 18px;
+            padding: 20px;
             margin-bottom: 15px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.5);
         }
 
         .card-title {
             color: var(--gold);
-            font-size: 1.1rem;
-            margin-bottom: 12px;
+            font-size: 1.15rem;
+            margin-bottom: 15px;
             font-weight: bold;
             border-bottom: 1px solid var(--border-color);
-            padding-bottom: 6px;
+            padding-bottom: 8px;
         }
 
         .form-group {
-            margin-bottom: 12px;
+            margin-bottom: 15px;
         }
 
         label {
             display: block;
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             color: var(--text-muted);
-            margin-bottom: 4px;
+            margin-bottom: 6px;
         }
 
-        input, select, button {
+        input, select {
             width: 100%;
-            padding: 11px;
+            padding: 12px;
             background-color: var(--card-inner);
             border: 1px solid var(--border-color);
             border-radius: 8px;
             color: var(--text-main);
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             outline: none;
         }
 
-        button.btn-gold {
+        input:focus, select:focus {
+            border-color: var(--gold);
+        }
+
+        .btn-gold {
+            width: 100%;
             background-color: var(--gold);
             color: var(--bg-dark);
             font-weight: bold;
+            font-size: 1rem;
+            padding: 13px;
             border: none;
+            border-radius: 8px;
             cursor: pointer;
-            margin-top: 8px;
+            transition: background 0.3s;
+            margin-top: 10px;
+        }
+
+        .btn-gold:hover {
+            background-color: var(--gold-light);
+        }
+
+        .btn-outline {
+            width: 100%;
+            background-color: transparent;
+            color: var(--gold);
+            font-weight: bold;
+            font-size: 0.9rem;
+            padding: 11px;
+            border: 1px solid var(--gold);
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .info-box {
+            background-color: var(--card-inner);
+            border-left: 3px solid var(--gold);
+            padding: 12px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+
+        .view-section {
+            display: none;
+        }
+
+        .view-section.active {
+            display: block;
         }
 
         .toggle-status {
@@ -150,7 +159,7 @@
             background-color: var(--card-inner);
             padding: 12px;
             border-radius: 8px;
-            margin-bottom: 12px;
+            margin-bottom: 15px;
         }
 
         .status-dot {
@@ -166,15 +175,6 @@
             box-shadow: 0 0 8px var(--green-active);
         }
 
-        .info-box {
-            background-color: var(--card-inner);
-            border-left: 3px solid var(--gold);
-            padding: 10px;
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            margin-bottom: 12px;
-        }
-
         footer {
             text-align: center;
             margin-top: 25px;
@@ -185,111 +185,78 @@
 </head>
 <body>
 
-    <header>
-        <h1>ZIPPY, C.A.</h1>
-        <p>Plataforma Multimodal • Calabozo, Estado Guárico</p>
-    </header>
+    <div class="container">
+        <header>
+            <h1>ZIPPY, C.A.</h1>
+            <p>Plataforma Multimodal • Calabozo, Guárico</p>
+        </header>
 
-    <!-- NAVEGADOR DE NÚCLEOS DE LA APP -->
-    <div class="nav-tabs">
-        <button class="tab-btn active" onclick="switchTab('registro')">📋 Registro KYC</button>
-        <button class="tab-btn" onclick="switchTab('cliente')">🛵 Cotizador</button>
-        <button class="tab-btn" onclick="switchTab('conductor')">📱 Conductor</button>
-        <button class="tab-btn" onclick="switchTab('admin')">🏛️ Back-Office</button>
-    </div>
-
-    <div class="main-container">
-
-        <!-- PESTAÑA 1: REGISTRO KYC -->
-        <div id="tab-registro" class="tab-content active">
-            <div class="card">
-                <div class="card-title">📝 Afiliación y Expediente KYC</div>
-                <form onsubmit="registrarConductor(event)">
-                    <div class="form-group">
-                        <label>Categoría</label>
-                        <select required>
-                            <option value="MOTO">ZIPPY MOTO (Pasajeros / Encomiendas)</option>
-                            <option value="AUTO">ZIPPY AUTO / TAXI</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Nombre y Apellido</label>
-                        <input type="text" placeholder="Ej: José Rodríguez" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Cédula de Identidad</label>
-                        <input type="text" placeholder="Ej: V-19476093" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Teléfono (WhatsApp)</label>
-                        <input type="tel" placeholder="Ej: 0426-4343732" required>
-                    </div>
-                    <button type="submit" class="btn-gold">Enviar para Verificación ($60 USD Kit)</button>
-                </form>
+        <!-- VISTA 1: INICIO / SELECCIÓN DE ACCESO -->
+        <div id="view-inicio" class="view-section active">
+            <div class="card" style="text-align: center; padding: 30px 20px;">
+                <h2 style="color: var(--gold); margin-bottom: 10px; font-size: 1.4rem;">Bienvenido a Zippy</h2>
+                <p style="color: var(--text-muted); margin-bottom: 25px; font-size: 0.9rem;">
+                    Seleccione el módulo al que desea ingresar:
+                </p>
+                <button class="btn-gold" onclick="cambiarVista('cliente')">📱 Pedir Viaje / Encomienda (Cliente)</button>
+                <button class="btn-outline" onclick="pedirClaveAdmin()">🏛️ Acceso Administrativo (CEO / Conductor)</button>
             </div>
         </div>
 
-        <!-- PESTAÑA 2: BOT CONVERSACIONAL Y COTIZADOR CLIENTE -->
-        <div id="tab-cliente" class="tab-content">
+        <!-- VISTA 2: CLIENTE (COTIZADOR Y DESPACHO) -->
+        <div id="view-cliente" class="view-section">
             <div class="card">
-                <div class="card-title">🤖 Bot Cotizador y Despacho GPS</div>
-                <div class="info-box">Cálculo en vivo de tarifa dinámica según distancia y horario legal de Venezuela.</div>
+                <div class="card-title">🛵 Solicitar Servicio / Cotizador</div>
+                <div class="info-box">Cálculo automático de tarifa según distancia en Calabozo y hora legal de Venezuela.</div>
                 
                 <div class="form-group">
-                    <label>Categoría requerida</label>
-                    <select id="calcCat">
-                        <option value="MOTO">ZIPPY MOTO</option>
+                    <label>Seleccione Categoría</label>
+                    <select id="clienteCat">
+                        <option value="MOTO">ZIPPY MOTO (Pasajeros / Encomiendas)</option>
                         <option value="AUTO">ZIPPY AUTO / TAXI</option>
                     </select>
                 </div>
+
                 <div class="form-group">
                     <label>Distancia estimada (Kilómetros)</label>
-                    <input type="number" id="calcKm" value="5" min="1" step="0.1">
+                    <input type="number" id="clienteKm" value="4" min="1" step="0.5">
                 </div>
-                <button type="button" class="btn-gold" onclick="calcularTarifa()">Calcular Cotización C2P BDV</button>
 
-                <div id="resultadoCotizacion" style="margin-top: 15px; display: none;" class="info-box">
-                    <strong>Resumen del Servicio:</strong><br>
-                    • Monto en USD: <span id="montoUSD" style="color: var(--gold); font-weight: bold;"></span><br>
-                    • Tasa BCV estimada: 1 USD = BS.<br>
-                    • Estado: Conductor asignado por cercanía GPS.
-                </div>
+                <button class="btn-gold" onclick="calcularViajeCliente()">Calcular y Enviar por WhatsApp</button>
+                <button class="btn-outline" onclick="cambiarVista('inicio')">⬅ Volver al Inicio</button>
             </div>
         </div>
 
-        <!-- PESTAÑA 3: PANEL DEL CONDUCTOR Y ZIPPY WALLET -->
-        <div id="tab-conductor" class="tab-content">
+        <!-- VISTA 3: PANEL ADMINISTRATIVO Y CONSOLA EXCLUSIVA CEO -->
+        <div id="view-admin" class="view-section">
             <div class="card">
-                <div class="card-title">🚘 Consola Conductor - Flota Calabozo</div>
-                
-                <div class="toggle-status">
-                    <span>Estatus GPS: <strong id="statusText">Fuera de Servicio</strong></span>
-                    <span id="statusDot" class="status-dot"></span>
-                </div>
-                <button type="button" id="btnToggleStatus" class="btn-gold" onclick="toggleConductor()">Ponerse EN LÍNEA</button>
-            </div>
-
-            <div class="card">
-                <div class="card-title">💳 ZIPPY Wallet (80% Conductor)</div>
-                <p style="font-size: 0.85rem; color: var(--text-muted);">Saldo acumulado por carreras del día:</p>
-                <h2 style="color: var(--gold); margin: 10px 0;">$42.50 USD</h2>
-                <button type="button" class="btn-gold" onclick="alert('Solicitud enviada. Dispersión por Pago Móvil BDV en proceso.')">Solicitar Retiro a Pago Móvil</button>
-            </div>
-        </div>
-
-        <!-- PESTAÑA 4: CONSOLA ADMINISTRATIVA CENTRAL -->
-        <div id="tab-admin" class="tab-content">
-            <div class="card">
-                <div class="card-title">🏛️ Torre de Control & SENIAT (Back-Office)</div>
+                <div class="card-title">🏛️ Torre de Control & Back-Office (CEO)</div>
                 <div class="info-box">
-                    • Unidades Activas en Calabozo: <strong>12 Motos / 5 Autos</strong><br>
-                    • Recaudación 20% Comisión ZIPPY: <strong>$128.40 USD</strong><br>
-                    • Reporte de Retención de IVA / SENIAT: <strong>Al día</strong>
+                    • Flota Activa Calabozo: <strong>14 Unidades</strong><br>
+                    • Recaudación Comisión 20%: <strong>$142.00 USD</strong><br>
+                    • Estado Fiscal BDV / SENIAT: <strong>Sincronizado</strong>
                 </div>
-                <button type="button" class="btn-gold" onclick="alert('Generando archivo de declaración fiscal SENIAT...')">Exportar Reporte Fiscal BDV/SENIAT</button>
+                <button class="btn-gold" onclick="alert('Generando reporte corporativo y fiscal...')">Exportar Reporte Financiero</button>
             </div>
-        </div>
 
+            <div class="card">
+                <div class="card-title">🚘 Estatus Conductor / GPS</div>
+                <div class="toggle-status">
+                    <span>Estatus: <strong id="adminStatusText">Fuera de Servicio</strong></span>
+                    <span id="adminStatusDot" class="status-dot"></span>
+                </div>
+                <button class="btn-gold" id="btnAdminToggle" onclick="toggleAdminGPS()">Ponerse EN LÍNEA</button>
+            </div>
+
+            <div class="card">
+                <div class="card-title">💳 ZIPPY Wallet (80% Líquido)</div>
+                <p style="font-size: 0.85rem; color: var(--text-muted);">Saldo disponible para retiro:</p>
+                <h2 style="color: var(--gold); margin: 8px 0;">$58.00 USD</h2>
+                <button class="btn-gold" onclick="alert('Instrucción enviada a API Pago Móvil BDV.')">Retirar vía Pago Móvil</button>
+            </div>
+
+            <button class="btn-outline" onclick="cambiarVista('inicio')">🔒 Cerrar Sesión Segura</button>
+        </div>
     </div>
 
     <footer>
@@ -298,50 +265,48 @@
     </footer>
 
     <script>
-        function switchTab(tabId) {
-            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
-            
-            document.getElementById('tab-' + tabId).classList.add('active');
-            event.currentTarget.classList.add('active');
+        function cambiarVista(vista) {
+            document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
+            document.getElementById('view-' + vista).classList.add('active');
         }
 
-        function registrarConductor(e) {
-            e.preventDefault();
-            alert('Expediente KYC recibido correctamente. Estatus actual: Pendiente de Verificación de Kit ($60 USD).');
-        }
-
-        function calcularTarifa() {
-            const cat = document.getElementById('calcCat').value;
-            const km = parseFloat(document.getElementById('calcKm').value);
-            let base = cat === 'MOTO' ? 3.00 : 5.00;
-            let kmExtra = cat === 'MOTO' ? 0.50 : 0.80;
-
-            let totalUSD = base;
-            if (km > 3) {
-                totalUSD += (km - 3) * kmExtra;
+        function pedirClaveAdmin() {
+            let clave = prompt("Ingrese clave de seguridad administrativa (CEO):");
+            if (clave === "1947" || clave === "zippy2026") {
+                cambiarVista('admin');
+            } else if (clave !== null) {
+                alert("Clave incorrecta. Acceso restringido.");
             }
-
-            document.getElementById('montoUSD').innerText = '$' + totalUSD.toFixed(2) + ' USD';
-            document.getElementById('resultadoCotizacion').style.display = 'block';
         }
 
-        let enLinea = false;
-        function toggleConductor() {
-            enLinea = !enLinea;
-            const statusText = document.getElementById('statusText');
-            const statusDot = document.getElementById('statusDot');
-            const btn = document.getElementById('btnToggleStatus');
+        function calcularViajeCliente() {
+            const cat = document.getElementById('clienteCat').value;
+            const km = parseFloat(document.getElementById('clienteKm').value);
+            let base = cat === 'MOTO' ? 3.00 : 5.00;
+            let adicional = cat === 'MOTO' ? 0.50 : 0.80;
+            let total = base;
+            if (km > 3) {
+                total += (km - 3) * adicional;
+            }
+            alert(`Cotización Generada:\n\n• Categoría: ZIPPY ${cat}\n• Distancia: ${km} km\n• Total a cancelar: $${total.USD ? total.USD : total.toFixed(2)} USD\n\nRedirigiendo a pasarela C2P BDV y Bot WhatsApp...`);
+        }
 
-            if (enLinea) {
-                statusText.innerText = 'EN LÍNEA (Transmitiendo GPS)';
-                statusText.style.color = 'var(--green-active)';
-                statusDot.classList.add('online');
+        let adminOnline = false;
+        function toggleAdminGPS() {
+            adminOnline = !adminOnline;
+            const txt = document.getElementById('adminStatusText');
+            const dot = document.getElementById('adminStatusDot');
+            const btn = document.getElementById('btnAdminToggle');
+
+            if (adminOnline) {
+                txt.innerText = 'EN LÍNEA (GPS Activo)';
+                txt.style.color = 'var(--green-active)';
+                dot.classList.add('online');
                 btn.innerText = 'Ponerse FUERA DE SERVICIO';
             } else {
-                statusText.innerText = 'Fuera de Servicio';
-                statusText.style.color = 'var(--text-main)';
-                statusDot.classList.remove('online');
+                txt.innerText = 'Fuera de Servicio';
+                txt.style.color = 'var(--text-main)';
+                dot.classList.remove('online');
                 btn.innerText = 'Ponerse EN LÍNEA';
             }
         }

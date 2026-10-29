@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZIPPY, C.A. - Movilidad y Encomiendas</title>
+    <style>
+        :root {
+            --bg-dark: #0a0a0a;
+            --card-bg: #141414;
+            --card-inner: #1e1e1e;
+            --gold: #d4af37;
+            --gold-light: #f3e5ab;
+            --text-main: #ffffff;
+            --text-muted: #aaaaaa;
+            --border-color: #2a2a2a;
+            --green-active: #28a745;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            min-height: 100vh;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 480px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 25px;
+            margin-top: 15px;
+        }
+
+        header h1 {
+            color: var(--gold);
+            font-size: 2.3rem;
+            letter-spacing: 2px;
+            font-weight: 800;
+        }
+
+        header p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-top: 4px;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+        }
+
+        .card-title {
+            color: var(--gold);
+            font-size: 1.15rem;
+            margin-bottom: 15px;
+            font-weight: bold;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 8px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 6px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--card-inner);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-main);
+            font-size: 0.95rem;
+            outline: none;
+        }
+
+        input:focus, select:focus {
+            border-color: var(--gold);
+        }
+
+        .btn-gold {
+            width: 100%;
+            background-color: var(--gold);
+            color: var(--bg-dark);
+            font-weight: bold;
+            font-size: 1rem;
+            padding: 13px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin-top: 10px;
+        }
+
+        .btn-gold:hover {
+            background-color: var(--gold-light);
+        }
+
+        .btn-outline {
+            width: 100%;
+            background-color: transparent;
+            color: var(--gold);
+            font-weight: bold;
+            font-size: 0.9rem;
+            padding: 11px;
+            border: 1px solid var(--gold);
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .info-box {
+            background-color: var(--card-inner);
+            border-left: 3px solid var(--gold);
+            padding: 12px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+
+        .view-section {
+            display: none;
+        }
+
+        .view-section.active {
+            display: block;
+        }
+
+        .toggle-status {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: var(--card-inner);
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .status-dot {
+            height: 12px;
+            width: 12px;
+            background-color: #666;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .status-dot.online {
+            background-color: var(--green-active);
+            box-shadow: 0 0 8px var(--green-active);
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 25px;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>ZIPPY, C.A.</h1>
+            <p>Plataforma Multimodal • Venezuela</p>
+        </header>
+
+        <!-- VISTA 1: INICIO /

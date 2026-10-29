@@ -50,7 +50,7 @@
         <div id="view-cliente" class="view-section">
             <div class="card">
                 <div class="card-title">🛵 Solicitar Servicio</div>
-                <div class="info-box">Cálculo automático de tarifa según distancia y hora legal de Venezuela.</div>
+                <div class="info-box">Cálculo según Pliego v2.0: Base + Km Extra + Recargo de Turno (Nocturno +40% / Trasnochado +140%).</div>
                 
                 <label>Categoría</label>
                 <select id="clienteCat">
@@ -61,7 +61,7 @@
                 <label>Distancia estimada (Kilómetros)</label>
                 <input type="number" id="clienteKm" value="4" min="1" step="0.5">
 
-                <button class="btn-gold" onclick="calcularViaje()">Calcular y Enviar por WhatsApp</button>
+                <button class="btn-gold" onclick="calcularViaje()">Calcular Cotización Pliego v2.0</button>
                 <button class="btn-outline" onclick="cambiarVista('inicio')">⬅ Volver al Inicio</button>
             </div>
         </div>
@@ -72,8 +72,8 @@
                 <div class="card-title">🏛️ Torre de Control (CEO)</div>
                 <div class="info-box">
                     • Flota Activa: <strong>14 Unidades</strong><br>
-                    • Comisión 20%: <strong>$142.00 USD</strong><br>
-                    • Estado Fiscal BDV / SENIAT: <strong>Sincronizado</strong>
+                    • Comisión 80/20: <strong>$142.00 USD</strong><br>
+                    • Sincronización Tasa BCV: <strong>Activa</strong>
                 </div>
                 <button class="btn-gold" onclick="alert('Reporte financiero exportado con éxito.')">Exportar Reporte Financiero</button>
             </div>
@@ -120,9 +120,39 @@
         function calcularViaje() {
             const cat = document.getElementById('clienteCat').value;
             const km = parseFloat(document.getElementById('clienteKm').value);
-            let total = cat === 'MOTO' ? 3.00 : 5.00;
-            if (km > 3) total += (km - 3) * (cat === 'MOTO' ? 0.50 : 0.80);
-            alert(`Cotización ZIPPY ${cat}:\nDistancia: ${km} km\nTotal: $${total.toFixed(2)} USD\n\nConectando con pasarela C2P BDV...`);
+            
+            // 1. Parámetros Base Invariables (Primeros 3 km)
+            let base = cat === 'MOTO' ? 3.00 : 5.00;
+            let adicionalKm = cat === 'MOTO' ? 0.50 : 0.80;
+            let subtotal = base;
+
+            // Recálculo de km extra según la matriz del pliego si supera los 3 km
+            const horaActual = new Date().getHours(); 
+            let porcentajeRecargo = 0;
+            let conceptoHorario = "Turno 1 (Diurno - 0%)";
+
+            // Definición estricta de franjas horarias del Pliego v2.0
+            if (horaActual >= 19 && horaActual < 23) { 
+                // Turno 2: Nocturno (07:00 p.m. – 10:59 p.m.) -> +40% y km extra ajustado
+                porcentajeRecargo = 0.40; 
+                adicionalKm = cat === 'MOTO' ? 0.70 : 1.12;
+                conceptoHorario = "Turno 2 (Nocturno +40%)";
+            } else if (horaActual >= 23 || horaActual < 6) {
+                // Turno 3: Trasnochado (11:00 p.m. – 05:59 a.m.) -> +140% y km extra ajustado
+                porcentajeRecargo = 1.40; 
+                adicionalKm = cat === 'MOTO' ? 1.20 : 1.92;
+                conceptoHorario = "Turno 3 (Trasnochado +140%)";
+            }
+
+            // Aplicación del cálculo de distancia
+            if (km > 3) {
+                subtotal += (km - 3) * adicionalKm;
+            }
+
+            // Aplicación del multiplicador general de turno sobre el valor calculado del servicio
+            let totalFinal = subtotal * (1 + porcentajeRecargo);
+
+            alert(`ZIPPY COTIZACIÓN PLIEGO v2.0:\n\n• Servicio: ZIPPY ${cat}\n• Distancia: ${km} km\n• Turno Activo: ${conceptoHorario}\n\nTOTAL A CANCELAR: $${totalFinal.toFixed(2)} USD\n\n(Equivalente en Bs. según tasa oficial BCV)\nIniciando despacho automático IA...`);
         }
 
         let adminOnline = false;

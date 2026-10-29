@@ -188,7 +188,7 @@
     <div class="container">
         <header>
             <h1>ZIPPY, C.A.</h1>
-            <p>Plataforma Multimodal • Calabozo, Guárico</p>
+            <p>Plataforma Multimodal • Calabozo, Guárico, Venezuela</p>
         </header>
 
         <!-- VISTA 1: INICIO / SELECCIÓN DE ACCESO -->
@@ -288,7 +288,7 @@
             if (km > 3) {
                 total += (km - 3) * adicional;
             }
-            alert(`Cotización Generada:\n\n• Categoría: ZIPPY ${cat}\n• Distancia: ${km} km\n• Total a cancelar: $${total.USD ? total.USD : total.toFixed(2)} USD\n\nRedirigiendo a pasarela C2P BDV y Bot WhatsApp...`);
+            alert(`Cotización Generada:\n\n• Categoría: ZIPPY ${cat}\n• Distancia: ${km} km\n• Total a cancelar: $${total.toFixed(2)} USD\n\nRedirigiendo a pasarela C2P BDV y Bot WhatsApp...`);
         }
 
         let adminOnline = false;

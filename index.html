@@ -71,7 +71,7 @@
             <div class="card-title">💳 ZIPPY Wallet (80% Líquido)</div>
             <div>Saldo disponible para retiro:</div>
             <div class="stat-val">$58.00 USD</div>
-            <button class="btn-gold" onclick="alert('Solicitud de retiro a Pago Móvil enviada con éxito.')">Retirar vía Pago Móvil</button>
+            <button class="btn-gold" onclick="alert('Solicitud de retiro procesada automáticamente vía C2P.')">Retirar vía Pago Móvil</button>
         </div>
     </div>
 
@@ -96,7 +96,7 @@
             <label>Teléfono WhatsApp:</label>
             <input type="text" id="kycTlf" placeholder="Ej: 0426-4343732">
 
-            <!-- NUEVO: DATOS DE PAGO MÓVIL DEL AFILIADO -->
+            <!-- DATOS DE PAGO MÓVIL DEL AFILIADO -->
             <div style="background:#111; padding:10px; border-radius:5px; border:1px solid #d4af37; margin-top:10px;">
                 <div style="color:#d4af37; font-weight:bold; font-size:0.85em; margin-bottom:5px;">🏦 Datos Bancarios para Pago Móvil (Liquidación 80%)</div>
                 
@@ -150,7 +150,7 @@
         </div>
     </div>
 
-    <!-- 4. VISTA PANEL CONTROL CEO -->
+    <!-- 4. VISTA PANEL CONTROL CEO (AUTOMATIZADO) -->
     <div id="viewCEO" class="section-view">
         <!-- Bloque de Login CEO -->
         <div id="ceoAuth" class="card">
@@ -160,19 +160,21 @@
             <button class="btn-gold" onclick="loginCEO()">Acceder a la Torre de Control</button>
         </div>
 
-        <!-- Dashboard Administrador -->
+        <!-- Dashboard Administrador (Sin aprobaciones manuales, 100% automático) -->
         <div id="ceoDashboard" style="display:none;">
             <div class="card" style="border-color:#d4af37;">
                 <div class="card-title">🏛️ Torre de Control & Back-Office (CEO)</div>
                 <div>• Flota Activa Nacional: <strong>14 Unidades (10 Motos / 4 Autos)</strong></div>
                 <div>• Recaudación Comisión 20%: <span class="stat-val">$142.00 USD</span></div>
                 <div>• Estado Fiscal BDV / SENIAT: <strong style="color:#00ff00;">Sincronizado</strong></div>
-                <button class="btn-gold" onclick="alert('Generando reporte financiero consolidado...')">Exportar Reporte Financiero</button>
+                <button class="btn-gold" onclick="alert('Generando reporte financiero y fiscal consolidado...')">Exportar Reporte Financiero</button>
             </div>
 
             <div class="card">
-                <div class="card-title">⚙️ Control Central Operativo</div>
-                <button class="btn-gold" onclick="alert('Cierre de caja ejecutado. Liquidando wallets de conductores vía C2P.')">Aprobar Pagos Móviles a Conductores</button>
+                <div class="card-title">⚡ Automatización Financiera C2P</div>
+                <div style="background:#111; padding:8px; border-radius:4px; font-size:0.8em; color:#00ff00; margin-bottom:8px; border:1px solid #00ff00;">
+                    ✓ Pasarela C2P Activa: Las liquidaciones del 80% a las wallets de los conductores se procesan automáticamente. Cero intervenciones manuales.
+                </div>
                 <button class="btn-danger" onclick="logoutCEO()">Cerrar Sesión Master</button>
             </div>
         </div>

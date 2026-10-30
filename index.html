@@ -75,7 +75,7 @@
         </div>
     </div>
 
-    <!-- 3. VISTA REGISTRO KYC (BIOMETRÍA, DOCUMENTOS Y VEHÍCULO) -->
+    <!-- 3. VISTA REGISTRO KYC -->
     <div id="viewKYC" class="section-view">
         <div class="card">
             <div class="card-title">📝 Afiliación y Expediente KYC (Seguridad Total)</div>
@@ -134,7 +134,7 @@
         <!-- Bloque de Login CEO -->
         <div id="ceoAuth" class="card">
             <div class="card-title">🔒 Panel Central de Control CEO</div>
-            <p>Introduce tu clave de Administrador Master (Cédula):</p>
+            <p>Introduce tu clave de Administrador Master (1947 o Cédula):</p>
             <input type="password" id="ceoKey" placeholder="Clave de Acceso Master">
             <button class="btn-gold" onclick="loginCEO()">Acceder a la Torre de Control</button>
         </div>
@@ -163,7 +163,8 @@
 </div>
 
 <script>
-    const CLAVE_MASTER = "19476093"; 
+    // Claves Master autorizadas (Acepta tanto 1947 como tu cédula completa 19476093)
+    const CLAVES_VALIDAS = ["1947", "19476093"]; 
 
     function switchTab(tab) {
         document.querySelectorAll('.nav-tabs button').forEach(b => b.classList.remove('active'));
@@ -189,12 +190,12 @@
     }
 
     function loginCEO() {
-        let pass = document.getElementById('ceoKey').value;
-        if(pass === CLAVE_MASTER) {
+        let pass = document.getElementById('ceoKey').value.trim();
+        if(CLAVES_VALIDAS.includes(pass)) {
             document.getElementById('ceoAuth').style.display = 'none';
             document.getElementById('ceoDashboard').style.display = 'block';
         } else {
-            alert('Clave incorrecta. Solo el CEO tiene acceso a la Torre de Control.');
+            alert('Clave incorrecta. Introduce 1947 o tu cédula completa para acceder a la Torre de Control.');
         }
     }
 

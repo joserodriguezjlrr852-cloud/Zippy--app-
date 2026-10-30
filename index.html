@@ -42,27 +42,36 @@
         <button id="tab5" onclick="switchTab('ceo')">Panel CEO</button>
     </div>
 
-    <!-- 1. VISTA COTIZADOR URBANO Y MULTIMODAL -->
+    <!-- 1. VISTA COTIZADOR URBANO CON RECARGOS NOCTURNOS Y TRASNOCHADOS -->
     <div id="viewCliente" class="section-view active">
         <div class="card">
-            <div class="card-title">🤖 Cotizador Multimodal (Motos, Taxis, Encomiendas, Buses & Carga)</div>
-            <p style="font-size:0.78em; color:#aaa;">Calcula servicios urbanos, pasajes (10%) y fletes de carga pesada (20%).</p>
+            <div class="card-title">🤖 Cotizador con Recargos Nocturnos y Trasnocho</div>
+            <p style="font-size:0.78em; color:#aaa;">Calcula servicios urbanos, tarifas nocturnas, pasajes (10%) y fletes (20%).</p>
             
             <label>Seleccione el Servicio:</label>
             <select id="cotCategoria" onchange="cambiarModoCotizacion()">
-                <option value="moto">ZIPPY MOTO - Mototaxi / Encomienda ($3.00 Base)</option>
+                <option value="moto">ZIPPY Moto - Mototaxi / Encomienda ($3.00 Base)</option>
                 <option value="auto">ZIPPY CAR - Taxi / Carrera Urbana ($5.00 Base)</option>
-                <option value="escolar">ZIPPY KIDS - Escolar Seguro (Motos/Furgones)</option>
+                <option value="escolar">ZIPPY KIDS - Escolar Seguro ($30 Afiliación)</option>
                 <option value="autobus">Autobús / Encava (Pasaje - Comisión 10%)</option>
                 <option value="gandola">ZIPPY Carga Pesada / Gandola (Flete - Comisión 20%)</option>
             </select>
 
-            <div id="divDistancia">
+            <div id="divHorario" style="margin-top:8px;">
+                <label>Franja Horaria / Tarifa:</label>
+                <select id="cotHorario">
+                    <option value="normal">🌅 Horario Normal (Día)</option>
+                    <option value="nocturno">🌙 Recargo Nocturno (+20%)</option>
+                    <option value="trasnocho">⚡ Recargo Trasnochado / Madrugada (+40%)</option>
+                </select>
+            </div>
+
+            <div id="divDistancia" style="margin-top:8px;">
                 <label>Distancia estimada (Km) o N° de Pasajes:</label>
                 <input type="number" id="cotKm" value="1" min="1">
             </div>
 
-            <div id="divCarga" style="display:none;">
+            <div id="divCarga" style="display:none; margin-top:8px;">
                 <label>Descripción de la Carga y Destino:</label>
                 <textarea rows="3" placeholder="Ej: Carga pesada de Calabozo a San Fernando..."></textarea>
                 <label>Monto Propuesto por el Transportista ($ USD):</label>
@@ -122,7 +131,7 @@
     <div id="viewWallet" class="section-view">
         <div class="card">
             <div class="card-title">💳 Wallets de Conductores y Flotas</div>
-            <p style="font-size:0.78em; color:#aaa;">Saldos líquidos (Motos/Taxis 100%, Autobuses 90%, Carga 80%).</p>
+            <p style="font-size:0.78em; color:#aaa;">Saldos líquidos (Motos/Taxis 100% con recargo, Autobuses 90%, Carga 80%).</p>
             
             <div>Saldo Disponible en Wallet:</div>
             <div class="stat-val">$1,850.00 USD</div>
@@ -132,7 +141,7 @@
         </div>
     </div>
 
-    <!-- 4. VISTA AFILIACIONES (Motos, Taxis, Kids $30, Carga/Buses $60) -->
+    <!-- 4. VISTA AFILIACIONES -->
     <div id="viewFlota" class="section-view">
         <div class="card" style="border-color:#d4af37;">
             <div class="card-title">🚐 Módulo de Afiliaciones y Dotación</div>
@@ -154,7 +163,7 @@
             <input type="text" placeholder="Ej: Placa o ID">
 
             <div class="legal-box" style="margin-top:8px;">
-                <strong>Dotación / Beneficios:</strong> Carnets PVC con QR, camisas reflectivas (según categoría) y calcomanías corporativas oficiales.
+                <strong>Dotación / Beneficios:</strong> Carnets PVC con QR, camisas reflectivas y calcomanías corporativas oficiales.
             </div>
 
             <button class="btn-gold" style="margin-top:15px;" onclick="alert('Afiliación procesada con éxito en la plataforma.')">Completar Registro y Pago</button>
@@ -165,7 +174,7 @@
     <div id="viewCEO" class="section-view">
         <div id="ceoAuth" class="card">
             <div class="card-title">🔒 Panel Central de Control CEO</div>
-            <p>Introduce tu clave de Administrador Master (Cédula):</p>
+            <p>Introduce thy clave de Administrador Master (Cédula):</p>
             <input type="password" id="ceoKey" placeholder="Clave de Acceso Master">
             <button class="btn-gold" onclick="loginCEO()">Acceder a la Torre de Control</button>
         </div>
@@ -173,7 +182,7 @@
         <div id="ceoDashboard" style="display:none;">
             <div class="card" style="border-color:#d4af37;">
                 <div class="card-title">🏛️ Torre de Control & Telemetría Global</div>
-                <div>• Unidades Activas (Motos, Taxis, Buses, Carga): <strong>84 Unidades</strong></div>
+                <div>• Unidades Activas: <strong>84 Unidades</strong></div>
                 <div>• Recaudación Comisiones: <span class="stat-val">$840.00 USD</span></div>
                 <div>• Ingresos por Afiliaciones: <span class="stat-val">$4,120.00 USD</span></div>
                 
@@ -223,12 +232,22 @@
 
     function cambiarModoCotizacion() {
         let cat = document.getElementById('cotCategoria').value;
+        let divHorario = document.getElementById('divHorario');
+        let divDistancia = document.getElementById('divDistancia');
+        let divCarga = document.getElementById('divCarga');
+
         if(cat === 'gandola') {
-            document.getElementById('divDistancia').style.display = 'none';
-            document.getElementById('divCarga').style.display = 'block';
+            divHorario.style.display = 'none';
+            divDistancia.style.display = 'none';
+            divCarga.style.display = 'block';
+        } else if(cat === 'autobus') {
+            divHorario.style.display = 'none';
+            divDistancia.style.display = 'block';
+            divCarga.style.display = 'none';
         } else {
-            document.getElementById('divDistancia').style.display = 'block';
-            document.getElementById('divCarga').style.display = 'none';
+            divHorario.style.display = 'block';
+            divDistancia.style.display = 'block';
+            divCarga.style.display = 'none';
         }
     }
 
@@ -254,24 +273,24 @@
 
     function calcularCotizacion() {
         let cat = document.getElementById('cotCategoria').value;
+        let horario = document.getElementById('cotHorario').value;
         let subtotal = 0;
         let comisionZippy = 0;
         let netoTransportista = 0;
         let tipoServicio = "";
+        let recargoTexto = "Horario Normal";
 
+        // Cálculo base según categoría
         if(cat === 'moto') {
             let km = parseFloat(document.getElementById('cotKm').value) || 1;
             subtotal = 3.00 + ((km - 1) * 0.50);
-            netoTransportista = subtotal; // 100% para el mototaxista/delivery
             tipoServicio = "ZIPPY Moto / Encomienda";
         } else if(cat === 'auto') {
             let km = parseFloat(document.getElementById('cotKm').value) || 1;
             subtotal = 5.00 + ((km - 1) * 0.80);
-            netoTransportista = subtotal; // 100% para el taxista
             tipoServicio = "ZIPPY Car / Taxi";
         } else if(cat === 'escolar') {
             subtotal = 10.00;
-            netoTransportista = subtotal;
             tipoServicio = "ZIPPY Kids Escolar";
         } else if(cat === 'autobus') {
             let cant = parseInt(document.getElementById('cotKm').value) || 1;
@@ -288,9 +307,21 @@
             tipoServicio = "Carga Pesada / Gandola (Comisión 20%)";
         }
 
+        // Aplicar recargo nocturno o trasnocho a servicios urbanos (motos, taxis, escolar)
+        if(cat === 'moto' || cat === 'auto' || cat === 'escolar') {
+            if(horario === 'nocturno') {
+                subtotal = subtotal * 1.20; // Recargo 20%
+                recargoTexto = "Recargo Nocturno (+20%)";
+            } else if(horario === 'trasnocho') {
+                subtotal = subtotal * 1.40; // Recargo 40%
+                recargoTexto = "Recargo Trasnochado / Madrugada (+40%)";
+            }
+            netoTransportista = subtotal; // 100% para el conductor urbano
+        }
+
         let res = document.getElementById('cotResult');
         res.style.display = 'block';
-        res.innerHTML = `<strong>${tipoServicio} Procesado</strong><br>Monto Total: $${subtotal.toFixed(2)} USD<br><span style="color:#00ff00;">• Abonado a Wallet Conductor: $${netoTransportista.toFixed(2)}</span>${comisionZippy > 0 ? `<br><span style="color:#d4af37;">• Comisión ZIPPY C.A.: $${comisionZippy.toFixed(2)}</span>` : ''}`;
+        res.innerHTML = `<strong>${tipoServicio}</strong><br><small style="color:#d4af37;">Franja: ${recargoTexto}</small><br>Monto Total: <strong>$${subtotal.toFixed(2)} USD</strong><br><span style="color:#00ff00;">• Abonado a Wallet Conductor: $${netoTransportista.toFixed(2)}</span>${comisionZippy > 0 ? `<br><span style="color:#d4af37;">• Comisión ZIPPY C.A.: $${comisionZippy.toFixed(2)}</span>` : ''}`;
     }
 </script>
 

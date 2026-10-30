@@ -42,11 +42,11 @@
         <button id="tab5" onclick="switchTab('ceo')">Panel CEO</button>
     </div>
 
-    <!-- 1. VISTA COTIZADOR URBANO CON RECARGOS NOCTURNOS Y TRASNOCHADOS -->
+    <!-- 1. VISTA COTIZADOR URBANO CON RECARGOS 40% Y 140% -->
     <div id="viewCliente" class="section-view active">
         <div class="card">
-            <div class="card-title">🤖 Cotizador con Recargos Nocturnos y Trasnocho</div>
-            <p style="font-size:0.78em; color:#aaa;">Calcula servicios urbanos, tarifas nocturnas, pasajes (10%) y fletes (20%).</p>
+            <div class="card-title">🤖 Cotizador con Recargos (40% Nocturno / 140% Trasnocho)</div>
+            <p style="font-size:0.78em; color:#aaa;">Calcula servicios urbanos, pasajes (10%) y fletes (20%).</p>
             
             <label>Seleccione el Servicio:</label>
             <select id="cotCategoria" onchange="cambiarModoCotizacion()">
@@ -61,8 +61,8 @@
                 <label>Franja Horaria / Tarifa:</label>
                 <select id="cotHorario">
                     <option value="normal">🌅 Horario Normal (Día)</option>
-                    <option value="nocturno">🌙 Recargo Nocturno (+20%)</option>
-                    <option value="trasnocho">⚡ Recargo Trasnochado / Madrugada (+40%)</option>
+                    <option value="nocturno">🌙 Recargo Nocturno (07:00 PM - 10:59 PM) [+40%]</option>
+                    <option value="trasnocho">⚡ Recargo Trasnochado / Madrugada (11:00 PM - 05:59 AM) [+140%]</option>
                 </select>
             </div>
 
@@ -174,7 +174,7 @@
     <div id="viewCEO" class="section-view">
         <div id="ceoAuth" class="card">
             <div class="card-title">🔒 Panel Central de Control CEO</div>
-            <p>Introduce thy clave de Administrador Master (Cédula):</p>
+            <p>Introduce tu clave de Administrador Master (Cédula):</p>
             <input type="password" id="ceoKey" placeholder="Clave de Acceso Master">
             <button class="btn-gold" onclick="loginCEO()">Acceder a la Torre de Control</button>
         </div>
@@ -307,14 +307,14 @@
             tipoServicio = "Carga Pesada / Gandola (Comisión 20%)";
         }
 
-        // Aplicar recargo nocturno o trasnocho a servicios urbanos (motos, taxis, escolar)
+        // Aplicar recargo nocturno (40%) o trasnocho (140%) a servicios urbanos (motos, taxis, escolar)
         if(cat === 'moto' || cat === 'auto' || cat === 'escolar') {
             if(horario === 'nocturno') {
-                subtotal = subtotal * 1.20; // Recargo 20%
-                recargoTexto = "Recargo Nocturno (+20%)";
-            } else if(horario === 'trasnocho') {
                 subtotal = subtotal * 1.40; // Recargo 40%
-                recargoTexto = "Recargo Trasnochado / Madrugada (+40%)";
+                recargoTexto = "Recargo Nocturno (+40%)";
+            } else if(horario === 'trasnocho') {
+                subtotal = subtotal * 2.40; // Recargo 140% (Base + 140%)
+                recargoTexto = "Recargo Trasnochado / Madrugada (+140%)";
             }
             netoTransportista = subtotal; // 100% para el conductor urbano
         }

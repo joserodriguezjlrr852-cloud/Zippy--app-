@@ -35,29 +35,38 @@
 
     <!-- Navegación de Pestañas -->
     <div class="nav-tabs">
-        <button id="tab1" class="active" onclick="switchTab('cliente')">Boleto</button>
+        <button id="tab1" class="active" onclick="switchTab('cliente')">Boleto / Carga</button>
         <button id="tab2" onclick="switchTab('fiscal')">Fiscal/Terminal</button>
-        <button id="tab3" onclick="switchTab('wallet')">Wallet 90/10</button>
+        <button id="tab3" onclick="switchTab('wallet')">Wallets</button>
         <button id="tab4" onclick="switchTab('flota')">Flotas ($60)</button>
         <button id="tab5" onclick="switchTab('ceo')">Panel CEO</button>
     </div>
 
-    <!-- 1. VISTA CLIENTE / COMPRA DE BOLETO -->
+    <!-- 1. VISTA CLIENTE / COMPRA DE BOLETO O COTIZACIÓN DE CARGA -->
     <div id="viewCliente" class="section-view active">
         <div class="card">
-            <div class="card-title">🎫 Compra de Pasaje Digital (QR)</div>
-            <p style="font-size:0.80em; color:#aaa;">Adquiere tu boleto. La plataforma acredita automáticamente el 90% al transportista y el 10% a ZIPPY.</p>
+            <div class="card-title">🎫 Cotizador de Pasajes (10%) & Fletes (20%)</div>
+            <p style="font-size:0.80em; color:#aaa;">Pasajes con comisión 10% y Carga Pesada con cotización directa y comisión 20%.</p>
             
-            <label>Ruta / Servicio de Transporte:</label>
-            <select id="cotCategoria">
-                <option value="autobus">Autobús / Encava / Expreso ($15.00 Boleto)</option>
-                <option value="carro_5p">Carro por Puesto / Urbano ($5.00 Boleto)</option>
+            <label>Seleccione el Servicio:</label>
+            <select id="cotCategoria" onchange="cambiarModoCotizacion()">
+                <option value="autobus">Autobús / Encava (Pasaje - Comisión 10%)</option>
+                <option value="gandola">ZIPPY Carga Pesada / Gandola (Flete - Comisión 20%)</option>
             </select>
 
-            <label>Cantidad de Pasajes:</label>
-            <input type="number" id="cotKm" value="1" min="1">
+            <div id="divPasaje">
+                <label>Cantidad de Pasajes ($15.00 c/u):</label>
+                <input type="number" id="cotKm" value="1" min="1">
+            </div>
 
-            <button class="btn-gold" onclick="comprarBoleto()">Comprar y Generar QR (C2P BDV)</button>
+            <div id="divCarga" style="display:none;">
+                <label>Descripción de la Carga y Destino:</label>
+                <textarea rows="3" placeholder="Ej: Carga a granel de Calabozo a Valencia..."></textarea>
+                <label>Monto Propuesto por el Transportista ($ USD):</label>
+                <input type="number" id="montoCargaDueño" placeholder="Ej: 500">
+            </div>
+
+            <button class="btn-gold" onclick="comprarBoleto()">Procesar Solicitud (C2P BDV)</button>
             <div id="cotResult" style="margin-top:10px; display:none; background:#111; padding:10px; border-radius:4px;"></div>
         </div>
     </div>
@@ -82,7 +91,7 @@
             <input type="text" placeholder="Colector / Ayudante: Nombre y Cédula" style="margin-top:4px;">
 
             <div style="background:#111; padding:10px; border-radius:5px; border:1px solid #d4af37; margin-top:10px;">
-                <div style="color:#d4af37; font-weight:bold; font-size:0.85em; margin-bottom:5px;">🏦 Pago Móvil del Dueño (Para retiros de Wallet 90%)</div>
+                <div style="color:#d4af37; font-weight:bold; font-size:0.85em; margin-bottom:5px;">🏦 Pago Móvil del Dueño (Para retiros de Wallet)</div>
                 
                 <label>Banco:</label>
                 <select>
@@ -99,7 +108,7 @@
                 <input type="text" placeholder="Ej: 0414-1234567">
             </div>
 
-            <button class="btn-gold" style="margin-top:12px;" onclick="alert('Unidad afiliada por el fiscal con éxito. Datos de pago móvil guardados para la Wallet.')">Afiliar Unidad al Terminal ($60)</button>
+            <button class="btn-gold" style="margin-top:12px;" onclick="alert('Unidad afiliada por el fiscal con éxito. Datos de pago móvil guardados.')">Afiliar Unidad al Terminal ($60)</button>
         </div>
 
         <div class="card">
@@ -109,41 +118,49 @@
         </div>
     </div>
 
-    <!-- 3. VISTA WALLET TRANSPORTISTA (90% LÍQUIDO) -->
+    <!-- 3. VISTA WALLET TRANSPORTISTA (90% / 80% LÍQUIDO) -->
     <div id="viewWallet" class="section-view">
         <div class="card">
-            <div class="card-title">💳 Wallet del Dueño de Flota / Autobús</div>
-            <p style="font-size:0.78em; color:#aaa;">Acumulado del 90% líquido por pasajes procesados centralizados.</p>
+            <div class="card-title">💳 Wallets de Transportistas y Carga</div>
+            <p style="font-size:0.78em; color:#aaa;">Acumulado de saldo líquido (90% pasajes / 80% carga pesada).</p>
             
             <div>Saldo Disponible en Wallet:</div>
-            <div class="stat-val">$1,350.00 USD</div>
-            <div style="font-size:0.75em; color:#00ff00; margin-top:3px;">✓ Comisión 10% retenida automáticamente por ZIPPY C.A.</div>
+            <div class="stat-val">$1,850.00 USD</div>
+            <div style="font-size:0.75em; color:#00ff00; margin-top:3px;">✓ Retenciones automáticas (10% Pasajes / 20% Carga) aplicadas.</div>
 
-            <button class="btn-gold" style="margin-top:15px;" onclick="alert('Solicitud de retiro enviada. Se procesará vía Pago Móvil al número registrado por el fiscal.')">Retirar Fondos a mi Pago Móvil</button>
+            <button class="btn-gold" style="margin-top:15px;" onclick="alert('Solicitud de retiro enviada. Se procesará vía Pago Móvil al número registrado.')">Retirar Fondos a mi Pago Móvil</button>
         </div>
     </div>
 
-    <!-- 4. VISTA AFILIACIÓN GENERAL Y ZIPPY KIDS ($30 / $60) -->
+    <!-- 4. VISTA PANEL DE AUTOGESTIÓN DE FLOTAS Y CARGA PESADA ($60 USD) -->
     <div id="viewFlota" class="section-view">
         <div class="card" style="border-color:#d4af37;">
-            <div class="card-title">🚐 Afiliación General & ZIPPY Kids ($30 / $60)</div>
-            <p style="font-size:0.78em; color:#aaa;">Inscribe unidades de carga pesada, transporte escolar ZIPPY Kids (con motos o furgones) y flotas.</p>
+            <div class="card-title">🚛 Panel de Dueños de Flota & Carga Pesada ($60)</div>
+            <p style="font-size:0.78em; color:#aaa;">Inscribe tus gandolas, camiones o flotas, afilia a tus propios choferes y recibe su dotación corporativa.</p>
 
-            <label>Seleccione Categoría:</label>
+            <label>Nombre de la Empresa / Propietario de Flota:</label>
+            <input type="text" placeholder="Ej: Transportes y Gandolas C.A.">
+
+            <label>Tipología de la Unidad a Afiliar ($60):</label>
             <select>
-                <option value="moto_kids">ZIPPY Kids - Moto Escolar (Carnet QR) - $30</option>
-                <option value="furgon_kids">ZIPPY Kids - Van / Furgón Escolar - $30</option>
-                <option value="pesado">Carga Pesada / Gandolas / Camiones - $60</option>
+                <option value="gandola">Gandola / Chuto / Batea ($60 USD - Comisión flete 20%)</option>
+                <option value="camion350">Camión 350 / Tritón / Furgón ($60 USD)</option>
+                <option value="camion_npr">Camión NPR / Carga Mediana ($60 USD)</option>
+                <option value="autobus_flota">Flota de Autobuses / Expresos ($60 USD - Comisión pasaje 10%)</option>
             </select>
 
-            <label>Placa / Identificación:</label>
-            <input type="text" placeholder="Ej: Placa o ID de la unidad">
+            <label>Placa / N° de Control de la Unidad:</label>
+            <input type="text" placeholder="Ej: Placa A12B34 / Chuto #05">
+
+            <label>Afiliar Chofer Principal de la Unidad:</label>
+            <input type="text" placeholder="Nombre y Apellido del Chofer">
+            <input type="text" placeholder="Cédula de Identidad del Chofer" style="margin-top:4px;">
 
             <div class="legal-box" style="margin-top:8px;">
-                <strong>Dotación Corporativa:</strong> Incluye carnets PVC con QR, camisas reflectivas y calcomanías oficiales.
+                <strong>Dotación Incluida ($60 USD):</strong> Carnet PVC con QR de seguridad, 2 camisas manga corta reflectivas y calcomanía corporativa de gran formato para parabrisas o lateral.
             </div>
 
-            <button class="btn-gold" style="margin-top:15px;" onclick="alert('Registro de afiliación procesado con éxito.')">Registrar y Solicitar Dotación</button>
+            <button class="btn-gold" style="margin-top:15px;" onclick="alert('Unidad de carga pesada / flota y chofer afianzados con éxito. Afiliación de $60 procesada.')">Afiliar Unidad y Chofer ($60 USD)</button>
         </div>
     </div>
 
@@ -159,9 +176,9 @@
         <div id="ceoDashboard" style="display:none;">
             <div class="card" style="border-color:#d4af37;">
                 <div class="card-title">🏛️ Torre de Control & Telemetría Global</div>
-                <div>• Unidades en Terminales: <strong>55 Unidades Activas</strong></div>
-                <div>• Recaudación Comisión (10%): <span class="stat-val">$520.00 USD</span></div>
-                <div>• Ingresos por Afiliaciones: <span class="stat-val">$3,450.00 USD</span></div>
+                <div>• Unidades en Terminales y Flotas: <strong>55 Unidades Activas</strong></div>
+                <div>• Recaudación Comisiones (10% Pasajes / 20% Carga): <span class="stat-val">$680.00 USD</span></div>
+                <div>• Ingresos por Afiliaciones ($60): <span class="stat-val">$3,450.00 USD</span></div>
                 
                 <div style="margin-top:8px; display:flex; align-items:center;">
                     • Estado Fiscal BDV / SENIAT: <span class="status-badge">Sincronizado</span>
@@ -207,6 +224,17 @@
         }
     }
 
+    function cambiarModoCotizacion() {
+        let cat = document.getElementById('cotCategoria').value;
+        if(cat === 'gandola') {
+            document.getElementById('divPasaje').style.display = 'none';
+            document.getElementById('divCarga').style.display = 'block';
+        } else {
+            document.getElementById('divPasaje').style.display = 'block';
+            document.getElementById('divCarga').style.display = 'none';
+        }
+    }
+
     function loginCEO() {
         let pass = document.getElementById('ceoKey').value.trim();
         if(CLAVES_VALIDAS.includes(pass)) {
@@ -228,16 +256,31 @@
     }
 
     function comprarBoleto() {
-        let cant = parseInt(document.getElementById('cotKm').value);
-        if(isNaN(cant) || cant <= 0) { alert('Ingresa una cantidad válida.'); return; }
-        
-        let subtotal = cant * 15.00;
-        let comisionZippy = subtotal * 0.10; // 10% para la empresa
-        let netoTransportista = subtotal * 0.90; // 90% a la Wallet del bus
+        let cat = document.getElementById('cotCategoria').value;
+        let subtotal = 0;
+        let comisionZippy = 0;
+        let netoTransportista = 0;
+        let tipoServicio = "";
+
+        if(cat === 'autobus') {
+            let cant = parseInt(document.getElementById('cotKm').value);
+            if(isNaN(cant) || cant <= 0) { alert('Ingresa una cantidad válida de pasajes.'); return; }
+            subtotal = cant * 15.00;
+            comisionZippy = subtotal * 0.10; // 10% para pasajes de autobuses
+            netoTransportista = subtotal * 0.90; // 90% para el bus
+            tipoServicio = "Pasaje Autobús (Comisión 10%)";
+        } else {
+            let montoCarga = parseFloat(document.getElementById('montoCargaDueño').value);
+            if(isNaN(montoCarga) || montoCarga <= 0) { alert('Ingresa el monto propuesto por el transportista de carga.'); return; }
+            subtotal = montoCarga;
+            comisionZippy = subtotal * 0.20; // 20% para carga pesada / gandolas
+            netoTransportista = subtotal * 0.80; // 80% para la gandola
+            tipoServicio = "Carga Pesada / Gandola (Comisión 20%)";
+        }
 
         let res = document.getElementById('cotResult');
         res.style.display = 'block';
-        res.innerHTML = `<strong>Boleto Generado (QR Activo)</strong><br>Total Pagado: $${subtotal.toFixed(2)} USD<br><span style="color:#00ff00;">• Abonado a Wallet Bus (90%): $${netoTransportista.toFixed(2)}</span><br><span style="color:#d4af37;">• Comisión ZIPPY C.A. (10%): $${comisionZippy.toFixed(2)}</span>`;
+        res.innerHTML = `<strong>${tipoServicio} Procesado</strong><br>Monto Total: $${subtotal.toFixed(2)} USD<br><span style="color:#00ff00;">• Abonado a Wallet Transportista: $${netoTransportista.toFixed(2)}</span><br><span style="color:#d4af37;">• Comisión ZIPPY C.A.: $${comisionZippy.toFixed(2)}</span>`;
     }
 </script>
 

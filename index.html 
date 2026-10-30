@@ -10,7 +10,7 @@
         h2 { color: #d4af37; text-align: center; margin-bottom: 2px; font-size: 1.5em; }
         .subtitle { text-align: center; font-size: 0.8em; color: #aaa; margin-bottom: 15px; }
         .nav-tabs { display: flex; justify-content: space-between; margin-bottom: 15px; border-bottom: 1px solid #333; padding-bottom: 10px; }
-        .nav-tabs button { background: #222; color: #aaa; border: 1px solid #444; padding: 6px 2px; border-radius: 4px; font-size: 0.6em; flex: 1; margin: 0 1px; cursor: pointer; }
+        .nav-tabs button { background: #222; color: #aaa; border: 1px solid #444; padding: 6px 2px; border-radius: 4px; font-size: 0.58em; flex: 1; margin: 0 1px; cursor: pointer; }
         .nav-tabs button.active { background-color: #d4af37; color: #121212; font-weight: bold; border-color: #d4af37; }
         .section-view { display: none; }
         .section-view.active { display: block; }
@@ -46,19 +46,20 @@
     <div id="viewCliente" class="section-view active">
         <div class="card">
             <div class="card-title">🤖 Bot Cotizador y Despacho GPS</div>
-            <p style="font-size:0.8em; color:#aaa;">Cálculo automático de tarifa para Pasajeros, Encomiendas y Fletes de Carga.</p>
+            <p style="font-size:0.8em; color:#aaa;">Cálculo automático de tarifa para Motos, Pasajeros, ZIPPY Kids y Fletes de Carga.</p>
             
             <label>Seleccione el Servicio:</label>
             <select id="cotCategoria">
-                <option value="moto">ZIPPY MOTO - Pasajeros / Encomienda Ligera ($3.00 Base / $0.50 Km)</option>
+                <option value="moto">ZIPPY MOTO - Pasajeros / Encomienda ($3.00 Base / $0.50 Km)</option>
                 <option value="auto">ZIPPY CAR - Taxi / Encomienda Mediana ($5.00 Base / $0.80 Km)</option>
+                <option value="escolar">ZIPPY KIDS - Transporte Escolar Seguro con QR ($10.00 Base)</option>
                 <option value="npr">ZIPPY CARGA MEDIANA - NPR / 350 / Furgón</option>
                 <option value="gandola">ZIPPY CARGA PESADA - Gandola / Chuto / Volquete</option>
                 <option value="autobus">ZIPPY BUS / Encava - Pasaje Interurbano / Rutas</option>
             </select>
 
-            <label>Distancia estimada (Km) o Volumen:</label>
-            <input type="number" id="cotKm" placeholder="Ej. 10" min="1">
+            <label>Distancia estimada (Km) o N° Estudiantes:</label>
+            <input type="number" id="cotKm" placeholder="Ej. 5" min="1">
 
             <button class="btn-gold" onclick="calcularTarifa()">Calcular Cotización C2P BDV</button>
             <div id="cotResult" style="margin-top:10px; display:none; background:#111; padding:10px; border-radius:4px;"></div>
@@ -89,8 +90,9 @@
             
             <label>Categoría a Afiliar:</label>
             <select id="kycCat">
-                <option value="moto">ZIPPY MOTO (Pasajeros / Encomiendas)</option>
+                <option value="moto">ZIPPY MOTO (Base Operativa Principal)</option>
                 <option value="auto">ZIPPY AUTO / TAXI</option>
+                <option value="escolar">ZIPPY KIDS (Transporte Escolar Seguro)</option>
                 <option value="transporte">Transporte Público / Encava</option>
                 <option value="pesado">Carga Pesada / Camiones / Gandolas</option>
             </select>
@@ -132,52 +134,57 @@
         </div>
     </div>
 
-    <!-- 4. VISTA FLOTA COMPLETA: PESADOS, MEDIANOS (NPR) Y ENCAVAS -->
+    <!-- 4. VISTA FLOTA COMPLETA: MOTOS, ZIPPY KIDS, PESADOS Y ENCAVAS -->
     <div id="viewFlota" class="section-view">
         <div class="card" style="border-color:#d4af37;">
-            <div class="card-title">🚛 Flota Multimodal & Ámbito Pesado Total</div>
-            <p style="font-size:0.78em; color:#aaa;">Registro oficial de vehículos de carga (NPR, 350, 750, Gandolas, Volteos) y Pasajeros.</p>
+            <div class="card-title">🛵 Flota Multimodal: Motos, ZIPPY Kids & Pesados</div>
+            <p style="font-size:0.78em; color:#aaa;">Registro oficial de unidades, carnet PVC con QR y control de fletes.</p>
 
             <label>Seleccione la Tipología del Vehículo:</label>
             <select id="flotaUnidad">
-                <!-- CARGA LIGERA Y MEDIANA -->
-                <option value="camion350">Camión 350 / Tritón / F-350 (Plataforma / Estacas / Cava)</option>
-                <option value="camionNpr">Camión Tipo NPR / Cargo 815 / JAC / Kodiak (Mediano 4-8 Ton)</option>
-                <option value="camion750">Camión 750 / F-600 / Pegaso (Carga Pesada Rígida)</option>
-                <option value="vans">Van / Panel Furgón (Carga Seca / Refrigerada)</option>
+                <!-- BASE PRINCIPAL -->
+                <option value="moto_app">Moto / Mototaxi / Delivery (Base Zippy)</option>
                 
-                <!-- CARGA PESADA Y AGRO-LOGÍSTICA -->
-                <option value="volquete">Volquete / Volqueta (Materiales de Construcción)</option>
-                <option value="chuto">Chuto / Cabezal Tractor (Solo o con Acople)</option>
-                <option value="gandola_batea">Gandola Batea / Plataforma (Granel / Contenedor)</option>
-                <option value="gandola_cava">Gandola Cava / Termo-King (Alimentos / Refrigerado)</option>
-                <option value="jaula">Jaula Ganadera (Transporte Pecuario - SICA/INSAI/Hierro)</option>
-                
-                <!-- PASAJEROS MASIVO -->
+                <!-- TRANSPORTE ESCOLAR ZIPPY KIDS -->
+                <option value="furgon_escolar">ZIPPY Kids - Furgoneta / Van Escolar (Control QR)</option>
+                <option value="buseta_escolar">ZIPPY Kids - Microbús / Buseta Escolar</option>
+                <option value="carro_5p">Vehículo 5 Puestos / Carrito por Puesto</option>
                 <option value="encava">Encava / Buseta (Urbano e Interurbano)</option>
                 <option value="bus">Autobús Expreso (Larga Distancia)</option>
-                <option value="carro_5p">Vehículo 5 Puestos / Carrito por Puesto</option>
+
+                <!-- CARGA LIGERA Y MEDIANA -->
+                <option value="camion350">Camión 350 / Tritón / F-350 (Plataforma / Estacas / Cava)</option>
+                <option value="camionNpr">Camión Tipo NPR / Cargo 815 / JAC / Kodiak</option>
+                <option value="camion750">Camión 750 / F-600 / Pegaso (Carga Pesada)</option>
+                <option value="vans">Van / Panel Furgón (Carga Seca)</option>
+                
+                <!-- CARGA PESADA Y AGRO-LOGÍSTICA -->
+                <option value="volquete">Volquete / Volqueta (Materiales)</option>
+                <option value="chuto">Chuto / Cabezal Tractor (Solo o con Acople)</option>
+                <option value="gandola_batea">Gandola Batea / Plataforma (Granel)</option>
+                <option value="gandola_cava">Gandola Cava / Termo-King (Refrigerado)</option>
+                <option value="jaula">Jaula Ganadera (SICA / INSAI / Hierro)</option>
             </select>
 
             <label>N° de Placa / Identificación de la Unidad:</label>
-            <input type="text" id="flotaPlaca" placeholder="Ej: Placa A12B34 / N° Control Interno">
+            <input type="text" id="flotaPlaca" placeholder="Ej: Placa A12B34 / Moto ID">
 
-            <label>N° de Guía SICA / INSAI / Registro de Hierro (si aplica):</label>
-            <input type="text" id="flotaPermiso" placeholder="Ej: SICA-2026-994821 / Hierro HR-4482">
+            <label>Permiso / Guía SICA / INSAI / Control ZIPPY Kids:</label>
+            <input type="text" id="flotaPermiso" placeholder="Ej: Carnet PVC QR Activo / SICA-2026">
 
-            <label style="margin-top:10px; color:#d4af37;">📸 Evidencia Fotográfica y Documental de la Unidad:</label>
+            <label style="margin-top:10px; color:#d4af37;">📸 Evidencia Fotográfica y Documental:</label>
             
-            <label class="btn-upload" for="fotoUnidad">📸 1. Foto de la Unidad (Vista Frontal/Lateral)</label>
+            <label class="btn-upload" for="fotoUnidad">📸 1. Foto de la Unidad / Moto</label>
             <input type="file" id="fotoUnidad" accept="image/*" style="display:none;" onchange="alertaCarga('Foto de la Unidad')">
 
-            <label class="btn-upload" for="fotoDocUnidad">📄 2. Carnet de Circulación / Título de Propiedad</label>
+            <label class="btn-upload" for="fotoDocUnidad">📄 2. Carnet de Circulación / Título</label>
             <input type="file" id="fotoDocUnidad" accept="image/*,.pdf" style="display:none;" onchange="alertaCarga('Documentación Legal')">
 
             <div class="legal-box">
-                <strong>Ámbito Pesado & Agro-Logística ZIPPY:</strong> Todas las unidades de carga pesada (NPR, 350, 750, Gandolas, Volteos) operan bajo el sistema de cobro centralizado (Escrow/Prepago), rastreo satelital de ruta y cumplimiento de normativas SICA/INSAI y Anti-Abigeato.
+                <strong>Identificación Corporativa PVC & QR (ZIPPY Kids):</strong> Cada afiliado validado recibe su carnet PVC oficial con código QR y biometría para control en ruta escolar y alcabalas.
             </div>
 
-            <button class="btn-gold" style="margin-top:15px;" onclick="alert('Unidad Pesada/Multimodal registrada con éxito en el sistema ZIPPY, C.A.')">Registrar Unidad Pesada</button>
+            <button class="btn-gold" style="margin-top:15px;" onclick="alert('Unidad y carnet PVC registrados con éxito en el sistema ZIPPY, C.A.')">Registrar Unidad</button>
         </div>
     </div>
 
@@ -193,10 +200,10 @@
         <div id="ceoDashboard" style="display:none;">
             <div class="card" style="border-color:#d4af37;">
                 <div class="card-title">🏛️ Torre de Control & Fleet Dashboard (CEO)</div>
-                <div>• Fuerza Afiliada Total: <strong id="ceoAfiliadosCount">45 Unidades (Incl. Flota NPR, Gandolas y Encavas)</strong></div>
-                <div style="margin-top:5px; margin-bottom:10px;">• Estatus Operativo: <strong style="color:#00ff00;">14 Unidades En Línea</strong></div>
+                <div>• Fuerza Afiliada Total: <strong id="ceoAfiliadosCount">58 Unidades (Motos, ZIPPY Kids, Pesados y Encavas)</strong></div>
+                <div style="margin-top:5px; margin-bottom:10px;">• Estatus Operativo: <strong style="color:#00ff00;">22 Unidades En Línea</strong></div>
                 
-                <div>• Recaudación Comisión (Hoy): <span class="stat-val">$142.00 USD</span></div>
+                <div>• Recaudación Comisión (Hoy): <span class="stat-val">$240.00 USD</span></div>
                 
                 <div style="margin-top:8px; display:flex; align-items:center;">
                     • Estado Fiscal BDV / SENIAT: <span class="status-badge">Sincronizado</span>
@@ -207,7 +214,7 @@
                 </div>
 
                 <button class="btn-gold" style="margin-top:15px;" onclick="exportarReportePDF()">Exportar Reporte Financiero (PDF)</button>
-                <button class="btn-gold" style="margin-top:8px; background-color:#222; color:#d4af37; border:1px solid #d4af37;" onclick="administrarAfiliadosKYC()">Administrar Flota Pesada & Afiliados</button>
+                <button class="btn-gold" style="margin-top:8px; background-color:#222; color:#d4af37; border:1px solid #d4af37;" onclick="administrarAfiliadosKYC()">Emitir Carnets PVC & Control ZIPPY Kids</button>
             </div>
 
             <div class="card">
@@ -272,7 +279,7 @@
     }
 
     function administrarAfiliadosKYC() {
-        alert('Accediendo al panel de administración de Flota Pesada (NPR, 350, Gandolas, Volteos, Encavas).');
+        alert('Accediendo al módulo de emisión de Carnets PVC y Control QR ZIPPY Kids.');
     }
 
     function toggleGPS() {
@@ -302,6 +309,7 @@
         let extra = 0.50;
 
         if(cat === 'auto') { base = 5.00; extra = 0.80; }
+        else if(cat === 'escolar') { base = 10.00; extra = 1.00; }
         else if(cat === 'npr') { base = 25.00; extra = 1.50; }
         else if(cat === 'gandola') { base = 60.00; extra = 3.00; }
         else if(cat === 'autobus') { base = 15.00; extra = 2.00; }

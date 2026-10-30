@@ -42,15 +42,15 @@
         <button id="tab5" onclick="switchTab('ceo')">Panel CEO</button>
     </div>
 
-    <!-- 1. VISTA COTIZADOR URBANO CON RECARGOS 40% Y 140% -->
+    <!-- 1. VISTA COTIZADOR URBANO CON REGLA 80/20 Y RECARGOS -->
     <div id="viewCliente" class="section-view active">
         <div class="card">
-            <div class="card-title">🤖 Cotizador con Recargos (40% Nocturno / 140% Trasnocho)</div>
-            <p style="font-size:0.78em; color:#aaa;">Calcula servicios urbanos, pasajes (10%) y fletes (20%).</p>
+            <div class="card-title">🤖 Cotizador Multimodal (Moto 80/20 & Recargos)</div>
+            <p style="font-size:0.78em; color:#aaa;">Mototaxis (80% Conductor / 20% ZIPPY), Pasajes (10%) y Carga (20%).</p>
             
             <label>Seleccione el Servicio:</label>
             <select id="cotCategoria" onchange="cambiarModoCotizacion()">
-                <option value="moto">ZIPPY Moto - Mototaxi / Encomienda ($3.00 Base)</option>
+                <option value="moto">ZIPPY Moto - Mototaxi / Encomienda ($3.00 Base - 80/20)</option>
                 <option value="auto">ZIPPY CAR - Taxi / Carrera Urbana ($5.00 Base)</option>
                 <option value="escolar">ZIPPY KIDS - Escolar Seguro ($30 Afiliación)</option>
                 <option value="autobus">Autobús / Encava (Pasaje - Comisión 10%)</option>
@@ -131,7 +131,7 @@
     <div id="viewWallet" class="section-view">
         <div class="card">
             <div class="card-title">💳 Wallets de Conductores y Flotas</div>
-            <p style="font-size:0.78em; color:#aaa;">Saldos líquidos (Motos/Taxis 100% con recargo, Autobuses 90%, Carga 80%).</p>
+            <p style="font-size:0.78em; color:#aaa;">Saldos líquidos (Motos 80%, Autobuses 90%, Carga 80%).</p>
             
             <div>Saldo Disponible en Wallet:</div>
             <div class="stat-val">$1,850.00 USD</div>
@@ -284,7 +284,7 @@
         if(cat === 'moto') {
             let km = parseFloat(document.getElementById('cotKm').value) || 1;
             subtotal = 3.00 + ((km - 1) * 0.50);
-            tipoServicio = "ZIPPY Moto / Encomienda";
+            tipoServicio = "ZIPPY Moto / Encomienda (80/20)";
         } else if(cat === 'auto') {
             let km = parseFloat(document.getElementById('cotKm').value) || 1;
             subtotal = 5.00 + ((km - 1) * 0.80);
@@ -307,16 +307,24 @@
             tipoServicio = "Carga Pesada / Gandola (Comisión 20%)";
         }
 
-        // Aplicar recargo nocturno (40%) o trasnocho (140%) a servicios urbanos (motos, taxis, escolar)
+        // Aplicar recargo nocturno (40%) o trasnocho (140%) a servicios urbanos
         if(cat === 'moto' || cat === 'auto' || cat === 'escolar') {
             if(horario === 'nocturno') {
                 subtotal = subtotal * 1.40; // Recargo 40%
                 recargoTexto = "Recargo Nocturno (+40%)";
             } else if(horario === 'trasnocho') {
-                subtotal = subtotal * 2.40; // Recargo 140% (Base + 140%)
+                subtotal = subtotal * 2.40; // Recargo 140%
                 recargoTexto = "Recargo Trasnochado / Madrugada (+140%)";
             }
-            netoTransportista = subtotal; // 100% para el conductor urbano
+
+            // Aplicar regla 80/20 específica para ZIPPY Moto; para autos/escolar se mantiene el estándar
+            if(cat === 'moto') {
+                netoTransportista = subtotal * 0.80; // 80% para el motorizado
+                comisionZippy = subtotal * 0.20;     // 20% para la empresa
+            } else {
+                netoTransportista = subtotal;        // 100% para conductor urbano (taxis)
+                comisionZippy = 0;
+            }
         }
 
         let res = document.getElementById('cotResult');

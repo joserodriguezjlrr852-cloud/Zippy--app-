@@ -29,7 +29,7 @@
 
 <div class="container">
     <h2>ZIPPY, C.A.</h2>
-    <div class="subtitle">Plataforma Multimodal • Calabozo, Estado Guárico</div>
+    <div class="subtitle">Plataforma Multimodal • Venezuela</div>
 
     <!-- Navegación de Pestañas -->
     <div class="nav-tabs">
@@ -62,7 +62,7 @@
     <!-- 2. VISTA CONDUCTOR -->
     <div id="viewConductor" class="section-view">
         <div class="card">
-            <div class="card-title">🚘 Consola Conductor - Flota Calabozo</div>
+            <div class="card-title">🚘 Consola Conductor - Flota Nacional</div>
             <div>Estatus GPS: <strong id="gpsStatus" style="color:#ff4444;">Fuera de Servicio</strong></div>
             <button class="btn-gold" id="btnGps" onclick="toggleGPS()">Ponerse EN LÍNEA</button>
         </div>
@@ -75,11 +75,11 @@
         </div>
     </div>
 
-    <!-- 3. VISTA REGISTRO KYC -->
+    <!-- 3. VISTA REGISTRO KYC CON PAGO MÓVIL -->
     <div id="viewKYC" class="section-view">
         <div class="card">
             <div class="card-title">📝 Afiliación y Expediente KYC (Seguridad Total)</div>
-            <p style="font-size:0.78em; color:#aaa; margin-bottom:6px;">Complete sus datos, prueba de fe y vida biométrica, documentos y fotos perimetrales.</p>
+            <p style="font-size:0.78em; color:#aaa; margin-bottom:6px;">Complete sus datos, datos bancarios, biometría, documentos y fotos perimetrales.</p>
             
             <label>Categoría a Afiliar:</label>
             <select id="kycCat">
@@ -95,6 +95,27 @@
 
             <label>Teléfono WhatsApp:</label>
             <input type="text" id="kycTlf" placeholder="Ej: 0426-4343732">
+
+            <!-- NUEVO: DATOS DE PAGO MÓVIL DEL AFILIADO -->
+            <div style="background:#111; padding:10px; border-radius:5px; border:1px solid #d4af37; margin-top:10px;">
+                <div style="color:#d4af37; font-weight:bold; font-size:0.85em; margin-bottom:5px;">🏦 Datos Bancarios para Pago Móvil (Liquidación 80%)</div>
+                
+                <label>Banco Afiliado:</label>
+                <select id="pmBanco">
+                    <option value="0102">0102 - Banco de Venezuela (BDV)</option>
+                    <option value="0105">0105 - Banco Mercantil</option>
+                    <option value="0108">0108 - Banco Provincial</option>
+                    <option value="0134">0134 - Banesco</option>
+                    <option value="0115">0115 - Banco Exterior</option>
+                    <option value="0191">0191 - BNC</option>
+                </select>
+
+                <label>Cédula Titular Pago Móvil:</label>
+                <input type="text" id="pmCedula" placeholder="Ej: V-19476093">
+
+                <label>Teléfono Pago Móvil:</label>
+                <input type="text" id="pmTlf" placeholder="Ej: 0412-1234567">
+            </div>
 
             <!-- BLOQUE DE PRUEBA DE FE Y VIDA -->
             <label style="margin-top:10px; color:#d4af37;">👤 Prueba de Fe y Vida (Biometría):</label>
@@ -125,7 +146,7 @@
             <label class="btn-upload" for="fotoTrasera">📷 4. Foto Parte Trasera</label>
             <input type="file" id="fotoTrasera" accept="image/*" style="display:none;" onchange="alertaCarga('Parte Trasera')">
 
-            <button class="btn-gold" style="margin-top:15px;" onclick="alert('Expediente KYC con Fe y Vida y perimetrales enviado al CEO ($60 USD Kit).')">Enviar Solicitud de Registro</button>
+            <button class="btn-gold" style="margin-top:15px;" onclick="alert('Expediente KYC, datos de Pago Móvil y perimetrales enviados al CEO ($60 USD Kit).')">Enviar Solicitud de Registro</button>
         </div>
     </div>
 
@@ -143,7 +164,7 @@
         <div id="ceoDashboard" style="display:none;">
             <div class="card" style="border-color:#d4af37;">
                 <div class="card-title">🏛️ Torre de Control & Back-Office (CEO)</div>
-                <div>• Flota Activa Calabozo: <strong>14 Unidades (10 Motos / 4 Autos)</strong></div>
+                <div>• Flota Activa Nacional: <strong>14 Unidades (10 Motos / 4 Autos)</strong></div>
                 <div>• Recaudación Comisión 20%: <span class="stat-val">$142.00 USD</span></div>
                 <div>• Estado Fiscal BDV / SENIAT: <strong style="color:#00ff00;">Sincronizado</strong></div>
                 <button class="btn-gold" onclick="alert('Generando reporte financiero consolidado...')">Exportar Reporte Financiero</button>
@@ -163,7 +184,6 @@
 </div>
 
 <script>
-    // Claves Master autorizadas (Acepta tanto 1947 como tu cédula completa 19476093)
     const CLAVES_VALIDAS = ["1947", "19476093"]; 
 
     function switchTab(tab) {

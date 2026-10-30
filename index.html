@@ -3,176 +3,150 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ZIPPY, C.A. - Plataforma Multimodal</title>
+    <title>ZIPPY, C.A. - Cotizador Oficial</title>
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; }
-        body { background-color: #0a0a0a; color: #ffffff; min-height: 100vh; padding: 15px; display: flex; flex-direction: column; align-items: center; justify-content: space-between; }
-        .container { width: 100%; max-width: 480px; }
-        header { text-align: center; margin: 20px 0; }
-        header h1 { color: #d4af37; font-size: 2.2rem; font-weight: 800; letter-spacing: 1px; }
-        header p { color: #aaaaaa; font-size: 0.85rem; margin-top: 5px; }
-        .card { background-color: #141414; border: 1px solid #2a2a2a; border-radius: 12px; padding: 20px; margin-bottom: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.5); }
-        .card-title { color: #d4af37; font-size: 1.1rem; margin-bottom: 15px; font-weight: bold; border-bottom: 1px solid #2a2a2a; padding-bottom: 8px; }
-        label { display: block; font-size: 0.85rem; color: #aaaaaa; margin-bottom: 6px; }
-        input, select { width: 100%; padding: 12px; background-color: #1e1e1e; border: 1px solid #2a2a2a; border-radius: 8px; color: #ffffff; font-size: 0.95rem; margin-bottom: 15px; outline: none; }
-        input:focus, select:focus { border-color: #d4af37; }
-        .btn-gold { width: 100%; background-color: #d4af37; color: #0a0a0a; font-weight: bold; font-size: 1rem; padding: 13px; border: none; border-radius: 8px; cursor: pointer; margin-top: 5px; }
-        .btn-gold:hover { background-color: #f3e5ab; }
-        .btn-outline { width: 100%; background-color: transparent; color: #d4af37; font-weight: bold; font-size: 0.9rem; padding: 11px; border: 1px solid #d4af37; border-radius: 8px; cursor: pointer; margin-top: 10px; }
-        .info-box { background-color: #1e1e1e; border-left: 3px solid #d4af37; padding: 12px; font-size: 0.85rem; color: #aaaaaa; margin-bottom: 15px; line-height: 1.4; }
-        .view-section { display: none; }
-        .view-section.active { display: block; }
-        .toggle-status { display: flex; align-items: center; justify-content: space-between; background-color: #1e1e1e; padding: 12px; border-radius: 8px; margin-bottom: 15px; }
-        .status-dot { height: 12px; width: 12px; background-color: #666; border-radius: 50%; display: inline-block; }
-        .status-dot.online { background-color: #28a745; box-shadow: 0 0 8px #28a745; }
-        footer { text-align: center; margin-top: 20px; font-size: 0.75rem; color: #aaaaaa; }
+        body {
+            background-color: #121212;
+            color: #e0e0e0;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 15px;
+        }
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            background: #1a1a1a;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #d4af37;
+        }
+        h2 {
+            color: #d4af37;
+            text-align: center;
+            font-size: 1.4em;
+        }
+        .info-box {
+            background-color: #222;
+            border-left: 4px solid #d4af37;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 4px;
+            font-size: 0.85em;
+            line-height: 1.4;
+        }
+        label {
+            font-size: 0.9em;
+            color: #d4af37;
+            display: block;
+            margin-bottom: 5px;
+        }
+        select, input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            background: #2a2a2a;
+            border: 1px solid #444;
+            color: #fff;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            width: 100%;
+            background-color: #d4af37;
+            color: #121212;
+            padding: 12px;
+            border: none;
+            font-weight: bold;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1em;
+        }
+        button:hover {
+            background-color: #c19b2e;
+        }
+        #resultado {
+            margin-top: 20px;
+            background: #222;
+            padding: 15px;
+            border-radius: 4px;
+            border: 1px solid #444;
+            font-size: 0.9em;
+            display: none;
+        }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <header>
-            <h1>ZIPPY, C.A.</h1>
-            <p>Plataforma Multimodal • Venezuela</p>
-        </header>
+<div class="container">
+    <h2>ZIPPY, C.A.</h2>
+    <p style="text-align: center; font-size: 0.8em; color: #aaa;">Plataforma Multimodal • Calabozo</p>
 
-        <!-- VISTA 1: INICIO -->
-        <div id="view-inicio" class="view-section active">
-            <div class="card" style="text-align: center; padding: 25px 20px;">
-                <h2 style="color: #d4af37; margin-bottom: 10px; font-size: 1.3rem;">Bienvenido a Zippy</h2>
-                <p style="color: #aaaaaa; margin-bottom: 20px; font-size: 0.85rem;">Seleccione el módulo al que desea ingresar:</p>
-                <button class="btn-gold" onclick="cambiarVista('cliente')">📱 Pedir Viaje / Encomienda</button>
-                <button class="btn-outline" onclick="pedirClaveAdmin()">🏛️ Acceso Administrativo (CEO)</button>
-            </div>
-        </div>
-
-        <!-- VISTA 2: CLIENTE -->
-        <div id="view-cliente" class="view-section">
-            <div class="card">
-                <div class="card-title">🛵 Solicitar Servicio</div>
-                <div class="info-box">Cálculo según Pliego v2.0: Base + Km Extra + Recargo de Turno (Nocturno +40% / Trasnochado +140%).</div>
-                
-                <label>Categoría</label>
-                <select id="clienteCat">
-                    <option value="MOTO">ZIPPY MOTO (Pasajeros / Encomiendas)</option>
-                    <option value="AUTO">ZIPPY AUTO / TAXI</option>
-                </select>
-
-                <label>Distancia estimada (Kilómetros)</label>
-                <input type="number" id="clienteKm" value="4" min="1" step="0.5">
-
-                <button class="btn-gold" onclick="calcularViaje()">Calcular Cotización Pliego v2.0</button>
-                <button class="btn-outline" onclick="cambiarVista('inicio')">⬅ Volver al Inicio</button>
-            </div>
-        </div>
-
-        <!-- VISTA 3: PANEL ADMIN -->
-        <div id="view-admin" class="view-section">
-            <div class="card">
-                <div class="card-title">🏛️ Torre de Control (CEO)</div>
-                <div class="info-box">
-                    • Flota Activa: <strong>14 Unidades</strong><br>
-                    • Comisión 80/20: <strong>$142.00 USD</strong><br>
-                    • Sincronización Tasa BCV: <strong>Activa</strong>
-                </div>
-                <button class="btn-gold" onclick="alert('Reporte financiero exportado con éxito.')">Exportar Reporte Financiero</button>
-            </div>
-
-            <div class="card">
-                <div class="card-title">🚘 Estatus Conductor / GPS</div>
-                <div class="toggle-status">
-                    <span>Estatus: <strong id="adminStatusText">Fuera de Servicio</strong></span>
-                    <span id="adminStatusDot" class="status-dot"></span>
-                </div>
-                <button class="btn-gold" id="btnAdminToggle" onclick="toggleAdminGPS()">Ponerse EN LÍNEA</button>
-            </div>
-
-            <div class="card">
-                <div class="card-title">💳 ZIPPY Wallet (80% Líquido)</div>
-                <p style="font-size: 0.85rem; color: #aaaaaa;">Saldo disponible para retiro:</p>
-                <h2 style="color: #d4af37; margin: 8px 0;">$58.00 USD</h2>
-                <button class="btn-gold" onclick="alert('Solicitud de Pago Móvil BDV procesada.')">Retirar vía Pago Móvil</button>
-            </div>
-
-            <button class="btn-outline" onclick="cambiarVista('inicio')">🔒 Cerrar Sesión Segura</button>
-        </div>
+    <div class="info-box">
+        <strong>Pliego v2.0:</strong><br>
+        • <strong>Turno Diurno (06:00 - 18:59):</strong> 0% recargo<br>
+        • <strong>Turno Nocturno (19:00 - 22:59):</strong> +40% recargo<br>
+        • <strong>Turno Trasnochado (23:00 - 05:59):</strong> +140% recargo
     </div>
 
-    <footer>
-        &copy; 2026 ZIPPY, C.A. • CEO: José Luis Rodríguez Rivero<br>Todos los derechos reservados.
-    </footer>
+    <label for="categoria">Categoría de Servicio:</label>
+    <select id="categoria">
+        <option value="moto">ZIPPY MOTO (Base: $3.00 | Km extra: $0.50)</option>
+        <option value="auto">ZIPPY CAR (Base: $5.00 | Km extra: $0.80)</option>
+    </select>
 
-    <script>
-        function cambiarVista(vista) {
-            document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
-            document.getElementById('view-' + vista).classList.add('active');
-        }
+    <label for="distancia">Distancia estimada (Kilómetros):</label>
+    <input type="number" id="distancia" placeholder="Ej. 4" step="0.1" min="1">
 
-        function pedirClaveAdmin() {
-            let clave = prompt("Ingrese clave de seguridad administrativa (CEO):");
-            if (clave === "1947" || clave === "zippy2026") {
-                cambiarVista('admin');
-            } else if (clave !== null) {
-                alert("Clave incorrecta.");
-            }
-        }
+    <button onclick="calcularTarifa()">Calcular Cotización Pliego v2.0</button>
 
-        function calcularViaje() {
-            const cat = document.getElementById('clienteCat').value;
-            const km = parseFloat(document.getElementById('clienteKm').value);
-            
-            // 1. Parámetros Base Invariables (Primeros 3 km)
-            let base = cat === 'MOTO' ? 3.00 : 5.00;
-            let adicionalKm = cat === 'MOTO' ? 0.50 : 0.80;
-            let subtotal = base;
+    <div id="resultado"></div>
+</div>
 
-            // Recálculo de km extra según la matriz del pliego si supera los 3 km
-            const horaActual = new Date().getHours(); 
-            let porcentajeRecargo = 0;
-            let conceptoHorario = "Turno 1 (Diurno - 0%)";
+<script>
+function calcularTarifa() {
+    let tipo = document.getElementById('categoria').value;
+    let km = parseFloat(document.getElementById('distancia').value);
+    
+    if (isNaN(km) || km <= 0) {
+        alert("Por favor, introduce una distancia válida en kilómetros.");
+        return;
+    }
 
-            // Definición estricta de franjas horarias del Pliego v2.0
-            if (horaActual >= 19 && horaActual < 23) { 
-                // Turno 2: Nocturno (07:00 p.m. – 10:59 p.m.) -> +40% y km extra ajustado
-                porcentajeRecargo = 0.40; 
-                adicionalKm = cat === 'MOTO' ? 0.70 : 1.12;
-                conceptoHorario = "Turno 2 (Nocturno +40%)";
-            } else if (horaActual >= 23 || horaActual < 6) {
-                // Turno 3: Trasnochado (11:00 p.m. – 05:59 a.m.) -> +140% y km extra ajustado
-                porcentajeRecargo = 1.40; 
-                adicionalKm = cat === 'MOTO' ? 1.20 : 1.92;
-                conceptoHorario = "Turno 3 (Trasnochado +140%)";
-            }
+    let base = tipo === 'moto' ? 3.00 : 5.00;
+    let extraKm = tipo === 'moto' ? 0.50 : 0.80;
+    let subtotal = base;
 
-            // Aplicación del cálculo de distancia
-            if (km > 3) {
-                subtotal += (km - 3) * adicionalKm;
-            }
+    if (km > 3) {
+        subtotal += (km - 3) * extraKm;
+    }
 
-            // Aplicación del multiplicador general de turno sobre el valor calculado del servicio
-            let totalFinal = subtotal * (1 + porcentajeRecargo);
+    // Hora actual del dispositivo para determinar el turno
+    let hora = new Date().getHours();
+    let recargo = 0;
+    let turnoNombre = "Turno 1: Diurno (06:00 - 18:59)";
 
-            alert(`ZIPPY COTIZACIÓN PLIEGO v2.0:\n\n• Servicio: ZIPPY ${cat}\n• Distancia: ${km} km\n• Turno Activo: ${conceptoHorario}\n\nTOTAL A CANCELAR: $${totalFinal.toFixed(2)} USD\n\n(Equivalente en Bs. según tasa oficial BCV)\nIniciando despacho automático IA...`);
-        }
+    if (hora >= 19 && hora < 23) {
+        recargo = 0.40;
+        turnoNombre = "Turno 2: Nocturno (+40%)";
+    } else if (hora >= 23 || hora < 6) {
+        recargo = 1.40;
+        turnoNombre = "Turno 3: Trasnochado (+140%)";
+    }
 
-        let adminOnline = false;
-        function toggleAdminGPS() {
-            adminOnline = !adminOnline;
-            const txt = document.getElementById('adminStatusText');
-            const dot = document.getElementById('adminStatusDot');
-            const btn = document.getElementById('btnAdminToggle');
-            if (adminOnline) {
-                txt.innerText = 'EN LÍNEA (GPS Activo)';
-                txt.style.color = '#28a745';
-                dot.classList.add('online');
-                btn.innerText = 'Ponerse FUERA DE SERVICIO';
-            } else {
-                txt.innerText = 'Fuera de Servicio';
-                txt.style.color = '#ffffff';
-                dot.classList.remove('online');
-                btn.innerText = 'Ponerse EN LÍNEA';
-            }
-        }
-    </script>
+    let total = subtotal * (1 + recargo);
+
+    let resDiv = document.getElementById('resultado');
+    resDiv.style.display = 'block';
+    resDiv.innerHTML = `
+        <strong>📊 Desglose de Tarifa:</strong><br>
+        • <strong>Distancia:</strong> ${km} km<br>
+        • <strong>Franja:</strong> ${turnoNombre}<br>
+        • <strong>Subtotal base/km:</strong> $${subtotal.toFixed(2)}<br>
+        <hr style="border:0; border-top:1px solid #444; margin:8px 0;">
+        • <strong style="color: #d4af37; font-size: 1.1em;">Total a Cancelar: $${total.toFixed(2)} USD</strong>
+    `;
+}
+</script>
+
 </body>
 </html>

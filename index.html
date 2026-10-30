@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ZIPPY, C.A. - Torre de Control & Agro-Logística</title>
+    <title>ZIPPY, C.A. - Torre de Control & Flota Pesada</title>
     <style>
         body { background-color: #121212; color: #e0e0e0; font-family: Arial, sans-serif; margin: 0; padding: 15px; }
         .container { max-width: 420px; margin: 0 auto; background: #1a1a1a; padding: 20px; border-radius: 8px; border: 1px solid #d4af37; }
         h2 { color: #d4af37; text-align: center; margin-bottom: 2px; font-size: 1.5em; }
         .subtitle { text-align: center; font-size: 0.8em; color: #aaa; margin-bottom: 15px; }
         .nav-tabs { display: flex; justify-content: space-between; margin-bottom: 15px; border-bottom: 1px solid #333; padding-bottom: 10px; }
-        .nav-tabs button { background: #222; color: #aaa; border: 1px solid #444; padding: 6px 2px; border-radius: 4px; font-size: 0.7em; flex: 1; margin: 0 1px; cursor: pointer; }
+        .nav-tabs button { background: #222; color: #aaa; border: 1px solid #444; padding: 6px 2px; border-radius: 4px; font-size: 0.65em; flex: 1; margin: 0 1px; cursor: pointer; }
         .nav-tabs button.active { background-color: #d4af37; color: #121212; font-weight: bold; border-color: #d4af37; }
         .section-view { display: none; }
         .section-view.active { display: block; }
@@ -38,7 +38,7 @@
         <button id="tab1" class="active" onclick="switchTab('cliente')">Cotizador</button>
         <button id="tab2" onclick="switchTab('conductor')">Conductor</button>
         <button id="tab3" onclick="switchTab('kyc')">Registro</button>
-        <button id="tab4" onclick="switchTab('agro')">Agro-Carga</button>
+        <button id="tab4" onclick="switchTab('agro')">Carga Pesada</button>
         <button id="tab5" onclick="switchTab('ceo')">Panel CEO</button>
     </div>
 
@@ -127,39 +127,42 @@
         </div>
     </div>
 
-    <!-- 4. VISTA MÓDULO CARGA PESADA Y AGRO-LOGÍSTICA (ANTI-ABIGEATO) -->
+    <!-- 4. VISTA MÓDULO CARGA PESADA, AGRO-LOGÍSTICA Y ANTI-ABIGEATO -->
     <div id="viewAgro" class="section-view">
         <div class="card" style="border-color:#d4af37;">
-            <div class="card-title">🚛 Carga Pesada & Agro-Logística (SICA / INSAI)</div>
-            <p style="font-size:0.78em; color:#aaa;">Control obligatorio para chutos, bateas, volquetes y jaulas ganaderas.</p>
+            <div class="card-title">🚛 Flota Pesada & Agro-Logística (SICA / INSAI)</div>
+            <p style="font-size:0.78em; color:#aaa;">Registro oficial para transporte pesado, fletes y control anti-abigeato.</p>
 
-            <label>Tipo de Unidad Pesada:</label>
+            <label>Seleccione el Tipo de Vehículo / Carga Pesada:</label>
             <select id="agroUnidad">
-                <option value="jaula">Jaula Ganadera (Transporte Animal)</option>
-                <option value="cava">Cava / Furgón de Carga</option>
-                <option value="batea">Batea / Plataforma</option>
-                <option value="volquete">Volquete / Volqueta</option>
+                <option value="camion350">Camión 350 (Plataforma / Estacas)</option>
+                <option value="camion750">Camión 750 (Mediana / Pesada)</option>
+                <option value="vans">Van / Furgón de Carga</option>
+                <option value="volquete">Volquete / Volqueta (Materiales)</option>
+                <option value="chuto">Chuto (Cabezal Tractor)</option>
+                <option value="gandola">Gandola (Batea / Plataforma / Cava)</option>
+                <option value="jaula">Jaula Ganadera (Transporte Pecuario)</option>
             </select>
 
             <label>N° de Guía SICA / INSAI:</label>
             <input type="text" id="agroGuia" placeholder="Ej: SICA-2026-994821">
 
-            <label>N° de Registro de Hierro de Herrar:</label>
+            <label>N° de Registro de Hierro de Herrar (si aplica):</label>
             <input type="text" id="agroHierro" placeholder="Ej: HR-4482-Guárico">
 
-            <label style="margin-top:10px; color:#d4af37;">📸 Evidencia Fotográfica de Embarque (Anti-Abigeato):</label>
+            <label style="margin-top:10px; color:#d4af37;">📸 Evidencia Fotográfica y Documental:</label>
             
-            <label class="btn-upload" for="fotoLote">📸 1. Foto del Lote / Carga en Corral o Rampa</label>
-            <input type="file" id="fotoLote" accept="image/*" style="display:none;" onchange="alertaCarga('Foto del Lote de Carga')">
+            <label class="btn-upload" for="fotoLote">📸 1. Foto de la Unidad y Carga / Corral</label>
+            <input type="file" id="fotoLote" accept="image/*" style="display:none;" onchange="alertaCarga('Foto de Unidad y Carga')">
 
-            <label class="btn-upload" for="fotoDocHierro">📄 2. Foto del Documento del Hierro / SICA</label>
-            <input type="file" id="fotoDocHierro" accept="image/*,.pdf" style="display:none;" onchange="alertaCarga('Documento SICA / Hierro')">
+            <label class="btn-upload" for="fotoDocHierro">📄 2. Guía SICA / INSAI / Título del Chuto</label>
+            <input type="file" id="fotoDocHierro" accept="image/*,.pdf" style="display:none;" onchange="alertaCarga('Documentación Legal de Carga')">
 
             <div class="legal-box">
-                <strong>Normativa Anti-Abigeato & GPS:</strong> El operador acepta que cualquier desvío de ruta no autorizado o manipulación del GPS activará la alerta roja central y los protocolos de seguridad vial. Cobro 100% centralizado en prepago (Escrow).
+                <strong>Normativa de Carga & Anti-Abigeato:</strong> El operador de unidades 350, 750, Vans, Volquetes, Gandolas y Chutos acepta el monitoreo GPS satelital, la prohibición de desvíos de ruta y el sistema de cobro centralizado Escrow/Prepago.
             </div>
 
-            <button class="btn-gold" style="margin-top:15px;" onclick="alert('Pase Digital de Carga con QR Cifrado y Expediente Anti-Abigeato generado con éxito.')">Generar Pase Digital de Carga</button>
+            <button class="btn-gold" style="margin-top:15px;" onclick="alert('Pase Digital de Carga Pesada con QR Cifrado generado con éxito.')">Generar Pase Digital de Carga</button>
         </div>
     </div>
 
@@ -175,7 +178,7 @@
         <div id="ceoDashboard" style="display:none;">
             <div class="card" style="border-color:#d4af37;">
                 <div class="card-title">🏛️ Torre de Control & Fleet Dashboard (CEO)</div>
-                <div>• Fuerza Afiliada Total: <strong id="ceoAfiliadosCount">45 Unidades (Incl. Carga Pesada)</strong></div>
+                <div>• Fuerza Afiliada Total: <strong id="ceoAfiliadosCount">45 Unidades (Incl. Flota 350/750/Gandolas)</strong></div>
                 <div style="margin-top:5px; margin-bottom:10px;">• Estatus Operativo: <strong style="color:#00ff00;">14 Unidades En Línea</strong></div>
                 
                 <div>• Recaudación Comisión 20% (Hoy): <span class="stat-val">$142.00 USD</span></div>
@@ -189,7 +192,7 @@
                 </div>
 
                 <button class="btn-gold" style="margin-top:15px;" onclick="exportarReportePDF()">Exportar Reporte Financiero (PDF)</button>
-                <button class="btn-gold" style="margin-top:8px; background-color:#222; color:#d4af37; border:1px solid #d4af37;" onclick="administrarAfiliadosKYC()">Administrar Afiliados & Carga</button>
+                <button class="btn-gold" style="margin-top:8px; background-color:#222; color:#d4af37; border:1px solid #d4af37;" onclick="administrarAfiliadosKYC()">Administrar Afiliados & Flota Pesada</button>
             </div>
 
             <div class="card">
@@ -254,7 +257,7 @@
     }
 
     function administrarAfiliadosKYC() {
-        alert('Accediendo al panel de administración de Afiliados, Expedientes KYC y Guías SICA/INSAI.');
+        alert('Accediendo al panel de administración de Afiliados y Flota Pesada (350, 750, Gandolas, Chutos).');
     }
 
     function toggleGPS() {

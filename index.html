@@ -17,8 +17,9 @@
         .card { background: #222; border: 1px solid #333; border-radius: 6px; padding: 12px; margin-bottom: 12px; font-size: 0.88em; }
         .card-title { color: #d4af37; font-weight: bold; border-bottom: 1px solid #333; padding-bottom: 5px; margin-bottom: 8px; }
         label { color: #d4af37; font-size: 0.85em; display: block; margin-top: 8px; }
-        input, select { width: 100%; padding: 10px; margin-top: 4px; background: #2a2a2a; border: 1px solid #444; color: #fff; border-radius: 4px; box-sizing: border-box; }
+        input, select, textarea { width: 100%; padding: 10px; margin-top: 4px; background: #2a2a2a; border: 1px solid #444; color: #fff; border-radius: 4px; box-sizing: border-box; }
         .btn-gold { width: 100%; background-color: #d4af37; color: #121212; padding: 12px; border: none; font-weight: bold; border-radius: 4px; cursor: pointer; margin-top: 10px; font-size: 0.95em; }
+        .btn-upload { width: 100%; background-color: #222; color: #d4af37; border: 1px dashed #d4af37; padding: 8px; font-weight: bold; border-radius: 4px; cursor: pointer; margin-top: 5px; font-size: 0.8em; text-align: center; display: block; box-sizing: border-box; }
         .btn-danger { width: 100%; background-color: #8b0000; color: #fff; padding: 10px; border: none; font-weight: bold; border-radius: 4px; cursor: pointer; margin-top: 8px; }
         .stat-val { font-size: 1.3em; color: #d4af37; font-weight: bold; }
         .footer-text { text-align: center; font-size: 0.75em; color: #777; margin-top: 20px; }
@@ -32,22 +33,22 @@
 
     <!-- Navegación de Pestañas -->
     <div class="nav-tabs">
-        <button id="tab1" class="active" onclick="switchTab('cliente')">📱 Cotizador</button>
-        <button id="tab2" onclick="switchTab('conductor')">🛵 Conductor</button>
-        <button id="tab3" onclick="switchTab('kyc')">📝 Registro</button>
-        <button id="tab4" onclick="switchTab('ceo')">🏛️ Panel CEO</button>
+        <button id="tab1" class="active" onclick="switchTab('cliente')">Cotizador</button>
+        <button id="tab2" onclick="switchTab('conductor')">Conductor</button>
+        <button id="tab3" onclick="switchTab('kyc')">Registro</button>
+        <button id="tab4" onclick="switchTab('ceo')">Panel CEO</button>
     </div>
 
     <!-- 1. VISTA CLIENTE / COTIZADOR -->
     <div id="viewCliente" class="section-view active">
         <div class="card">
             <div class="card-title">🤖 Bot Cotizador y Despacho GPS</div>
-            <p style="font-size:0.8em; color:#aaa;">Cálculo automático de tarifa según distancia y turno oficial.</p>
+            <p style="font-size:0.8em; color:#aaa;">Cálculo automático de tarifa para Pasajeros y Encomiendas según distancia y turno oficial.</p>
             
-            <label>Categoría:</label>
+            <label>Seleccione el Servicio:</label>
             <select id="cotCategoria">
-                <option value="moto">ZIPPY MOTO ($3.00 Base / $0.50 Km)</option>
-                <option value="auto">ZIPPY CAR ($5.00 Base / $0.80 Km)</option>
+                <option value="moto">ZIPPY MOTO - Pasajeros / Encomienda Ligera ($3.00 Base / $0.50 Km)</option>
+                <option value="auto">ZIPPY CAR - Taxi / Encomienda Mediana ($5.00 Base / $0.80 Km)</option>
             </select>
 
             <label>Distancia estimada (Km):</label>
@@ -67,24 +68,64 @@
         </div>
 
         <div class="card">
-            <div class="card-title">💳 ZIPPY Wallet (80% Conductor)</div>
-            <div>Saldo disponible del día:</div>
-            <div class="stat-val">$42.50 USD</div>
-            <button class="btn-gold" style="background:#2a2a2a; color:#d4af37; border:1px solid #d4af37;" onclick="alert('Solicitud enviada a la administración.')">Solicitar Retiro a Pago Móvil</button>
+            <div class="card-title">💳 ZIPPY Wallet (80% Líquido)</div>
+            <div>Saldo disponible para retiro:</div>
+            <div class="stat-val">$58.00 USD</div>
+            <button class="btn-gold" onclick="alert('Solicitud de retiro a Pago Móvil enviada con éxito.')">Retirar vía Pago Móvil</button>
         </div>
     </div>
 
-    <!-- 3. VISTA REGISTRO KYC -->
+    <!-- 3. VISTA REGISTRO KYC (BIOMETRÍA, DOCUMENTOS Y VEHÍCULO) -->
     <div id="viewKYC" class="section-view">
         <div class="card">
-            <div class="card-title">📝 Afiliación y Expediente KYC</div>
+            <div class="card-title">📝 Afiliación y Expediente KYC (Seguridad Total)</div>
+            <p style="font-size:0.78em; color:#aaa; margin-bottom:6px;">Complete sus datos, prueba de fe y vida biométrica, documentos y fotos perimetrales.</p>
+            
+            <label>Categoría a Afiliar:</label>
+            <select id="kycCat">
+                <option value="moto">ZIPPY MOTO (Pasajeros / Encomiendas)</option>
+                <option value="auto">ZIPPY AUTO / TAXI</option>
+            </select>
+
             <label>Nombre y Apellido:</label>
-            <input type="text" placeholder="Ej: José Rodríguez">
+            <input type="text" id="kycNombre" placeholder="Ej: José Rodríguez">
+
             <label>Cédula de Identidad:</label>
-            <input type="text" placeholder="Ej: V-19476093">
+            <input type="text" id="kycCedula" placeholder="Ej: V-19476093">
+
             <label>Teléfono WhatsApp:</label>
-            <input type="text" placeholder="Ej: 0426-4343732">
-            <button class="btn-gold" onclick="alert('Registro enviado a revisión del CEO.')">Enviar para Verificación ($60 USD Kit)</button>
+            <input type="text" id="kycTlf" placeholder="Ej: 0426-4343732">
+
+            <!-- BLOQUE DE PRUEBA DE FE Y VIDA -->
+            <label style="margin-top:10px; color:#d4af37;">👤 Prueba de Fe y Vida (Biometría):</label>
+            <label class="btn-upload" for="fotoFeVida" style="background:#2a2200; border-color:#d4af37;">🤳 Tomar Selfie con Cédula en Mano</label>
+            <input type="file" id="fotoFeVida" accept="image/*" capture="user" style="display:none;" onchange="alertaCarga('Prueba de Fe y Vida (Selfie)')">
+
+            <label style="margin-top:10px;">📋 Documentos Legales:</label>
+            <label class="btn-upload" for="fileCedula">📷 Foto de Cédula de Identidad</label>
+            <input type="file" id="fileCedula" accept="image/*" style="display:none;" onchange="alertaCarga('Cédula')">
+
+            <label class="btn-upload" for="fileLicencia">📄 Licencia y Certificado Médico</label>
+            <input type="file" id="fileLicencia" accept="image/*,.pdf" style="display:none;" onchange="alertaCarga('Licencia')">
+
+            <label class="btn-upload" for="fileVehiculo">🚗 Título / Carnet del Vehículo</label>
+            <input type="file" id="fileVehiculo" accept="image/*,.pdf" style="display:none;" onchange="alertaCarga('Documento del Vehículo')">
+
+            <label style="margin-top:10px; color:#d4af37;">📸 Inspección Fotográfica del Vehículo:</label>
+            
+            <label class="btn-upload" for="fotoFrente">📷 1. Foto Frontal de la Unidad</label>
+            <input type="file" id="fotoFrente" accept="image/*" style="display:none;" onchange="alertaCarga('Foto Frontal')">
+
+            <label class="btn-upload" for="fotoIzq">📷 2. Foto Lateral Izquierdo</label>
+            <input type="file" id="fotoIzq" accept="image/*" style="display:none;" onchange="alertaCarga('Lateral Izquierdo')">
+
+            <label class="btn-upload" for="fotoDer">📷 3. Foto Lateral Derecho</label>
+            <input type="file" id="fotoDer" accept="image/*" style="display:none;" onchange="alertaCarga('Lateral Derecho')">
+
+            <label class="btn-upload" for="fotoTrasera">📷 4. Foto Parte Trasera</label>
+            <input type="file" id="fotoTrasera" accept="image/*" style="display:none;" onchange="alertaCarga('Parte Trasera')">
+
+            <button class="btn-gold" style="margin-top:15px;" onclick="alert('Expediente KYC con Fe y Vida y perimetrales enviado al CEO ($60 USD Kit).')">Enviar Solicitud de Registro</button>
         </div>
     </div>
 
@@ -93,25 +134,24 @@
         <!-- Bloque de Login CEO -->
         <div id="ceoAuth" class="card">
             <div class="card-title">🔒 Panel Central de Control CEO</div>
-            <p>Introduce tu clave de Administrador Master:</p>
+            <p>Introduce tu clave de Administrador Master (Cédula):</p>
             <input type="password" id="ceoKey" placeholder="Clave de Acceso Master">
             <button class="btn-gold" onclick="loginCEO()">Acceder a la Torre de Control</button>
         </div>
 
-        <!-- Dashboard Administrador (Oculto hasta validar clave) -->
+        <!-- Dashboard Administrador -->
         <div id="ceoDashboard" style="display:none;">
             <div class="card" style="border-color:#d4af37;">
-                <div class="card-title">🏛️ Torre de Control & SENIAT (CEO)</div>
+                <div class="card-title">🏛️ Torre de Control & Back-Office (CEO)</div>
                 <div>• Flota Activa Calabozo: <strong>14 Unidades (10 Motos / 4 Autos)</strong></div>
                 <div>• Recaudación Comisión 20%: <span class="stat-val">$142.00 USD</span></div>
                 <div>• Estado Fiscal BDV / SENIAT: <strong style="color:#00ff00;">Sincronizado</strong></div>
-                <button class="btn-gold" onclick="alert('Generando reporte PDF/Excel para SENIAT...')">Exportar Reporte Financiero</button>
+                <button class="btn-gold" onclick="alert('Generando reporte financiero consolidado...')">Exportar Reporte Financiero</button>
             </div>
 
             <div class="card">
                 <div class="card-title">⚙️ Control Central Operativo</div>
-                <button class="btn-gold" onclick="alert('Cierre de caja ejecutado. Liquidando wallets vía C2P.')">Aprobar Pagos Móviles a Conductores</button>
-                <button class="btn-gold" style="background:#333; color:#fff;" onclick="alert('Bloqueo de seguridad activado.')">Suspender Conductor por Infracción</button>
+                <button class="btn-gold" onclick="alert('Cierre de caja ejecutado. Liquidando wallets de conductores vía C2P.')">Aprobar Pagos Móviles a Conductores</button>
                 <button class="btn-danger" onclick="logoutCEO()">Cerrar Sesión Master</button>
             </div>
         </div>
@@ -123,7 +163,6 @@
 </div>
 
 <script>
-    // Clave de Acceso Master del CEO
     const CLAVE_MASTER = "19476093"; 
 
     function switchTab(tab) {
@@ -143,6 +182,10 @@
             document.getElementById('tab4').classList.add('active');
             document.getElementById('viewCEO').classList.add('active');
         }
+    }
+
+    function alertaCarga(tipo) {
+        alert('¡' + tipo + ' cargada y guardada con éxito en el expediente!');
     }
 
     function loginCEO() {

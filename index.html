@@ -3,27 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ZIPPY, C.A. - Torre de Control & CEO</title>
+    <title>ZIPPY, C.A. - Torre de Control & Agro-Logística</title>
     <style>
         body { background-color: #121212; color: #e0e0e0; font-family: Arial, sans-serif; margin: 0; padding: 15px; }
         .container { max-width: 420px; margin: 0 auto; background: #1a1a1a; padding: 20px; border-radius: 8px; border: 1px solid #d4af37; }
         h2 { color: #d4af37; text-align: center; margin-bottom: 2px; font-size: 1.5em; }
         .subtitle { text-align: center; font-size: 0.8em; color: #aaa; margin-bottom: 15px; }
         .nav-tabs { display: flex; justify-content: space-between; margin-bottom: 15px; border-bottom: 1px solid #333; padding-bottom: 10px; }
-        .nav-tabs button { background: #222; color: #aaa; border: 1px solid #444; padding: 8px 4px; border-radius: 4px; font-size: 0.75em; flex: 1; margin: 0 2px; cursor: pointer; }
+        .nav-tabs button { background: #222; color: #aaa; border: 1px solid #444; padding: 6px 2px; border-radius: 4px; font-size: 0.7em; flex: 1; margin: 0 1px; cursor: pointer; }
         .nav-tabs button.active { background-color: #d4af37; color: #121212; font-weight: bold; border-color: #d4af37; }
         .section-view { display: none; }
         .section-view.active { display: block; }
         .card { background: #222; border: 1px solid #333; border-radius: 6px; padding: 12px; margin-bottom: 12px; font-size: 0.88em; }
-        .card-title { color: #d4af37; font-weight: bold; border-bottom: 1px solid #333; padding-bottom: 5px; margin-bottom: 8px; }
+        .card-title { color: #d4af37; font-weight: bold; border-bottom: 1px solid #333; padding-bottom: 5px; margin-bottom: 8px; font-size: 0.95em; }
         label { color: #d4af37; font-size: 0.85em; display: block; margin-top: 8px; }
-        input, select, textarea { width: 100%; padding: 10px; margin-top: 4px; background: #2a2a2a; border: 1px solid #444; color: #fff; border-radius: 4px; box-sizing: border-box; }
+        input, select, textarea { width: 100%; padding: 10px; margin-top: 4px; background: #2a2a2a; border: 1px solid #444; color: #fff; border-radius: 4px; box-sizing: border-box; font-size: 0.9em; }
         .btn-gold { width: 100%; background-color: #d4af37; color: #121212; padding: 12px; border: none; font-weight: bold; border-radius: 4px; cursor: pointer; margin-top: 10px; font-size: 0.95em; }
         .btn-upload { width: 100%; background-color: #222; color: #d4af37; border: 1px dashed #d4af37; padding: 8px; font-weight: bold; border-radius: 4px; cursor: pointer; margin-top: 5px; font-size: 0.8em; text-align: center; display: block; box-sizing: border-box; }
         .btn-danger { width: 100%; background-color: #8b0000; color: #fff; padding: 10px; border: none; font-weight: bold; border-radius: 4px; cursor: pointer; margin-top: 8px; }
         .stat-val { font-size: 1.3em; color: #d4af37; font-weight: bold; }
         .status-badge { background-color: #004d00; color: #00ff00; padding: 2px 5px; border-radius: 3px; font-size: 0.8em; font-weight: bold; margin-left: 5px; }
         .footer-text { text-align: center; font-size: 0.75em; color: #777; margin-top: 20px; }
+        .legal-box { background: #111; padding: 8px; border-radius: 4px; font-size: 0.75em; color: #ccc; margin-top: 8px; border-left: 3px solid #d4af37; max-height: 120px; overflow-y: auto; }
     </style>
 </head>
 <body>
@@ -37,7 +38,8 @@
         <button id="tab1" class="active" onclick="switchTab('cliente')">Cotizador</button>
         <button id="tab2" onclick="switchTab('conductor')">Conductor</button>
         <button id="tab3" onclick="switchTab('kyc')">Registro</button>
-        <button id="tab4" onclick="switchTab('ceo')">Panel CEO</button>
+        <button id="tab4" onclick="switchTab('agro')">Agro-Carga</button>
+        <button id="tab5" onclick="switchTab('ceo')">Panel CEO</button>
     </div>
 
     <!-- 1. VISTA CLIENTE / COTIZADOR -->
@@ -76,11 +78,11 @@
         </div>
     </div>
 
-    <!-- 3. VISTA REGISTRO KYC CON PAGO MÓVIL Y FE Y VIDA -->
+    <!-- 3. VISTA REGISTRO KYC GENERAL -->
     <div id="viewKYC" class="section-view">
         <div class="card">
             <div class="card-title">📝 Afiliación y Expediente KYC (Seguridad Total)</div>
-            <p style="font-size:0.78em; color:#aaa; margin-bottom:6px;">Complete sus datos, datos bancarios, biometría, documentos y fotos perimetrales.</p>
+            <p style="font-size:0.78em; color:#aaa; margin-bottom:6px;">Complete sus datos, datos bancarios, biometría y documentos.</p>
             
             <label>Categoría a Afiliar:</label>
             <select id="kycCat">
@@ -97,7 +99,7 @@
             <label>Teléfono WhatsApp:</label>
             <input type="text" id="kycTlf" placeholder="Ej: 0426-4343732">
 
-            <!-- DATOS DE PAGO MÓVIL DEL AFILIADO -->
+            <!-- DATOS DE PAGO MÓVIL -->
             <div style="background:#111; padding:10px; border-radius:5px; border:1px solid #d4af37; margin-top:10px;">
                 <div style="color:#d4af37; font-weight:bold; font-size:0.85em; margin-bottom:5px;">🏦 Datos Bancarios para Pago Móvil (Liquidación 80%)</div>
                 
@@ -107,8 +109,6 @@
                     <option value="0105">0105 - Banco Mercantil</option>
                     <option value="0108">0108 - Banco Provincial</option>
                     <option value="0134">0134 - Banesco</option>
-                    <option value="0115">0115 - Banco Exterior</option>
-                    <option value="0191">0191 - BNC</option>
                 </select>
 
                 <label>Cédula Titular Pago Móvil:</label>
@@ -118,42 +118,53 @@
                 <input type="text" id="pmTlf" placeholder="Ej: 0412-1234567">
             </div>
 
-            <!-- BLOQUE DE PRUEBA DE FE Y VIDA -->
+            <!-- FE Y VIDA -->
             <label style="margin-top:10px; color:#d4af37;">👤 Prueba de Fe y Vida (Biometría):</label>
             <label class="btn-upload" for="fotoFeVida" style="background:#2a2200; border-color:#d4af37;">🤳 Tomar Selfie con Cédula en Mano</label>
             <input type="file" id="fotoFeVida" accept="image/*" capture="user" style="display:none;" onchange="alertaCarga('Prueba de Fe y Vida (Selfie)')">
 
-            <label style="margin-top:10px;">📋 Documentos Legales:</label>
-            <label class="btn-upload" for="fileCedula">📷 Foto de Cédula de Identidad</label>
-            <input type="file" id="fileCedula" accept="image/*" style="display:none;" onchange="alertaCarga('Cédula')">
-
-            <label class="btn-upload" for="fileLicencia">📄 Licencia y Certificado Médico</label>
-            <input type="file" id="fileLicencia" accept="image/*,.pdf" style="display:none;" onchange="alertaCarga('Licencia')">
-
-            <label class="btn-upload" for="fileVehiculo">🚗 Título / Carnet del Vehículo</label>
-            <input type="file" id="fileVehiculo" accept="image/*,.pdf" style="display:none;" onchange="alertaCarga('Documento del Vehículo')">
-
-            <label style="margin-top:10px; color:#d4af37;">📸 Inspección Fotográfica del Vehículo:</label>
-            
-            <label class="btn-upload" for="fotoFrente">📷 1. Foto Frontal de la Unidad</label>
-            <input type="file" id="fotoFrente" accept="image/*" style="display:none;" onchange="alertaCarga('Foto Frontal')">
-
-            <label class="btn-upload" for="fotoIzq">📷 2. Foto Lateral Izquierdo</label>
-            <input type="file" id="fotoIzq" accept="image/*" style="display:none;" onchange="alertaCarga('Lateral Izquierdo')">
-
-            <label class="btn-upload" for="fotoDer">📷 3. Foto Lateral Derecho</label>
-            <input type="file" id="fotoDer" accept="image/*" style="display:none;" onchange="alertaCarga('Lateral Derecho')">
-
-            <label class="btn-upload" for="fotoTrasera">📷 4. Foto Parte Trasera</label>
-            <input type="file" id="fotoTrasera" accept="image/*" style="display:none;" onchange="alertaCarga('Parte Trasera')">
-
-            <button class="btn-gold" style="margin-top:15px;" onclick="alert('Expediente KYC, datos de Pago Móvil y perimetrales enviados al CEO ($60 USD Kit).')">Enviar Solicitud de Registro</button>
+            <button class="btn-gold" style="margin-top:15px;" onclick="alert('Expediente KYC general enviado con éxito.')">Enviar Registro General</button>
         </div>
     </div>
 
-    <!-- 4. VISTA PANEL CONTROL CEO -->
+    <!-- 4. VISTA MÓDULO CARGA PESADA Y AGRO-LOGÍSTICA (ANTI-ABIGEATO) -->
+    <div id="viewAgro" class="section-view">
+        <div class="card" style="border-color:#d4af37;">
+            <div class="card-title">🚛 Carga Pesada & Agro-Logística (SICA / INSAI)</div>
+            <p style="font-size:0.78em; color:#aaa;">Control obligatorio para chutos, bateas, volquetes y jaulas ganaderas.</p>
+
+            <label>Tipo de Unidad Pesada:</label>
+            <select id="agroUnidad">
+                <option value="jaula">Jaula Ganadera (Transporte Animal)</option>
+                <option value="cava">Cava / Furgón de Carga</option>
+                <option value="batea">Batea / Plataforma</option>
+                <option value="volquete">Volquete / Volqueta</option>
+            </select>
+
+            <label>N° de Guía SICA / INSAI:</label>
+            <input type="text" id="agroGuia" placeholder="Ej: SICA-2026-994821">
+
+            <label>N° de Registro de Hierro de Herrar:</label>
+            <input type="text" id="agroHierro" placeholder="Ej: HR-4482-Guárico">
+
+            <label style="margin-top:10px; color:#d4af37;">📸 Evidencia Fotográfica de Embarque (Anti-Abigeato):</label>
+            
+            <label class="btn-upload" for="fotoLote">📸 1. Foto del Lote / Carga en Corral o Rampa</label>
+            <input type="file" id="fotoLote" accept="image/*" style="display:none;" onchange="alertaCarga('Foto del Lote de Carga')">
+
+            <label class="btn-upload" for="fotoDocHierro">📄 2. Foto del Documento del Hierro / SICA</label>
+            <input type="file" id="fotoDocHierro" accept="image/*,.pdf" style="display:none;" onchange="alertaCarga('Documento SICA / Hierro')">
+
+            <div class="legal-box">
+                <strong>Normativa Anti-Abigeato & GPS:</strong> El operador acepta que cualquier desvío de ruta no autorizado o manipulación del GPS activará la alerta roja central y los protocolos de seguridad vial. Cobro 100% centralizado en prepago (Escrow).
+            </div>
+
+            <button class="btn-gold" style="margin-top:15px;" onclick="alert('Pase Digital de Carga con QR Cifrado y Expediente Anti-Abigeato generado con éxito.')">Generar Pase Digital de Carga</button>
+        </div>
+    </div>
+
+    <!-- 5. VISTA PANEL CONTROL CEO -->
     <div id="viewCEO" class="section-view">
-        <!-- Bloque de Login CEO -->
         <div id="ceoAuth" class="card">
             <div class="card-title">🔒 Panel Central de Control CEO</div>
             <p>Introduce tu clave de Administrador Master (Cédula):</p>
@@ -161,11 +172,10 @@
             <button class="btn-gold" onclick="loginCEO()">Acceder a la Torre de Control</button>
         </div>
 
-        <!-- Dashboard Administrador -->
         <div id="ceoDashboard" style="display:none;">
             <div class="card" style="border-color:#d4af37;">
                 <div class="card-title">🏛️ Torre de Control & Fleet Dashboard (CEO)</div>
-                <div>• Fuerza Afiliada Total: <strong id="ceoAfiliadosCount">45 Unidades (32 Motos / 13 Autos)</strong></div>
+                <div>• Fuerza Afiliada Total: <strong id="ceoAfiliadosCount">45 Unidades (Incl. Carga Pesada)</strong></div>
                 <div style="margin-top:5px; margin-bottom:10px;">• Estatus Operativo: <strong style="color:#00ff00;">14 Unidades En Línea</strong></div>
                 
                 <div>• Recaudación Comisión 20% (Hoy): <span class="stat-val">$142.00 USD</span></div>
@@ -173,15 +183,13 @@
                 <div style="margin-top:8px; display:flex; align-items:center;">
                     • Estado Fiscal BDV / SENIAT: <span class="status-badge">Sincronizado</span>
                 </div>
-                <div style="font-size:0.75em; color:#aaa; margin-left:10px; margin-top:2px;">(Sincronización activa para declaraciones automáticas).</div>
 
                 <div style="margin-top:10px; display:flex; align-items:center; background:#111; padding:5px; border-radius:4px; border:1px solid #004d00;">
                     • Liquidación C2P Direct Automatizada (80%): <span class="status-badge" style="background-color:#00cc00; color:#121212;">✓ ACTIVA</span>
                 </div>
-                <div style="font-size:0.75em; color:#aaa; margin-left:10px; margin-top:2px;">(El sistema liquida automáticamente a conductores al corte).</div>
 
                 <button class="btn-gold" style="margin-top:15px;" onclick="exportarReportePDF()">Exportar Reporte Financiero (PDF)</button>
-                <button class="btn-gold" style="margin-top:8px; background-color:#222; color:#d4af37; border:1px solid #d4af37;" onclick="administrarAfiliadosKYC()">Administrar Afiliados (KYC)</button>
+                <button class="btn-gold" style="margin-top:8px; background-color:#222; color:#d4af37; border:1px solid #d4af37;" onclick="administrarAfiliadosKYC()">Administrar Afiliados & Carga</button>
             </div>
 
             <div class="card">
@@ -212,8 +220,11 @@
         } else if(tab === 'kyc') {
             document.getElementById('tab3').classList.add('active');
             document.getElementById('viewKYC').classList.add('active');
-        } else if(tab === 'ceo') {
+        } else if(tab === 'agro') {
             document.getElementById('tab4').classList.add('active');
+            document.getElementById('viewAgro').classList.add('active');
+        } else if(tab === 'ceo') {
+            document.getElementById('tab5').classList.add('active');
             document.getElementById('viewCEO').classList.add('active');
         }
     }
@@ -243,7 +254,7 @@
     }
 
     function administrarAfiliadosKYC() {
-        alert('Accediendo al panel de administración de Afiliados (KYC)... Verificando documentos perimetrales y pruebas de fe y vida.');
+        alert('Accediendo al panel de administración de Afiliados, Expedientes KYC y Guías SICA/INSAI.');
     }
 
     function toggleGPS() {

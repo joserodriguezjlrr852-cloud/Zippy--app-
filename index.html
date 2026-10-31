@@ -35,19 +35,19 @@
 
     <!-- Navegación de Pestañas Global -->
     <div class="nav-tabs">
-        <button id="btnCotizador" class="active" onclick="switchTab('cliente', this)">Cotizador</button>
-        <button id="btnFiscal" onclick="switchTab('fiscalTerminal', this)">Fiscal Línea</button>
-        <button id="btnDueño" onclick="switchTab('duenoBus', this)">Dueños Buses</button>
-        <button id="btnWallet" onclick="switchTab('wallet', this)">Wallets</button>
-        <button id="btnFlota" onclick="switchTab('flota', this)">Afiliaciones</button>
-        <button id="btnCEO" onclick="switchTab('ceo', this)">Panel CEO</button>
+        <button id="btnCotizador" class="active" onclick="switchTab('viewCliente', this)">Cotizador</button>
+        <button id="btnFiscal" onclick="switchTab('viewFiscalTerminal', this)">Fiscal Línea</button>
+        <button id="btnDueño" onclick="switchTab('viewDuenoBus', this)">Dueños Buses</button>
+        <button id="btnWallet" onclick="switchTab('viewWallet', this)">Wallets</button>
+        <button id="btnFlota" onclick="switchTab('viewFlota', this)">Afiliaciones</button>
+        <button id="btnCEO" onclick="switchTab('viewCEO', this)">Panel CEO</button>
     </div>
 
     <!-- 1. VISTA COTIZADOR URBANO Y MULTIMODAL -->
     <div id="viewCliente" class="section-view active">
         <div class="card">
             <div class="card-title">🤖 Solicita tu Servicio ZIPPY</div>
-            <p style="font-size:0.78em; color:#aaa;">Indica tu ruta y calcula la tarifa base para reportar tu pago móvil de inmediato.</p>
+            <p style="font-size:0.78em; color:#aaa;">Indica tu ruta y genera tu solicitud para reportar el pago móvil a la Torre de Control.</p>
             
             <label>Seleccione el Servicio:</label>
             <select id="cotCategoria">
@@ -63,7 +63,7 @@
             <label>Punto de Destino (¿A dónde vas?):</label>
             <input type="text" id="destinoCliente" placeholder="Ej: Terminal de Pasajeros o comercio...">
 
-            <button class="btn-gold" onclick="calcularYEnviarWhatsApp()">Calcular y Reportar por WhatsApp</button>
+            <button class="btn-gold" onclick="calcularYEnviarWhatsApp()">Generar Solicitud para WhatsApp</button>
             <div id="cotResult" style="margin-top:10px; display:none; background:#111; padding:10px; border-radius:4px; border:1px solid #d4af37;"></div>
         </div>
     </div>
@@ -135,7 +135,7 @@
             <button class="btn-upload" onclick="alert('Cámara abierta: Foto Parte Trasera.')">📷 5. Foto Parte Trasera del Autobús</button>
 
             <div style="background:#111; padding:10px; border-radius:5px; border:1px solid #d4af37; margin-top:10px;">
-                <div style="color:#d4af37; font-weight:bold; font-size:0.85em; margin-bottom:5px;">🏦 Pago Móvil del Dueño (Para Recibir Liquidación 90%)</div>
+                <div style="color:#d4af37; font-weight:bold; font-size:0.85em; margin-bottom:5px;">🏦 Pago Móvil Dueño (Liquidación 90%)</div>
                 <label>Banco:</label>
                 <select>
                     <option value="0102">0102 - Banco de Venezuela (BDV)</option>
@@ -266,25 +266,16 @@
     function switchTab(viewId, btnElement) {
         // Ocultar todas las vistas
         document.querySelectorAll('.section-view').forEach(s => s.classList.remove('active'));
-        // Quitar la clase active a todos los botones del menú
+        // Quitar clase active a todos los botones
         document.querySelectorAll('.nav-tabs button').forEach(b => b.classList.remove('active'));
 
-        // Mostrar la vista seleccionada según el ID
-        if(viewId === 'cliente') {
-            document.getElementById('viewCliente').classList.add('active');
-        } else if(viewId === 'fiscalTerminal') {
-            document.getElementById('viewFiscalTerminal').classList.add('active');
-        } else if(viewId === 'duenoBus') {
-            document.getElementById('viewDuenoBus').classList.add('active');
-        } else if(viewId === 'wallet') {
-            document.getElementById('viewWallet').classList.add('active');
-        } else if(viewId === 'flota') {
-            document.getElementById('viewFlota').classList.add('active');
-        } else if(viewId === 'ceo') {
-            document.getElementById('viewCEO').classList.add('active');
+        // Mostrar la vista que corresponde de manera directa
+        let targetView = document.getElementById(viewId);
+        if (targetView) {
+            targetView.classList.add('active');
         }
 
-        // Marcar el botón presionado como activo
+        // Activar el botón presionado
         if(btnElement) {
             btnElement.classList.add('active');
         }
@@ -313,4 +304,9 @@
 
             <div style="background:#1a1a1a; padding:8px; border-radius:4px; border:1px solid #d4af37; margin-bottom:8px;">
                 <div style="color:#d4af37; font-weight:bold; font-size:0.85em;">💳 Pago Móvil BDV (ZIPPY):</div>
-                • Banco
+                • Banco: Banco de Venezuela (0102)<br>
+                • Teléfono: 0426-4343732<br>
+                • Cédula: V-19476093
+            </div>
+
+            <a href="https://wa.me/584264343732?text=Hola%20Torre%20de%20Control,%20necesito%20una%20unidad.%0A%0A*Servicio:*%20${encodeURIComponent(servicio)}%0A*Origen:*%20${encodeURIComponent(origen)}%0A*Destino:*%20${encodeURIComponent(destino)}%0A*Referencia%20Pago%20Móvil:*%20[Escribe%20aquí%20tu%20referencia]" target="_blank" style="display: block; width: 100%; background-color: #25d366; color: #fff; text-align: center; padding:

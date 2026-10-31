@@ -19,6 +19,7 @@
         label { color: #d4af37; font-size: 0.85em; display: block; margin-top: 8px; }
         input, select, textarea { width: 100%; padding: 10px; margin-top: 4px; background: #2a2a2a; border: 1px solid #444; color: #fff; border-radius: 4px; box-sizing: border-box; font-size: 0.9em; }
         .btn-gold { width: 100%; background-color: #d4af37; color: #121212; padding: 12px; border: none; font-weight: bold; border-radius: 4px; cursor: pointer; margin-top: 10px; font-size: 0.95em; }
+        .btn-upload { width: 100%; background-color: #222; color: #d4af37; border: 1px dashed #d4af37; padding: 8px; font-weight: bold; border-radius: 4px; cursor: pointer; margin-top: 5px; font-size: 0.8em; text-align: center; display: block; box-sizing: border-box; }
         .btn-danger { width: 100%; background-color: #8b0000; color: #fff; padding: 10px; border: none; font-weight: bold; border-radius: 4px; cursor: pointer; margin-top: 8px; }
         .stat-val { font-size: 1.2em; color: #d4af37; font-weight: bold; }
         .status-badge { background-color: #004d00; color: #00ff00; padding: 2px 5px; border-radius: 3px; font-size: 0.8em; font-weight: bold; margin-left: 5px; }
@@ -147,11 +148,11 @@
         </div>
     </div>
 
-    <!-- 4. VISTA AFILIACIONES CON REQUISITOS EXIGIDOS -->
+    <!-- 4. VISTA AFILIACIONES CON EXPEDIENTE, REQUISITOS Y REGISTRO FOTOGRÁFICO -->
     <div id="viewFlota" class="section-view">
         <div class="card" style="border-color:#d4af37;">
-            <div class="card-title">🚐 Módulo de Afiliaciones & Requisitos</div>
-            <p style="font-size:0.78em; color:#aaa;">Inscribe unidades y valida los recaudos obligatorios del expediente digital.</p>
+            <div class="card-title">🚐 Módulo de Afiliaciones & Inspección Visual</div>
+            <p style="font-size:0.78em; color:#aaa;">Registro de documentos, Fe de Vida y validación fotográfica de la unidad.</p>
 
             <label>Tipo de Afiliación:</label>
             <select>
@@ -170,11 +171,17 @@
 
             <div class="legal-box" style="margin-top:8px;">
                 <strong>📋 Requisitos Obligatorios del Expediente:</strong><br>
-                • Cédula de Identidad y RIF vigente.<br>
-                • Licencia de Conducir y Certificado Médico.<br>
-                • Documentos del Vehículo (Título y Carnet).<br>
-                • Carta de Residencia y Validación de Pago ($30 / $60).
+                • Cédula, RIF, Licencia y Certificado Médico.<br>
+                • Documentos del Vehículo y Carta de Residencia.<br>
+                • Pago de Afiliación ($30 / $60).
             </div>
+
+            <label style="margin-top:10px; color:#d4af37;">📸 Registro Fotográfico & Validación de Unidad:</label>
+            <button class="btn-upload" onclick="alert('Cámara abierta: Tomar Fotografía de Fe de Vida / Rostro del Conductor.')">📷 1. Foto Fe de Vida (Rostro Conductor)</button>
+            <button class="btn-upload" onclick="alert('Cámara abierta: Tomar Fotografía Frontal de la Unidad.')">📷 2. Foto Frontal del Vehículo / Moto</button>
+            <button class="btn-upload" onclick="alert('Cámara abierta: Tomar Fotografía Lateral Izquierda.')">📷 3. Foto Lateral Izquierda</button>
+            <button class="btn-upload" onclick="alert('Cámara abierta: Tomar Fotografía Lateral Derecha.')">📷 4. Foto Lateral Derecha</button>
+            <button class="btn-upload" onclick="alert('Cámara abierta: Tomar Fotografía Trasera de la Unidad.')">📷 5. Foto Parte Trasera (Placa / Stop)</button>
 
             <label style="margin-top:8px;">Estatus del Conductor / Flota:</label>
             <select>
@@ -182,7 +189,7 @@
                 <option value="inactivo">🔴 Inactivo / Fuera de Línea</option>
             </select>
 
-            <button class="btn-gold" style="margin-top:15px;" onclick="alert('Expediente y requisitos validados. Afiliación procesada con éxito.')">Validar Recaudos y Completar Registro</button>
+            <button class="btn-gold" style="margin-top:15px;" onclick="alert('Expediente, recaudos y registros fotográficos validados. Afiliación exitosa.')">Completar Afiliación y Cargar Expediente</button>
         </div>
     </div>
 
@@ -339,26 +346,4 @@
         if(cat === 'moto' || cat === 'auto' || cat === 'escolar') {
             if(horario === 'nocturno') {
                 subtotal = subtotal * 1.40;
-                recargoTexto = "Recargo Nocturno (+40%)";
-            } else if(horario === 'trasnocho') {
-                subtotal = subtotal * 2.40;
-                recargoTexto = "Recargo Trasnochado / Madrugada (+140%)";
-            }
-
-            if(cat === 'moto') {
-                netoTransportista = subtotal * 0.80;
-                comisionZippy = subtotal * 0.20;
-            } else {
-                netoTransportista = subtotal;
-                comisionZippy = 0;
-            }
-        }
-
-        let res = document.getElementById('cotResult');
-        res.style.display = 'block';
-        res.innerHTML = `<strong>${tipoServicio}</strong><br><small style="color:#d4af37;">Franja: ${recargoTexto}</small><br>Monto Total: <strong>$${subtotal.toFixed(2)} USD</strong><br><span style="color:#00ff00;">• Abonado a Wallet Conductor: $${netoTransportista.toFixed(2)}</span>${comisionZippy > 0 ? `<br><span style="color:#d4af37;">• Comisión ZIPPY C.A.: $${comisionZippy.toFixed(2)}</span>` : ''}`;
-    }
-</script>
-
-</body>
-</html>
+     

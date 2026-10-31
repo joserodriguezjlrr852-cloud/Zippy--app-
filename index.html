@@ -13,9 +13,9 @@
         .nav-tabs button { background: #1a1a1a; color: #aaa; border: 2px solid #444; padding: 8px 4px; border-radius: 0px; font-size: 0.52em; flex: 1; cursor: pointer; white-space: nowrap; text-align: center; font-weight: bold; }
         .nav-tabs button.active { background-color: #ccff00; color: #080808; font-weight: 900; border-color: #ccff00; box-shadow: 0 0 8px rgba(204,255,0,0.5); }
         
-        /* Control de Visibilidad de Paneles */
-        .section-view { display: none !important; }
-        .section-view.active { display: block !important; }
+        /* Forzar visibilidad absoluta de las pestañas */
+        .panel-zippy { display: none; }
+        .panel-zippy.activo { display: block; }
 
         .card { background: #1a1a1a; border: 3.5px solid #ccff00; border-radius: 0px; padding: 14px; margin-bottom: 14px; font-size: 0.95em; box-shadow: 0 0 10px rgba(204,255,0,0.15); }
         .card-title { color: #ccff00; font-weight: 900; border-bottom: 3px solid #ccff00; padding-bottom: 6px; margin-bottom: 10px; font-size: 1.2em; }
@@ -39,16 +39,16 @@
 
     <!-- Navegación de Pestañas Global -->
     <div class="nav-tabs">
-        <button id="btnCotizador" class="active" onclick="abrirPanel('tabCotizador', this)">Cotizador</button>
-        <button id="btnFiscal" onclick="abrirPanel('tabFiscal', this)">Fiscal Línea</button>
-        <button id="btnDueño" onclick="abrirPanel('tabDueno', this)">Dueños Buses</button>
-        <button id="btnWallet" onclick="abrirPanel('tabWallet', this)">Wallets</button>
-        <button id="btnFlota" onclick="abrirPanel('tabFlota', this)">Afiliaciones</button>
-        <button id="btnCEO" onclick="abrirPanel('tabCEO', this)">Panel CEO</button>
+        <button id="bCotizador" class="active" onclick="irAPanel('pCotizador', this)">Cotizador</button>
+        <button id="bFiscal" onclick="irAPanel('pFiscal', this)">Fiscal Línea</button>
+        <button id="bDueno" onclick="irAPanel('pDueno', this)">Dueños Buses</button>
+        <button id="bWallet" onclick="irAPanel('pWallet', this)">Wallets</button>
+        <button id="bFlota" onclick="irAPanel('pFlota', this)">Afiliaciones</button>
+        <button id="bCEO" onclick="irAPanel('pCEO', this)">Panel CEO</button>
     </div>
 
     <!-- 1. VISTA COTIZADOR URBANO Y MULTIMODAL -->
-    <div id="tabCotizador" class="section-view active">
+    <div id="pCotizador" class="panel-zippy activo">
         <div class="card">
             <div class="card-title">🤖 Solicita tu Servicio ZIPPY</div>
             <p style="font-size:0.82em; color:#ccc;">Indica tu ruta. La Torre de Control calculará la distancia y tarifa exacta por WhatsApp.</p>
@@ -73,7 +73,7 @@
     </div>
 
     <!-- 2. PANEL EXCLUSIVO DEL FISCAL DE LÍNEA / TERMINAL -->
-    <div id="tabFiscal" class="section-view">
+    <div id="pFiscal" class="panel-zippy">
         <div class="card">
             <div class="card-title">🛡️ Panel del Fiscal de Línea / Terminal</div>
             <p style="font-size:0.82em; color:#ccc;">Verificación en sistema de unidades registradas, control de andén y despacho.</p>
@@ -105,7 +105,7 @@
     </div>
 
     <!-- 3. PANEL EXCLUSIVO PARA DUEÑOS DE AUTOBUSES Y LÍNEAS -->
-    <div id="tabDueno" class="section-view">
+    <div id="pDueno" class="panel-zippy">
         <div class="card">
             <div class="card-title">🚌 Panel de Dueños de Autobuses & Flotas</div>
             <p style="font-size:0.82em; color:#ccc;">Registro oficial de unidades, afiliar choferes y cargar expediente digital.</p>
@@ -158,7 +158,7 @@
     </div>
 
     <!-- 4. VISTA WALLETS CON DISEÑO GPS Y RETIRO -->
-    <div id="tabWallet" class="section-view">
+    <div id="pWallet" class="panel-zippy">
         <div class="card">
             <div class="card-title">🚗 Estatus Conductor / GPS</div>
             <div style="margin-top:8px; margin-bottom:10px; font-size:0.92em;">
@@ -176,7 +176,7 @@
     </div>
 
     <!-- 5. VISTA AFILIACIONES GENERALES -->
-    <div id="tabFlota" class="section-view">
+    <div id="pFlota" class="panel-zippy">
         <div class="card">
             <div class="card-title">🚐 Módulo de Afiliaciones Urbano & Carga</div>
             <p style="font-size:0.82em; color:#ccc;">Registro para Motos (80/20), Taxis, ZIPPY Kids ($30) y Gandolas ($60).</p>
@@ -220,7 +220,7 @@
     </div>
 
     <!-- 6. PANEL CEO - TORRE DE CONTROL MAESTRA -->
-    <div id="tabCEO" class="section-view">
+    <div id="pCEO" class="panel-zippy">
         <div id="ceoAuth" class="card">
             <div class="card-title">🔒 Panel Central de Control CEO</div>
             <p style="font-size:0.9em;">Introduce tu clave de Administrador Master (Cédula):</p>
@@ -272,27 +272,28 @@
     const CLAVES_VALIDAS = ["1947", "19476093"]; 
     let enLinea = false;
 
-    function abrirPanel(targetId, btnElement) {
-        // 1. Ocultar todas las pestañas
-        var paneles = document.getElementsByClassName('section-view');
-        for (var i = 0; i < paneles.length; i++) {
-            paneles[i].classList.remove('active');
+    function irAPanel(idPanel, btnObj) {
+        // Ocultar todos los paneles
+        let listaPaneles = document.querySelectorAll('.panel-zippy');
+        listaPaneles.forEach(function(p) {
+            p.classList.remove('activo');
+        });
+
+        // Quitar estatus activo a los botones
+        let listaBotones = document.querySelectorAll('.nav-tabs button');
+        listaBotones.forEach(function(b) {
+            b.classList.remove('active');
+        });
+
+        // Mostrar el panel seleccionado
+        let destino = document.getElementById(idPanel);
+        if (destino) {
+            destino.classList.add('activo');
         }
 
-        // 2. Desactivar todos los botones
-        var botones = document.querySelectorAll('.nav-tabs button');
-        for (var j = 0; j < botones.length; j++) {
-            botones[j].classList.remove('active');
-        }
-
-        // 3. Activar la pestaña y el botón seleccionado
-        var panelDestino = document.getElementById(targetId);
-        if (panelDestino) {
-            panelDestino.classList.add('active');
-        }
-
-        if (btnElement) {
-            btnElement.classList.add('active');
+        // Iluminar el botón presionado
+        if (btnObj) {
+            btnObj.classList.add('active');
         }
     }
 
@@ -314,4 +315,9 @@
             lbl.style.color = "#aaa";
             dot.style.background = "#777";
             btn.innerText = "Ponerse EN LÍNEA";
-            btn
+            btn.style.backgroundColor = "#ccff00";
+            btn.style.color = "#080808";
+        }
+    }
+
+    fun

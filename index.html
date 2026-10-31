@@ -264,18 +264,14 @@
     const CLAVES_VALIDAS = ["1947", "19476093"]; 
 
     function switchTab(viewId, btnElement) {
-        // Ocultar todas las vistas
         document.querySelectorAll('.section-view').forEach(s => s.classList.remove('active'));
-        // Quitar clase active a todos los botones
         document.querySelectorAll('.nav-tabs button').forEach(b => b.classList.remove('active'));
 
-        // Mostrar la vista que corresponde de manera directa
         let targetView = document.getElementById(viewId);
         if (targetView) {
             targetView.classList.add('active');
         }
 
-        // Activar el botón presionado
         if(btnElement) {
             btnElement.classList.add('active');
         }
@@ -315,26 +311,4 @@
         `;
     }
 
-    function loginCEO() {
-        let key = document.getElementById('ceoKey').value;
-        if(CLAVES_VALIDAS.includes(key)) {
-            document.getElementById('ceoAuth').style.display = 'none';
-            document.getElementById('ceoDashboard').style.display = 'block';
-        } else {
-            alert('Clave de acceso incorrecta.');
-        }
-    }
-
-    function logoutCEO() {
-        document.getElementById('ceoKey').value = '';
-        document.getElementById('ceoDashboard').style.display = 'none';
-        document.getElementById('ceoAuth').style.display = 'block';
-    }
-
-    function exportarReportePDF() {
-        alert('Generando PDF consolidado de ingresos, comisiones y flotas activas...');
-    }
-</script>
-
-</body>
-</html>
+    fu

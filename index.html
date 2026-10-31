@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ZIPPY, C.A. - Torre de Control & Cotizador</title>
+  <title>ZIPPY, C.A. - Torre de Control & Cotizador Oficial</title>
   <style>
     :root {
       --bg-color: #0b0b0b;
@@ -94,10 +94,12 @@
     .result-box {
       margin-top: 15px;
       background: #111;
-      padding: 12px;
+      padding: 15px;
       border-radius: 8px;
       border-left: 4px solid var(--primary);
       display: none;
+      font-size: 0.95em;
+      line-height: 1.5;
     }
     /* Sección Oficial de Pago Móvil Integrada */
     #seccion-pago-movil {
@@ -148,29 +150,40 @@
       <p>Plan Piloto — Calabozo</p>
     </div>
 
-    <!-- Cotizador de Servicios -->
+    <!-- Cotizador Avanzado de Servicios -->
     <div class="card-section">
       <div class="form-group">
         <label for="tipoServicio">Seleccione el Servicio:</label>
         <select id="tipoServicio">
           <option value="moto">ZIPPY Moto (Carrera Urbana)</option>
-          <option value="express">ZIPPY Express (Encomienda)</option>
+          <option value="express">ZIPPY Express (Encomienda / Delivery)</option>
         </select>
       </div>
 
       <div class="form-group">
-        <label for="distancia">Distancia estimada (Kilómetros):</label>
-        <input type="number" id="distancia" placeholder="Ej: 3" min="1" value="1">
+        <label for="origen">Punto de Origen:</label>
+        <input type="text" id="origen" placeholder="Ej: Plaza Bolívar o Sector" value="Calabozo Centro">
       </div>
 
-      <button class="btn-action" onclick="calcularTarifa()">Calcular Tarifa</button>
+      <div class="form-group">
+        <label for="destino">Punto de Destino:</label>
+        <input type="text" id="destino" placeholder="Ej: Av. Principal / Urbanización">
+      </div>
 
+      <div class="form-group">
+        <label for="distancia">Distancia estimada (Kilómetros):</label>
+        <input type="number" id="distancia" placeholder="Ej: 3" min="1" value="2">
+      </div>
+
+      <button class="btn-action" onclick="calcularTarifaCompleta()">Calcular Cotización</button>
+
+      <!-- Resultado Detallado del Cálculo -->
       <div id="resultadoCotizacion" class="result-box">
-        <p style="margin: 0; font-weight: bold; color: var(--primary);" id="textoResultado">Tarifa calculada correctamente.</p>
+        <div id="textoResultado"></div>
       </div>
     </div>
 
-    <!-- SECCIÓN OFICIAL DE PAGO MÓVIL (INCORPORADA PERMANENTE) -->
+    <!-- SECCIÓN OFICIAL DE PAGO MÓVIL (INCORPORADA) -->
     <div id="seccion-pago-movil">
       <div class="pago-title">
         <span style="font-size: 1.4em; margin-right: 8px;">💳</span>
@@ -184,24 +197,33 @@
       </div>
 
       <div class="pago-notice">
-        ⚠️ <strong>Instrucción:</strong> Realiza el pago por el monto exacto de tu cotización, conserva tu número de referencia y repórtalo en el canal de atención para asignar tu unidad de inmediato.
+        ⚠️ <strong>Instrucción:</strong> Realiza el pago por el monto exacto indicado en tu cotización, conserva tu número de referencia y repórtalo en el canal de atención para asignar tu unidad de inmediato.
       </div>
     </div>
   </div>
 
   <script>
-    function calcularTarifa() {
-      const dist = document.getElementById('distancia').value;
+    function calcularTarifaCompleta() {
       const servicio = document.getElementById('tipoServicio').value;
+      const origen = document.getElementById('origen').value || 'Origen no especificado';
+      const destino = document.getElementById('destino').value || 'Destino no especificado';
+      const distancia = parseFloat(document.getElementById('distancia').value) || 1;
+      
       const box = document.getElementById('resultadoCotizacion');
       const texto = document.getElementById('textoResultado');
       
-      // Lógica base del cotizador piloto
+      // Lógica de cálculo del plan piloto
       let tarifaBase = servicio === 'moto' ? 1.5 : 2.0;
-      let total = tarifaBase + (dist * 0.5);
+      let costoPorKm = 0.5;
+      let totalUSD = tarifaBase + (distancia * costoPorKm);
       
       box.style.display = 'block';
-      texto.innerHTML = `Distancia: ${dist} Km | <strong>Total a pagar: $${total.toFixed(2)} USD</strong> (o su equivalente en Bs. tasa oficial)`;
+      texto.innerHTML = `
+        <strong>📍 Ruta:</strong> ${origen} ➔ ${destino}<br>
+        <strong>📏 Distancia:</strong> ${distancia} Km<br>
+        <strong>💰 Total a Pagar:</strong> <span style="color: var(--primary); font-size: 1.1em;">$${totalUSD.toFixed(2)} USD</span><br>
+        <span style="font-size: 0.85em; color: #aaa;">(Equivalente en Bs. según tasa oficial del día al transferir por Pago Móvil)</span>
+      `;
     }
   </script>
 

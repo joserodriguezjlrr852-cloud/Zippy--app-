@@ -5,27 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ZIPPY, C.A. - Torre de Control & Flota Multimodal</title>
     <style>
-        body { background-color: #0d0d0d; color: #e0e0e0; font-family: Arial, sans-serif; margin: 0; padding: 12px; }
-        .container { max-width: 420px; margin: 0 auto; background: #161616; padding: 18px; border-radius: 10px; border: 2.5px solid #ccff00; box-sizing: border-box; box-shadow: 0 0 15px rgba(204,255,0,0.15); }
-        h2 { color: #ccff00; text-align: center; margin-bottom: 2px; font-size: 2em; font-weight: 900; letter-spacing: 1px; text-shadow: 0 0 10px rgba(204,255,0,0.4); }
+        body { background-color: #080808; color: #e0e0e0; font-family: Arial, sans-serif; margin: 0; padding: 10px; }
+        .container { max-width: 420px; margin: 0 auto; background: #121212; padding: 18px; border-radius: 0px; border: 4px solid #ccff00; box-sizing: border-box; box-shadow: 0 0 15px rgba(204,255,0,0.2); }
+        h2 { color: #ccff00; text-align: center; margin-bottom: 2px; font-size: 2.2em; font-weight: 900; letter-spacing: 1px; text-shadow: 0 0 12px rgba(204,255,0,0.5); }
         .subtitle { text-align: center; font-size: 0.9em; color: #ccc; margin-bottom: 15px; font-weight: bold; }
-        .nav-tabs { display: flex; justify-content: space-between; margin-bottom: 15px; border-bottom: 2px solid #333; padding-bottom: 10px; overflow-x: auto; gap: 3px; }
-        .nav-tabs button { background: #222; color: #aaa; border: 1px solid #444; padding: 6px 4px; border-radius: 4px; font-size: 0.52em; flex: 1; cursor: pointer; white-space: nowrap; text-align: center; font-weight: bold; }
-        .nav-tabs button.active { background-color: #ccff00; color: #0d0d0d; font-weight: 900; border-color: #ccff00; box-shadow: 0 0 8px rgba(204,255,0,0.4); }
+        .nav-tabs { display: flex; justify-content: space-between; margin-bottom: 15px; border-bottom: 3px solid #ccff00; padding-bottom: 8px; overflow-x: auto; gap: 3px; }
+        .nav-tabs button { background: #1a1a1a; color: #aaa; border: 2px solid #444; padding: 8px 4px; border-radius: 0px; font-size: 0.52em; flex: 1; cursor: pointer; white-space: nowrap; text-align: center; font-weight: bold; }
+        .nav-tabs button.active { background-color: #ccff00; color: #080808; font-weight: 900; border-color: #ccff00; box-shadow: 0 0 8px rgba(204,255,0,0.5); }
         .section-view { display: none; }
         .section-view.active { display: block; }
-        .card { background: #202020; border: 2px solid #ccff00; border-radius: 8px; padding: 14px; margin-bottom: 14px; font-size: 0.95em; box-shadow: 0 0 8px rgba(204,255,0,0.1); }
-        .card-title { color: #ccff00; font-weight: 900; border-bottom: 2px solid #333; padding-bottom: 6px; margin-bottom: 10px; font-size: 1.15em; }
+        .card { background: #1a1a1a; border: 3.5px solid #ccff00; border-radius: 0px; padding: 14px; margin-bottom: 14px; font-size: 0.95em; box-shadow: 0 0 10px rgba(204,255,0,0.15); }
+        .card-title { color: #ccff00; font-weight: 900; border-bottom: 3px solid #ccff00; padding-bottom: 6px; margin-bottom: 10px; font-size: 1.2em; }
         label { color: #ccff00; font-size: 0.92em; display: block; margin-top: 10px; font-weight: bold; }
-        input, select, textarea { width: 100%; padding: 11px; margin-top: 5px; background: #2a2a2a; border: 1.5px solid #555; color: #fff; border-radius: 5px; box-sizing: border-box; font-size: 1em; font-weight: bold; }
+        input, select, textarea { width: 100%; padding: 12px; margin-top: 5px; background: #222; border: 2px solid #555; color: #fff; border-radius: 0px; box-sizing: border-box; font-size: 1em; font-weight: bold; }
         input:focus, select:focus { border-color: #ccff00; outline: none; }
-        .btn-neon { width: 100%; background-color: #ccff00; color: #0d0d0d; padding: 14px; border: none; font-weight: 900; border-radius: 6px; cursor: pointer; margin-top: 12px; font-size: 1.05em; box-shadow: 0 0 12px rgba(204,255,0,0.3); }
-        .btn-upload { width: 100%; background-color: #222; color: #ccff00; border: 2px dashed #ccff00; padding: 10px; font-weight: bold; border-radius: 6px; cursor: pointer; margin-top: 6px; font-size: 0.88em; text-align: center; display: block; box-sizing: border-box; }
-        .btn-danger { width: 100%; background-color: #8b0000; color: #fff; padding: 12px; border: none; font-weight: bold; border-radius: 6px; cursor: pointer; margin-top: 10px; font-size: 1em; }
+        .btn-neon { width: 100%; background-color: #ccff00; color: #080808; padding: 14px; border: none; font-weight: 900; border-radius: 0px; cursor: pointer; margin-top: 12px; font-size: 1.05em; box-shadow: 0 0 12px rgba(204,255,0,0.3); }
+        .btn-upload { width: 100%; background-color: #1a1a1a; color: #ccff00; border: 3px dashed #ccff00; padding: 10px; font-weight: bold; border-radius: 0px; cursor: pointer; margin-top: 6px; font-size: 0.88em; text-align: center; display: block; box-sizing: border-box; }
+        .btn-danger { width: 100%; background-color: #8b0000; color: #fff; padding: 12px; border: none; font-weight: bold; border-radius: 0px; cursor: pointer; margin-top: 10px; font-size: 1em; }
         .stat-val { font-size: 1.4em; color: #ccff00; font-weight: 900; }
-        .status-badge { background-color: #004d00; color: #00ff00; padding: 3px 6px; border-radius: 4px; font-size: 0.85em; font-weight: bold; margin-left: 5px; }
+        .status-badge { background-color: #004d00; color: #00ff00; padding: 3px 6px; border-radius: 0px; font-size: 0.85em; font-weight: bold; margin-left: 5px; }
         .footer-text { text-align: center; font-size: 0.8em; color: #888; margin-top: 20px; font-weight: bold; }
-        .legal-box { background: #111; padding: 10px; border-radius: 6px; font-size: 0.82em; color: #ddd; margin-top: 10px; border-left: 4px solid #ccff00; }
+        .legal-box { background: #111; padding: 10px; border-radius: 0px; font-size: 0.82em; color: #ddd; margin-top: 10px; border-left: 5px solid #ccff00; border-right: 1px solid #444; border-top: 1px solid #444; border-bottom: 1px solid #444; }
     </style>
 </head>
 <body>
@@ -65,7 +65,7 @@
             <input type="text" id="destinoCliente" placeholder="Ej: Centro Carrera 12...">
 
             <button class="btn-neon" onclick="calcularYEnviarWhatsApp()">Enviar Ruta a Torre de Control</button>
-            <div id="cotResult" style="margin-top:12px; display:none; background:#111; padding:12px; border-radius:6px; border:2px solid #ccff00;"></div>
+            <div id="cotResult" style="margin-top:12px; display:none; background:#111; padding:12px; border-radius:0px; border:3px solid #ccff00;"></div>
         </div>
     </div>
 
@@ -77,9 +77,9 @@
 
             <label>Buscar Unidad Registrada (Placa o N° Control):</label>
             <input type="text" placeholder="Ej: Control #12 / Placa A12">
-            <button class="btn-neon" style="background-color:#2a2e00; color:#ccff00; border:2px solid #ccff00; margin-top:8px;" onclick="alert('Unidad encontrada en el sistema. Expediente y fotos validadas.')">🔍 Verificar Unidad en Base de Datos</button>
+            <button class="btn-neon" style="background-color:#1a1a1a; color:#ccff00; border:3px solid #ccff00; margin-top:8px;" onclick="alert('Unidad encontrada en el sistema. Expediente y fotos validadas.')">🔍 Verificar Unidad en Base de Datos</button>
 
-            <div style="background:#111; padding:10px; border-radius:6px; border:1.5px solid #444; margin-top:10px;">
+            <div style="background:#111; padding:10px; border-radius:0px; border:2px solid #555; margin-top:10px;">
                 <div style="color:#ccff00; font-weight:900; font-size:0.9em; margin-bottom:4px;">📊 Estado de la Unidad en Pista:</div>
                 <p style="font-size:0.8em; color:#ddd; margin:0;">• Propietario: Carlos Mendoza<br>• Chófer Asignado: Juan Pérez (V-12345678)<br>• Estatus Expediente: <span style="color:#00ff00; font-weight:bold;">✓ Aprobado (5/5 Fotos OK)</span></p>
             </div>
@@ -96,7 +96,7 @@
 
         <div class="card">
             <div class="card-title">📱 Control de Abordaje & Avances</div>
-            <button class="btn-neon" style="background-color:#2a2e00; border:2px solid #ccff00; color:#ccff00;" onclick="alert('Escaneando QR de pasajero para validar boleto de andén...')">📷 Escanear QR de Pasajero</button>
+            <button class="btn-neon" style="background-color:#1a1a1a; border:3px solid #ccff00; color:#ccff00;" onclick="alert('Escaneando QR de pasajero para validar boleto de andén...')">📷 Escanear QR de Pasajero</button>
             <button class="btn-neon" style="margin-top:10px;" onclick="alert('¡Autobús extra o avance habilitado en pista por el fiscal!')">🚌 Habilitar Unidad Extra / Avance</button>
         </div>
     </div>
@@ -113,7 +113,7 @@
             <label>Placa / N° de Control del Autobús:</label>
             <input type="text" placeholder="Ej: Control #12 - Encava 32 Puestos">
 
-            <div style="background:#111; padding:10px; border-radius:6px; border:1.5px solid #444; margin-top:10px;">
+            <div style="background:#111; padding:10px; border-radius:0px; border:2px solid #555; margin-top:10px;">
                 <div style="color:#ccff00; font-weight:900; font-size:0.9em; margin-bottom:6px;">👤 Datos de la Tripulación (Afiliar Chófer)</div>
                 <label>Nombre y Cédula del Chófer:</label>
                 <input type="text" placeholder="Ej: Juan Pérez V-12345678">
@@ -135,7 +135,7 @@
             <button class="btn-upload" onclick="alert('Cámara abierta: Foto Lateral Derecha.')">📷 4. Foto Lateral Derecha</button>
             <button class="btn-upload" onclick="alert('Cámara abierta: Foto Parte Trasera.')">📷 5. Foto Parte Trasera del Autobús</button>
 
-            <div style="background:#111; padding:10px; border-radius:6px; border:1.5px solid #ccff00; margin-top:12px;">
+            <div style="background:#111; padding:10px; border-radius:0px; border:3px solid #ccff00; margin-top:12px;">
                 <div style="color:#ccff00; font-weight:900; font-size:0.9em; margin-bottom:6px;">🏦 Pago Móvil Dueño (Liquidación 90%)</div>
                 <label>Banco:</label>
                 <select>
@@ -159,7 +159,7 @@
         <div class="card">
             <div class="card-title">🚗 Estatus Conductor / GPS</div>
             <div style="margin-top:8px; margin-bottom:10px; font-size:0.92em;">
-                Estatus: <span id="lblEstatus" style="color:#aaa; font-weight:bold;">Fuera de Servicio</span> <span style="display:inline-block; width:10px; height:10px; background:#777; border-radius:50%; margin-left:4px;" id="dotEstatus"></span>
+                Estatus: <span id="lblEstatus" style="color:#aaa; font-weight:bold;">Fuera de Servicio</span> <span style="display:inline-block; width:10px; height:10px; background:#777; border-radius:0px; margin-left:4px;" id="dotEstatus"></span>
             </div>
             <button class="btn-neon" id="btnEstatusGPS" onclick="toggleEstatusGPS()">Ponerse EN LÍNEA</button>
         </div>
@@ -168,7 +168,7 @@
             <div class="card-title">💳 ZIPPY Wallet (80% Líquido)</div>
             <p style="font-size:0.82em; color:#ccc; margin:0 0 5px 0;">Saldo disponible para retiro:</p>
             <div class="stat-val">$58.00 USD</div>
-            <button class="btn-neon" style="margin-top:15px; background-color:#ccff00; color:#0d0d0d;" onclick="alert('Solicitud de retiro enviada vía Pago Móvil con éxito.')">Retirar vía Pago Móvil</button>
+            <button class="btn-neon" style="margin-top:15px; background-color:#ccff00; color:#080808;" onclick="alert('Solicitud de retiro enviada vía Pago Móvil con éxito.')">Retirar vía Pago Móvil</button>
         </div>
     </div>
 
@@ -229,7 +229,7 @@
             <div class="card">
                 <div class="card-title">🏛️ Torre de Control & Telemetría Global</div>
                 
-                <div style="margin-bottom:10px; border-bottom:2px solid #333; padding-bottom:8px;">
+                <div style="margin-bottom:10px; border-bottom:3px solid #ccff00; padding-bottom:8px;">
                     <strong style="color:#ccff00; font-size:1.05em;">📊 Estatus de Flotas Activas:</strong><br>
                     • ZIPPY Motos (80/20): <strong>35 Unidades</strong> (🟢 Activos)<br>
                     • ZIPPY Taxis / Autos: <strong>15 Unidades</strong> (🟢 Activos)<br>
@@ -238,7 +238,7 @@
                     • Carga Pesada / Gandolas (20%): <strong>8 Unidades</strong> (🟢 En Ruta)
                 </div>
 
-                <div style="margin-bottom:10px; border-bottom:2px solid #333; padding-bottom:8px;">
+                <div style="margin-bottom:10px; border-bottom:3px solid #ccff00; padding-bottom:8px;">
                     <strong style="color:#ccff00; font-size:1.05em;">💰 Consolidado Financiero:</strong><br>
                     • Comisiones Recaudadas (Motos 20%): <span class="stat-val">$210.00 USD</span><br>
                     • Comisiones Recaudadas (Buses 10%): <span class="stat-val">$320.00 USD</span><br>
@@ -302,7 +302,7 @@
             dot.style.background = "#777";
             btn.innerText = "Ponerse EN LÍNEA";
             btn.style.backgroundColor = "#ccff00";
-            btn.style.color = "#0d0d0d";
+            btn.style.color = "#080808";
         }
     }
 
@@ -310,7 +310,4 @@
         let servicio = document.getElementById('cotCategoria').value;
         let origen = document.getElementById('origenCliente').value.trim();
         let destino = document.getElementById('destinoCliente').value.trim();
-        let resDiv = document.getElementById('cotResult');
-
-        if(!origen || !destino) {
-            alert('Por f
+        let resDiv = d

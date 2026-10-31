@@ -43,30 +43,27 @@
         <button id="btnCEO" onclick="switchTab('ceo', this)">Panel CEO</button>
     </div>
 
-    <!-- 1. VISTA COTIZADOR URBANO Y MULTIMODAL CON CÁLCULO DE DISTANCIA -->
+    <!-- 1. VISTA COTIZADOR URBANO Y MULTIMODAL -->
     <div id="viewCliente" class="section-view active">
         <div class="card">
             <div class="card-title">🤖 Solicita tu Servicio ZIPPY</div>
-            <p style="font-size:0.78em; color:#aaa;">Ingresa las direcciones para calcular automáticamente la distancia en mapa y la tarifa exacta.</p>
+            <p style="font-size:0.78em; color:#aaa;">Indica tu ruta y genera tu solicitud para reportar el pago móvil a la Torre de Control.</p>
             
             <label>Seleccione el Servicio:</label>
             <select id="cotCategoria">
-                <option value="moto">ZIPPY Moto - Mototaxi / Encomienda ($1.50 Base + $0.50/Km)</option>
-                <option value="carro">ZIPPY CAR - Taxi / Carrera Urbana ($3.00 Base + $0.80/Km)</option>
-                <option value="kids">ZIPPY KIDS - Escolar Seguro</option>
-                <option value="carga">ZIPPY Carga / Flete</option>
+                <option value="ZIPPY Moto ($3.00)">ZIPPY Moto - Mototaxi / Encomienda ($3.00)</option>
+                <option value="ZIPPY Car ($5.00)">ZIPPY CAR - Taxi / Carrera Urbana ($5.00)</option>
+                <option value="ZIPPY Kids">ZIPPY KIDS - Escolar Seguro</option>
+                <option value="ZIPPY Carga Pesada">ZIPPY Carga / Flete</option>
             </select>
 
             <label>Punto de Origen (¿Dónde te buscamos?):</label>
-            <input type="text" id="origenCliente" placeholder="Ej: Vicario 3, Sector 5 de Julio...">
+            <input type="text" id="origenCliente" placeholder="Ej: Sector 5 de Julio, Carrera 10...">
 
             <label>Punto de Destino (¿A dónde vas?):</label>
-            <input type="text" id="destinoCliente" placeholder="Ej: Centro, Carrera 12...">
+            <input type="text" id="destinoCliente" placeholder="Ej: Terminal de Pasajeros o comercio...">
 
-            <label>Distancia Estimada (Calculada / Ingrese Km aprox.):</label>
-            <input type="number" id="distanciaKm" placeholder="Ej: 3.5" step="0.1" value="3.0">
-
-            <button class="btn-gold" onclick="calcularYEnviarWhatsApp()">📍 Calcular Distancia & Tarifa por WhatsApp</button>
+            <button class="btn-gold" onclick="calcularYEnviarWhatsApp()">Generar Solicitud para WhatsApp</button>
             <div id="cotResult" style="margin-top:10px; display:none; background:#111; padding:10px; border-radius:4px; border:1px solid #d4af37;"></div>
         </div>
     </div>
@@ -172,10 +169,9 @@
     }
 
     function calcularYEnviarWhatsApp() {
-        let cat = document.getElementById('cotCategoria').value;
+        let servicio = document.getElementById('cotCategoria').value;
         let origen = document.getElementById('origenCliente').value.trim();
         let destino = document.getElementById('destinoCliente').value.trim();
-        let km = parseFloat(document.getElementById('distanciaKm').value) || 3;
         let resDiv = document.getElementById('cotResult');
 
         if(!origen || !destino) {
@@ -183,30 +179,15 @@
             return;
         }
 
-        let totalUSD = 0;
-        let nombreServicio = "";
-
-        if(cat === 'moto') {
-            nombreServicio = "ZIPPY Moto";
-            totalUSD = 1.50 + (km * 0.50);
-        } else if(cat === 'carro') {
-            nombreServicio = "ZIPPY CAR";
-            totalUSD = 3.00 + (km * 0.80);
-        } else {
-            nombreServicio = "ZIPPY Especial / Carga";
-            totalUSD = 5.00 + (km * 1.00);
-        }
-
-        let montoFormateado = "$" + totalUSD.toFixed(2) + " USD";
+        let precioBase = servicio.includes('$3.00') ? '$3.00 USD' : (servicio.includes('$5.00') ? '$5.00 USD' : 'Tarifa por Acuerdo');
 
         resDiv.style.display = 'block';
         resDiv.innerHTML = `
-            <div style="color:#d4af37; font-weight:bold; margin-bottom:5px;">📋 Cotización por Distancia Calculada</div>
-            • <strong>Servicio:</strong> ${nombreServicio}<br>
+            <div style="color:#d4af37; font-weight:bold; margin-bottom:5px;">📋 Resumen de Solicitud</div>
+            • <strong>Servicio:</strong> ${servicio}<br>
             • <strong>Origen:</strong> ${origen}<br>
             • <strong>Destino:</strong> ${destino}<br>
-            • <strong>Distancia Ruta:</strong> ${km} Km<br>
-            • <strong>Monto Total a Pagar:</strong> <span style="color:#00ff00; font-size:1.1em; font-weight:bold;">${montoFormateado}</span><br><br>
+            • <strong>Tarifa Estimada:</strong> <span style="color:#00ff00; font-size:1.1em; font-weight:bold;">${precioBase}</span><br><br>
 
             <div style="background:#1a1a1a; padding:8px; border-radius:4px; border:1px solid #d4af37; margin-bottom:8px;">
                 <div style="color:#d4af37; font-weight:bold; font-size:0.85em;">💳 Pago Móvil BDV (ZIPPY):</div>
@@ -215,7 +196,7 @@
                 • Cédula: V-19476093
             </div>
 
-            <a href="https://wa.me/584264343732?text=Hola%20Torre%20de%20Control,%20necesito%20una%20unidad.%0A%0A*Servicio:*%20${encodeURIComponent(nombreServicio)}%0A*Origen:*%20${encodeURIComponent(origen)}%0A*Destino:*%20${encodeURIComponent(destino)}%0A*Distancia:*%20${km}%20Km%0A*Monto%20Calculado:*%20${encodeURIComponent(montoFormateado)}%0A*Referencia%20Pago%20Móvil:*%20[Escribe%20aquí%20tu%20referencia]" target="_blank" style="display: block; width: 100%; background-color: #25d366; color: #fff; text-align: center; padding: 12px; border-radius: 6px; text-decoration: none; font-weight: bold; box-sizing: border-box;">
+            <a href="https://wa.me/584264343732?text=Hola%20Torre%20de%20Control,%20necesito%20una%20unidad.%0A%0A*Servicio:*%20${encodeURIComponent(servicio)}%0A*Origen:*%20${encodeURIComponent(origen)}%0A*Destino:*%20${encodeURIComponent(destino)}%0A*Referencia%20Pago%20Móvil:*%20[Escribe%20aquí%20tu%20referencia]" target="_blank" style="display: block; width: 100%; background-color: #25d366; color: #fff; text-align: center; padding: 12px; border-radius: 6px; text-decoration: none; font-weight: bold; box-sizing: border-box;">
               💬 Enviar Solicitud y Pago a WhatsApp
             </a>
         `;

@@ -47,23 +47,23 @@
     <div id="viewCliente" class="section-view active">
         <div class="card">
             <div class="card-title">🤖 Solicita tu Servicio ZIPPY</div>
-            <p style="font-size:0.78em; color:#aaa;">Indica tu ruta y genera tu solicitud para reportar el pago móvil a la Torre de Control.</p>
+            <p style="font-size:0.78em; color:#aaa;">Indica tu ruta. La Torre de Control calculará la distancia y tarifa exacta por WhatsApp.</p>
             
             <label>Seleccione el Servicio:</label>
             <select id="cotCategoria">
-                <option value="ZIPPY Moto ($3.00)">ZIPPY Moto - Mototaxi / Encomienda ($3.00)</option>
-                <option value="ZIPPY Car ($5.00)">ZIPPY CAR - Taxi / Carrera Urbana ($5.00)</option>
-                <option value="ZIPPY Kids">ZIPPY KIDS - Escolar Seguro</option>
-                <option value="ZIPPY Carga Pesada">ZIPPY Carga / Flete</option>
+                <option value="ZIPPY Moto - Mototaxi / Encomienda">ZIPPY Moto - Mototaxi / Encomienda</option>
+                <option value="ZIPPY Car - Taxi / Urbano">ZIPPY CAR - Taxi / Carrera Urbana</option>
+                <option value="ZIPPY Kids - Escolar Seguro">ZIPPY KIDS - Escolar Seguro</option>
+                <option value="ZIPPY Carga / Flete">ZIPPY Carga / Flete</option>
             </select>
 
             <label>Punto de Origen (¿Dónde te buscamos?):</label>
-            <input type="text" id="origenCliente" placeholder="Ej: Sector 5 de Julio, Carrera 10...">
+            <input type="text" id="origenCliente" placeholder="Ej: Vicario 3, Sector 5 de Julio...">
 
             <label>Punto de Destino (¿A dónde vas?):</label>
-            <input type="text" id="destinoCliente" placeholder="Ej: Terminal de Pasajeros o comercio...">
+            <input type="text" id="destinoCliente" placeholder="Ej: Centro Carrera 12...">
 
-            <button class="btn-gold" onclick="calcularYEnviarWhatsApp()">Generar Solicitud para WhatsApp</button>
+            <button class="btn-gold" onclick="calcularYEnviarWhatsApp()">Enviar Ruta a Torre de Control</button>
             <div id="cotResult" style="margin-top:10px; display:none; background:#111; padding:10px; border-radius:4px; border:1px solid #d4af37;"></div>
         </div>
     </div>
@@ -316,49 +316,9 @@
             return;
         }
 
-        let precioBase = servicio.includes('$3.00') ? '$3.00 USD' : (servicio.includes('$5.00') ? '$5.00 USD' : 'Tarifa por Acuerdo');
-
         resDiv.style.display = 'block';
         resDiv.innerHTML = `
-            <div style="color:#d4af37; font-weight:bold; margin-bottom:5px;">📋 Resumen de Solicitud</div>
+            <div style="color:#d4af37; font-weight:bold; margin-bottom:5px;">📋 Solicitud Enviada a Torre de Control</div>
             • <strong>Servicio:</strong> ${servicio}<br>
             • <strong>Origen:</strong> ${origen}<br>
-            • <strong>Destino:</strong> ${destino}<br>
-            • <strong>Tarifa Estimada:</strong> <span style="color:#00ff00; font-size:1.1em; font-weight:bold;">${precioBase}</span><br><br>
-
-            <div style="background:#1a1a1a; padding:8px; border-radius:4px; border:1px solid #d4af37; margin-bottom:8px;">
-                <div style="color:#d4af37; font-weight:bold; font-size:0.85em;">💳 Pago Móvil BDV (ZIPPY):</div>
-                • Banco: Banco de Venezuela (0102)<br>
-                • Teléfono: 0426-4343732<br>
-                • Cédula: V-19476093
-            </div>
-
-            <a href="https://wa.me/584264343732?text=Hola%20Torre%20de%20Control,%20necesito%20una%20unidad.%0A%0A*Servicio:*%20${encodeURIComponent(servicio)}%0A*Origen:*%20${encodeURIComponent(origen)}%0A*Destino:*%20${encodeURIComponent(destino)}%0A*Referencia%20Pago%20Móvil:*%20[Escribe%20aquí%20tu%20referencia]" target="_blank" style="display: block; width: 100%; background-color: #25d366; color: #fff; text-align: center; padding: 12px; border-radius: 6px; text-decoration: none; font-weight: bold; box-sizing: border-box;">
-              💬 Enviar Solicitud y Pago a WhatsApp
-            </a>
-        `;
-    }
-
-    function loginCEO() {
-        let key = document.getElementById('ceoKey').value;
-        if(CLAVES_VALIDAS.includes(key)) {
-            document.getElementById('ceoAuth').style.display = 'none';
-            document.getElementById('ceoDashboard').style.display = 'block';
-        } else {
-            alert('Clave de acceso incorrecta.');
-        }
-    }
-
-    function logoutCEO() {
-        document.getElementById('ceoKey').value = '';
-        document.getElementById('ceoDashboard').style.display = 'none';
-        document.getElementById('ceoAuth').style.display = 'block';
-    }
-
-    function exportarReportePDF() {
-        alert('Generando PDF consolidado de ingresos, comisiones y flotas activas...');
-    }
-</script>
-
-</body>
-</html>
+            • <s

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ZIPPY, C.A. - Torre de Control & Flota Multimodal</title>
+    <title>ZIPPY, C.A. - Torre de Control & Telemetría Global</title>
     <style>
         body { background-color: #121212; color: #e0e0e0; font-family: Arial, sans-serif; margin: 0; padding: 15px; }
         .container { max-width: 420px; margin: 0 auto; background: #1a1a1a; padding: 20px; border-radius: 8px; border: 1px solid #d4af37; }
@@ -20,7 +20,7 @@
         input, select, textarea { width: 100%; padding: 10px; margin-top: 4px; background: #2a2a2a; border: 1px solid #444; color: #fff; border-radius: 4px; box-sizing: border-box; font-size: 0.9em; }
         .btn-gold { width: 100%; background-color: #d4af37; color: #121212; padding: 12px; border: none; font-weight: bold; border-radius: 4px; cursor: pointer; margin-top: 10px; font-size: 0.95em; }
         .btn-danger { width: 100%; background-color: #8b0000; color: #fff; padding: 10px; border: none; font-weight: bold; border-radius: 4px; cursor: pointer; margin-top: 8px; }
-        .stat-val { font-size: 1.3em; color: #d4af37; font-weight: bold; }
+        .stat-val { font-size: 1.2em; color: #d4af37; font-weight: bold; }
         .status-badge { background-color: #004d00; color: #00ff00; padding: 2px 5px; border-radius: 3px; font-size: 0.8em; font-weight: bold; margin-left: 5px; }
         .footer-text { text-align: center; font-size: 0.75em; color: #777; margin-top: 20px; }
         .legal-box { background: #111; padding: 8px; border-radius: 4px; font-size: 0.75em; color: #ccc; margin-top: 8px; border-left: 3px solid #d4af37; max-height: 120px; overflow-y: auto; }
@@ -41,7 +41,7 @@
         <button id="tab5" onclick="switchTab('ceo')">Panel CEO</button>
     </div>
 
-    <!-- 1. VISTA COTIZADOR URBANO CON REGLA 80/20 Y RECARGOS -->
+    <!-- 1. VISTA COTIZADOR URBANO Y MULTIMODAL -->
     <div id="viewCliente" class="section-view active">
         <div class="card">
             <div class="card-title">🤖 Cotizador Multimodal & Recargos</div>
@@ -82,7 +82,7 @@
         </div>
     </div>
 
-    <!-- 2. VISTA FISCAL DE TERMINAL & ESTADO DE CHOFERES -->
+    <!-- 2. VISTA FISCAL DE TERMINAL -->
     <div id="viewFiscal" class="section-view">
         <div class="card" style="border-color:#d4af37;">
             <div class="card-title">🏢 Panel del Fiscal: Unidades & Estatus Operativo</div>
@@ -102,7 +102,7 @@
             <input type="text" placeholder="Colector / Ayudante (Nombre y Cédula)" style="margin-top:4px;">
 
             <label>Estatus del Chofer / Unidad en Terminal:</label>
-            <select id="estatusChoferTerminal">
+            <select>
                 <option value="disponible">🟢 Disponible / En Andén (Activo)</option>
                 <option value="en_ruta">🟡 En Ruta / Viajando</option>
                 <option value="no_disponible">🔴 No Disponible / Fuera de Servicio</option>
@@ -147,7 +147,7 @@
         </div>
     </div>
 
-    <!-- 4. VISTA AFILIACIONES CON BOTÓN DE DISPONIBILIDAD -->
+    <!-- 4. VISTA AFILIACIONES -->
     <div id="viewFlota" class="section-view">
         <div class="card" style="border-color:#d4af37;">
             <div class="card-title">🚐 Módulo de Afiliaciones & Control de Estatus</div>
@@ -182,7 +182,7 @@
         </div>
     </div>
 
-    <!-- 5. PANEL CEO -->
+    <!-- 5. PANEL CEO - TORRE DE CONTROL MAESTRA (CONSOLIDA TODO) -->
     <div id="viewCEO" class="section-view">
         <div id="ceoAuth" class="card">
             <div class="card-title">🔒 Panel Central de Control CEO</div>
@@ -194,19 +194,33 @@
         <div id="ceoDashboard" style="display:none;">
             <div class="card" style="border-color:#d4af37;">
                 <div class="card-title">🏛️ Torre de Control & Telemetría Global</div>
-                <div>• Unidades Activas: <strong>84 Unidades</strong></div>
-                <div>• Recaudación Comisiones: <span class="stat-val">$840.00 USD</span></div>
-                <div>• Ingresos por Afiliaciones: <span class="stat-val">$4,120.00 USD</span></div>
                 
-                <div style="margin-top:8px; display:flex; align-items:center;">
+                <div style="margin-bottom:8px; border-bottom:1px solid #333; padding-bottom:6px;">
+                    <strong style="color:#d4af37;">📊 Estatus de Flotas Activas:</strong><br>
+                    • ZIPPY Motos (80/20): <strong>35 Unidades</strong> (🟢 Activos)<br>
+                    • ZIPPY Taxis / Autos: <strong>15 Unidades</strong> (🟢 Activos)<br>
+                    • ZIPPY Kids (Escolar): <strong>8 Unidades</strong> (🟢 Activos)<br>
+                    • Autobuses / Encavas (10%): <strong>18 Unidades</strong> (🟢 En Terminal)<br>
+                    • Carga Pesada / Gandolas (20%): <strong>8 Unidades</strong> (🟢 En Ruta)
+                </div>
+
+                <div style="margin-bottom:8px; border-bottom:1px solid #333; padding-bottom:6px;">
+                    <strong style="color:#d4af37;">💰 Consolidado Financiero:</strong><br>
+                    • Comisiones Recaudadas (Motos 20%): <span class="stat-val">$210.00 USD</span><br>
+                    • Comisiones Recaudadas (Buses 10%): <span class="stat-val">$320.00 USD</span><br>
+                    • Comisiones Recaudadas (Carga 20%): <span class="stat-val">$310.00 USD</span><br>
+                    • Ingresos por Afiliaciones ($30 / $60): <span class="stat-val">$4,120.00 USD</span>
+                </div>
+                
+                <div style="margin-bottom:8px; display:flex; align-items:center;">
                     • Estado Fiscal BDV / SENIAT: <span class="status-badge">Sincronizado</span>
                 </div>
 
-                <button class="btn-gold" style="margin-top:15px;" onclick="exportarReportePDF()">Exportar Consolidado Financiero (PDF)</button>
+                <button class="btn-gold" style="margin-top:10px;" onclick="exportarReportePDF()">Exportar Consolidado Financiero (PDF)</button>
             </div>
 
             <div class="card">
-                <div class="card-title">⚙️ Control Operativo</div>
+                <div class="card-title">⚙️ Control Operativo & Sistema</div>
                 <button class="btn-danger" onclick="logoutCEO()">Cerrar Sesión Master</button>
             </div>
         </div>
@@ -280,7 +294,7 @@
     }
 
     function exportarReportePDF() {
-        alert('Generando reporte financiero consolidado en PDF...');
+        alert('Generando reporte financiero consolidado en PDF con toda la telemetría global...');
     }
 
     function calcularCotizacion() {

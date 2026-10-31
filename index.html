@@ -19,7 +19,6 @@
         label { color: #d4af37; font-size: 0.85em; display: block; margin-top: 8px; }
         input, select, textarea { width: 100%; padding: 10px; margin-top: 4px; background: #2a2a2a; border: 1px solid #444; color: #fff; border-radius: 4px; box-sizing: border-box; font-size: 0.9em; }
         .btn-gold { width: 100%; background-color: #d4af37; color: #121212; padding: 12px; border: none; font-weight: bold; border-radius: 4px; cursor: pointer; margin-top: 10px; font-size: 0.95em; }
-        .btn-upload { width: 100%; background-color: #222; color: #d4af37; border: 1px dashed #d4af37; padding: 8px; font-weight: bold; border-radius: 4px; cursor: pointer; margin-top: 5px; font-size: 0.8em; text-align: center; display: block; box-sizing: border-box; }
         .btn-danger { width: 100%; background-color: #8b0000; color: #fff; padding: 10px; border: none; font-weight: bold; border-radius: 4px; cursor: pointer; margin-top: 8px; }
         .stat-val { font-size: 1.3em; color: #d4af37; font-weight: bold; }
         .status-badge { background-color: #004d00; color: #00ff00; padding: 2px 5px; border-radius: 3px; font-size: 0.8em; font-weight: bold; margin-left: 5px; }
@@ -45,8 +44,8 @@
     <!-- 1. VISTA COTIZADOR URBANO CON REGLA 80/20 Y RECARGOS -->
     <div id="viewCliente" class="section-view active">
         <div class="card">
-            <div class="card-title">🤖 Cotizador Multimodal (Moto 80/20 & Recargos)</div>
-            <p style="font-size:0.78em; color:#aaa;">Mototaxis (80% Conductor / 20% ZIPPY), Pasajes (10%) y Carga (20%).</p>
+            <div class="card-title">🤖 Cotizador Multimodal & Recargos</div>
+            <p style="font-size:0.78em; color:#aaa;">Mototaxis (80/20), Pasajes (10%), Carga (20%) y Recargos Nocturnos/Trasnocho.</p>
             
             <label>Seleccione el Servicio:</label>
             <select id="cotCategoria" onchange="cambiarModoCotizacion()">
@@ -83,11 +82,11 @@
         </div>
     </div>
 
-    <!-- 2. VISTA FISCAL DE TERMINAL -->
+    <!-- 2. VISTA FISCAL DE TERMINAL & ESTADO DE CHOFERES -->
     <div id="viewFiscal" class="section-view">
         <div class="card" style="border-color:#d4af37;">
-            <div class="card-title">🏢 Panel del Fiscal: Unidades & Pago Móvil</div>
-            <p style="font-size:0.78em; color:#aaa;">Afiliación en andén, capacidad, tripulación y registro de Pago Móvil para retiros.</p>
+            <div class="card-title">🏢 Panel del Fiscal: Unidades & Estatus Operativo</div>
+            <p style="font-size:0.78em; color:#aaa;">Afiliación en andén, capacidad, tripulación y control de disponibilidad (Activo/Inactivo).</p>
 
             <label>Propietario / Dueño:</label>
             <input type="text" placeholder="Ej: Carlos Mendoza">
@@ -101,6 +100,13 @@
             <label>Tripulación:</label>
             <input type="text" placeholder="Chofer (Nombre y Cédula)">
             <input type="text" placeholder="Colector / Ayudante (Nombre y Cédula)" style="margin-top:4px;">
+
+            <label>Estatus del Chofer / Unidad en Terminal:</label>
+            <select id="estatusChoferTerminal">
+                <option value="disponible">🟢 Disponible / En Andén (Activo)</option>
+                <option value="en_ruta">🟡 En Ruta / Viajando</option>
+                <option value="no_disponible">🔴 No Disponible / Fuera de Servicio</option>
+            </select>
 
             <div style="background:#111; padding:10px; border-radius:5px; border:1px solid #d4af37; margin-top:10px;">
                 <div style="color:#d4af37; font-weight:bold; font-size:0.85em; margin-bottom:5px;">🏦 Pago Móvil del Dueño (Para Wallet)</div>
@@ -117,7 +123,7 @@
                 <input type="text" placeholder="Ej: 0414-1234567">
             </div>
 
-            <button class="btn-gold" style="margin-top:12px;" onclick="alert('Unidad afiliada por el fiscal con éxito. Pago móvil guardado.')">Afiliar Unidad al Terminal ($60)</button>
+            <button class="btn-gold" style="margin-top:12px;" onclick="alert('Unidad afiliada y estatus del chofer actualizado con éxito.')">Afiliar Unidad y Guardar Estatus ($60)</button>
         </div>
 
         <div class="card">
@@ -141,11 +147,11 @@
         </div>
     </div>
 
-    <!-- 4. VISTA AFILIACIONES -->
+    <!-- 4. VISTA AFILIACIONES CON BOTÓN DE DISPONIBILIDAD -->
     <div id="viewFlota" class="section-view">
         <div class="card" style="border-color:#d4af37;">
-            <div class="card-title">🚐 Módulo de Afiliaciones y Dotación</div>
-            <p style="font-size:0.78em; color:#aaa;">Inscribe Motos, Taxis, Encomiendas, ZIPPY Kids ($30) o Carga Pesada ($60).</p>
+            <div class="card-title">🚐 Módulo de Afiliaciones & Control de Estatus</div>
+            <p style="font-size:0.78em; color:#aaa;">Inscribe unidades y gestiona si el chofer está activo o inactivo en la red.</p>
 
             <label>Tipo de Afiliación:</label>
             <select>
@@ -162,11 +168,17 @@
             <label>Placa / N° de Registro:</label>
             <input type="text" placeholder="Ej: Placa o ID">
 
+            <label>Estatus del Conductor / Flota:</label>
+            <select>
+                <option value="activo">🟢 Activo / Disponible para Servicios</option>
+                <option value="inactivo">🔴 Inactivo / Fuera de Línea</option>
+            </select>
+
             <div class="legal-box" style="margin-top:8px;">
                 <strong>Dotación / Beneficios:</strong> Carnets PVC con QR, camisas reflectivas y calcomanías corporativas oficiales.
             </div>
 
-            <button class="btn-gold" style="margin-top:15px;" onclick="alert('Afiliación procesada con éxito en la plataforma.')">Completar Registro y Pago</button>
+            <button class="btn-gold" style="margin-top:15px;" onclick="alert('Afiliación y estatus de disponibilidad procesados con éxito.')">Completar Registro</button>
         </div>
     </div>
 
@@ -280,7 +292,6 @@
         let tipoServicio = "";
         let recargoTexto = "Horario Normal";
 
-        // Cálculo base según categoría
         if(cat === 'moto') {
             let km = parseFloat(document.getElementById('cotKm').value) || 1;
             subtotal = 3.00 + ((km - 1) * 0.50);
@@ -295,34 +306,32 @@
         } else if(cat === 'autobus') {
             let cant = parseInt(document.getElementById('cotKm').value) || 1;
             subtotal = cant * 15.00;
-            comisionZippy = subtotal * 0.10; // 10%
-            netoTransportista = subtotal * 0.90; // 90%
+            comisionZippy = subtotal * 0.10;
+            netoTransportista = subtotal * 0.90;
             tipoServicio = "Pasaje Autobús (Comisión 10%)";
         } else {
             let montoCarga = parseFloat(document.getElementById('montoCargaDueño').value);
             if(isNaN(montoCarga) || montoCarga <= 0) { alert('Ingresa el monto propuesto por el transportista de carga.'); return; }
             subtotal = montoCarga;
-            comisionZippy = subtotal * 0.20; // 20%
-            netoTransportista = subtotal * 0.80; // 80%
+            comisionZippy = subtotal * 0.20;
+            netoTransportista = subtotal * 0.80;
             tipoServicio = "Carga Pesada / Gandola (Comisión 20%)";
         }
 
-        // Aplicar recargo nocturno (40%) o trasnocho (140%) a servicios urbanos
         if(cat === 'moto' || cat === 'auto' || cat === 'escolar') {
             if(horario === 'nocturno') {
-                subtotal = subtotal * 1.40; // Recargo 40%
+                subtotal = subtotal * 1.40;
                 recargoTexto = "Recargo Nocturno (+40%)";
             } else if(horario === 'trasnocho') {
-                subtotal = subtotal * 2.40; // Recargo 140%
+                subtotal = subtotal * 2.40;
                 recargoTexto = "Recargo Trasnochado / Madrugada (+140%)";
             }
 
-            // Aplicar regla 80/20 específica para ZIPPY Moto; para autos/escolar se mantiene el estándar
             if(cat === 'moto') {
-                netoTransportista = subtotal * 0.80; // 80% para el motorizado
-                comisionZippy = subtotal * 0.20;     // 20% para la empresa
+                netoTransportista = subtotal * 0.80;
+                comisionZippy = subtotal * 0.20;
             } else {
-                netoTransportista = subtotal;        // 100% para conductor urbano (taxis)
+                netoTransportista = subtotal;
                 comisionZippy = 0;
             }
         }

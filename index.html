@@ -31,7 +31,7 @@
 
 <div class="container">
     <h2>ZIPPY, C.A.</h2>
-    <div class="subtitle">Plataforma Multimodal • Venezuela</div>
+    <div class="subtitle">Plataforma Multimodal • Calabozo</div>
 
     <!-- Navegación de Pestañas Global -->
     <div class="nav-tabs">
@@ -46,40 +46,24 @@
     <!-- 1. VISTA COTIZADOR URBANO Y MULTIMODAL -->
     <div id="viewCliente" class="section-view active">
         <div class="card">
-            <div class="card-title">🤖 Cotizador Multimodal & Recargos</div>
-            <p style="font-size:0.78em; color:#aaa;">Mototaxis (80/20), Pasajes (10%), Carga (20%) y Recargos Nocturnos/Trasnocho.</p>
+            <div class="card-title">🤖 Solicita tu Servicio ZIPPY</div>
+            <p style="font-size:0.78em; color:#aaa;">Indica tu ruta y calcula la tarifa base para reportar tu pago móvil de inmediato.</p>
             
             <label>Seleccione el Servicio:</label>
-            <select id="cotCategoria" onchange="cambiarModoCotizacion()">
-                <option value="moto">ZIPPY Moto - Mototaxi / Encomienda ($3.00 Base - 80/20)</option>
-                <option value="auto">ZIPPY CAR - Taxi / Carrera Urbana ($5.00 Base)</option>
-                <option value="escolar">ZIPPY KIDS - Escolar Seguro ($30 Afiliación)</option>
-                <option value="autobus">Autobús / Encava (Pasaje - Comisión 10%)</option>
-                <option value="gandola">ZIPPY Carga Pesada / Gandola (Flete - Comisión 20%)</option>
+            <select id="cotCategoria">
+                <option value="ZIPPY Moto ($3.00)">ZIPPY Moto - Mototaxi / Encomienda ($3.00)</option>
+                <option value="ZIPPY Car ($5.00)">ZIPPY CAR - Taxi / Carrera Urbana ($5.00)</option>
+                <option value="ZIPPY Kids">ZIPPY KIDS - Escolar Seguro</option>
+                <option value="ZIPPY Carga Pesada">ZIPPY Carga / Flete</option>
             </select>
 
-            <div id="divHorario" style="margin-top:8px;">
-                <label>Franja Horaria / Tarifa:</label>
-                <select id="cotHorario">
-                    <option value="normal">🌅 Horario Normal (Día)</option>
-                    <option value="nocturno">🌙 Recargo Nocturno (07:00 PM - 10:59 PM) [+40%]</option>
-                    <option value="trasnocho">⚡ Recargo Trasnochado / Madrugada (11:00 PM - 05:59 AM) [+140%]</option>
-                </select>
-            </div>
+            <label>Punto de Origen (¿Dónde te buscamos?):</label>
+            <input type="text" id="origenCliente" placeholder="Ej: Sector 5 de Julio, Carrera 10...">
 
-            <div id="divDistancia" style="margin-top:8px;">
-                <label>Distancia estimada (Km) o N° de Pasajes:</label>
-                <input type="number" id="cotKm" value="1" min="1">
-            </div>
+            <label>Punto de Destino (¿A dónde vas?):</label>
+            <input type="text" id="destinoCliente" placeholder="Ej: Terminal de Pasajeros o comercio...">
 
-            <div id="divCarga" style="display:none; margin-top:8px;">
-                <label>Descripción de la Carga y Destino:</label>
-                <textarea rows="3" placeholder="Ej: Carga pesada de Calabozo a San Fernando..."></textarea>
-                <label>Monto Propuesto por el Transportista ($ USD):</label>
-                <input type="number" id="montoCargaDueño" placeholder="Ej: 500">
-            </div>
-
-            <button class="btn-gold" onclick="calcularCotizacion()">Procesar Servicio / Pago Móvil BDV</button>
+            <button class="btn-gold" onclick="calcularYEnviarWhatsApp()">Calcular y Reportar por WhatsApp</button>
             <div id="cotResult" style="margin-top:10px; display:none; background:#111; padding:10px; border-radius:4px; border:1px solid #d4af37;"></div>
         </div>
     </div>
@@ -144,11 +128,11 @@
             </div>
 
             <label style="margin-top:10px; color:#d4af37;">📸 Carga de Registro Fotográfico de Rigor:</label>
-            <button class="btn-upload" onclick="alert('Cámara abierta: Selfie / Fe de vida del Chófer asignado.')">📷 1. Fe de Vida (Rostro del Chófer)</button>
-            <button class="btn-upload" onclick="alert('Cámara abierta: Foto Frontal del Autobús con placa visible.')">📷 2. Foto Frontal del Autobús</button>
+            <button class="btn-upload" onclick="alert('Cámara abierta: Fe de Vida del Chófer.')">📷 1. Fe de Vida (Rostro del Chófer)</button>
+            <button class="btn-upload" onclick="alert('Cámara abierta: Foto Frontal del Autobús.')">📷 2. Foto Frontal del Autobús</button>
             <button class="btn-upload" onclick="alert('Cámara abierta: Foto Lateral Izquierda.')">📷 3. Foto Lateral Izquierda</button>
             <button class="btn-upload" onclick="alert('Cámara abierta: Foto Lateral Derecha.')">📷 4. Foto Lateral Derecha</button>
-            <button class="btn-upload" onclick="alert('Cámara abierta: Foto Parte Trasera (Placa y Stop).')">📷 5. Foto Parte Trasera del Autobús</button>
+            <button class="btn-upload" onclick="alert('Cámara abierta: Foto Parte Trasera.')">📷 5. Foto Parte Trasera del Autobús</button>
 
             <div style="background:#111; padding:10px; border-radius:5px; border:1px solid #d4af37; margin-top:10px;">
                 <div style="color:#d4af37; font-weight:bold; font-size:0.85em; margin-bottom:5px;">🏦 Pago Móvil del Dueño (Para Recibir Liquidación 90%)</div>
@@ -165,7 +149,7 @@
                 <input type="text" placeholder="Ej: 0414-1234567">
             </div>
 
-            <button class="btn-gold" style="margin-top:12px;" onclick="alert('Autobús y chófer afiliados exitosamente. Expediente digital completo guardado.')">Afiliar Chófer y Guardar Autobús ($60)</button>
+            <button class="btn-gold" style="margin-top:12px;" onclick="alert('Autobús y chófer afiliados exitosamente. Expediente digital guardado.')">Afiliar Chófer y Guardar Autobús ($60)</button>
         </div>
     </div>
 
@@ -280,9 +264,12 @@
     const CLAVES_VALIDAS = ["1947", "19476093"]; 
 
     function switchTab(viewId, btnElement) {
+        // Ocultar todas las vistas
         document.querySelectorAll('.section-view').forEach(s => s.classList.remove('active'));
+        // Quitar la clase active a todos los botones del menú
         document.querySelectorAll('.nav-tabs button').forEach(b => b.classList.remove('active'));
 
+        // Mostrar la vista seleccionada según el ID
         if(viewId === 'cliente') {
             document.getElementById('viewCliente').classList.add('active');
         } else if(viewId === 'fiscalTerminal') {
@@ -297,20 +284,33 @@
             document.getElementById('viewCEO').classList.add('active');
         }
 
+        // Marcar el botón presionado como activo
         if(btnElement) {
             btnElement.classList.add('active');
         }
     }
 
-    function cambiarModoCotizacion() {
-        let cat = document.getElementById('cotCategoria').value;
-        let divHorario = document.getElementById('divHorario');
-        let divDistancia = document.getElementById('divDistancia');
-        let divCarga = document.getElementById('divCarga');
+    function calcularYEnviarWhatsApp() {
+        let servicio = document.getElementById('cotCategoria').value;
+        let origen = document.getElementById('origenCliente').value.trim();
+        let destino = document.getElementById('destinoCliente').value.trim();
+        let resDiv = document.getElementById('cotResult');
 
-        if(cat === 'gandola') {
-            divHorario.style.display = 'none';
-            divDistancia.style.display = 'none';
-            divCarga.style.display = 'block';
-        } else if(cat === 'autobus') {
-            divHorario.sty
+        if(!origen || !destino) {
+            alert('Por favor, ingresa el origen y el destino de tu carrera.');
+            return;
+        }
+
+        let precioBase = servicio.includes('$3.00') ? '$3.00 USD' : (servicio.includes('$5.00') ? '$5.00 USD' : 'Tarifa por Acuerdo');
+
+        resDiv.style.display = 'block';
+        resDiv.innerHTML = `
+            <div style="color:#d4af37; font-weight:bold; margin-bottom:5px;">📋 Resumen de Solicitud</div>
+            • <strong>Servicio:</strong> ${servicio}<br>
+            • <strong>Origen:</strong> ${origen}<br>
+            • <strong>Destino:</strong> ${destino}<br>
+            • <strong>Tarifa Estimada:</strong> <span style="color:#00ff00; font-size:1.1em; font-weight:bold;">${precioBase}</span><br><br>
+
+            <div style="background:#1a1a1a; padding:8px; border-radius:4px; border:1px solid #d4af37; margin-bottom:8px;">
+                <div style="color:#d4af37; font-weight:bold; font-size:0.85em;">💳 Pago Móvil BDV (ZIPPY):</div>
+                • Banco

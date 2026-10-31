@@ -264,9 +264,12 @@
     const CLAVES_VALIDAS = ["1947", "19476093"]; 
 
     function switchTab(viewId, btnElement) {
+        // Ocultar todas las vistas
         document.querySelectorAll('.section-view').forEach(s => s.classList.remove('active'));
+        // Quitar la clase active a todos los botones del menú
         document.querySelectorAll('.nav-tabs button').forEach(b => b.classList.remove('active'));
 
+        // Mostrar la vista seleccionada según el ID
         if(viewId === 'cliente') {
             document.getElementById('viewCliente').classList.add('active');
         } else if(viewId === 'fiscalTerminal') {
@@ -281,6 +284,7 @@
             document.getElementById('viewCEO').classList.add('active');
         }
 
+        // Marcar el botón presionado como activo
         if(btnElement) {
             btnElement.classList.add('active');
         }
@@ -309,9 +313,4 @@
 
             <div style="background:#1a1a1a; padding:8px; border-radius:4px; border:1px solid #d4af37; margin-bottom:8px;">
                 <div style="color:#d4af37; font-weight:bold; font-size:0.85em;">💳 Pago Móvil BDV (ZIPPY):</div>
-                • Banco: Banco de Venezuela (0102)<br>
-                • Teléfono: 0426-4343732<br>
-                • Cédula: V-19476093
-            </div>
-
-            <a href="https://wa.me/584264343732?text=Hola%20Torre%20
+                • Banco

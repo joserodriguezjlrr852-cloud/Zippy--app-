@@ -23,7 +23,7 @@
         .stat-val { font-size: 1.2em; color: #d4af37; font-weight: bold; }
         .status-badge { background-color: #004d00; color: #00ff00; padding: 2px 5px; border-radius: 3px; font-size: 0.8em; font-weight: bold; margin-left: 5px; }
         .footer-text { text-align: center; font-size: 0.75em; color: #777; margin-top: 20px; }
-        .legal-box { background: #111; padding: 8px; border-radius: 4px; font-size: 0.75em; color: #ccc; margin-top: 8px; border-left: 3px solid #d4af37; max-height: 120px; overflow-y: auto; }
+        .legal-box { background: #111; padding: 8px; border-radius: 4px; font-size: 0.75em; color: #ccc; margin-top: 8px; border-left: 3px solid #d4af37; }
     </style>
 </head>
 <body>
@@ -147,19 +147,19 @@
         </div>
     </div>
 
-    <!-- 4. VISTA AFILIACIONES -->
+    <!-- 4. VISTA AFILIACIONES CON REQUISITOS EXIGIDOS -->
     <div id="viewFlota" class="section-view">
         <div class="card" style="border-color:#d4af37;">
-            <div class="card-title">🚐 Módulo de Afiliaciones & Control de Estatus</div>
-            <p style="font-size:0.78em; color:#aaa;">Inscribe unidades y gestiona si el chofer está activo o inactivo en la red.</p>
+            <div class="card-title">🚐 Módulo de Afiliaciones & Requisitos</div>
+            <p style="font-size:0.78em; color:#aaa;">Inscribe unidades y valida los recaudos obligatorios del expediente digital.</p>
 
             <label>Tipo de Afiliación:</label>
             <select>
                 <option value="moto_taxi">ZIPPY Moto / Mototaxi / Encomienda (Urbano)</option>
                 <option value="carro_taxi">ZIPPY Car / Taxi / Urbano</option>
                 <option value="zippy_kids">ZIPPY Kids - Escolar (Motos/Furgones) - $30</option>
-                <option value="carga_pesada">Carga Pesada / Gandolas / Camiones - $60 (Incluye dotación)</option>
-                <option value="flota_bus">Flota de Autobuses / Expresos - $60 (Incluye dotación)</option>
+                <option value="carga_pesada">Carga Pesada / Gandolas / Camiones - $60 (Dotación)</option>
+                <option value="flota_bus">Flota de Autobuses / Expresos - $60 (Dotación)</option>
             </select>
 
             <label>Nombre del Propietario / Conductor:</label>
@@ -168,21 +168,25 @@
             <label>Placa / N° de Registro:</label>
             <input type="text" placeholder="Ej: Placa o ID">
 
-            <label>Estatus del Conductor / Flota:</label>
+            <div class="legal-box" style="margin-top:8px;">
+                <strong>📋 Requisitos Obligatorios del Expediente:</strong><br>
+                • Cédula de Identidad y RIF vigente.<br>
+                • Licencia de Conducir y Certificado Médico.<br>
+                • Documentos del Vehículo (Título y Carnet).<br>
+                • Carta de Residencia y Validación de Pago ($30 / $60).
+            </div>
+
+            <label style="margin-top:8px;">Estatus del Conductor / Flota:</label>
             <select>
                 <option value="activo">🟢 Activo / Disponible para Servicios</option>
                 <option value="inactivo">🔴 Inactivo / Fuera de Línea</option>
             </select>
 
-            <div class="legal-box" style="margin-top:8px;">
-                <strong>Dotación / Beneficios:</strong> Carnets PVC con QR, camisas reflectivas y calcomanías corporativas oficiales.
-            </div>
-
-            <button class="btn-gold" style="margin-top:15px;" onclick="alert('Afiliación y estatus de disponibilidad procesados con éxito.')">Completar Registro</button>
+            <button class="btn-gold" style="margin-top:15px;" onclick="alert('Expediente y requisitos validados. Afiliación procesada con éxito.')">Validar Recaudos y Completar Registro</button>
         </div>
     </div>
 
-    <!-- 5. PANEL CEO - TORRE DE CONTROL MAESTRA (CONSOLIDA TODO) -->
+    <!-- 5. PANEL CEO - TORRE DE CONTROL MAESTRA -->
     <div id="viewCEO" class="section-view">
         <div id="ceoAuth" class="card">
             <div class="card-title">🔒 Panel Central de Control CEO</div>

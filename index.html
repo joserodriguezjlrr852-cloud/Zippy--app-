@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZIPPY, C.A. - Torre de Control & Flota Multimodal</title>
+    <style>
+        body { background-color: #080808; color: #e0e0e0; font-family: Arial, sans-serif; margin: 0; padding: 10px; }
+        .container { max-width: 420px; margin: 0 auto; background: #121212; padding: 18px; border-radius: 0px; border: 4px solid #ccff00; box-sizing: border-box; box-shadow: 0 0 15px rgba(204,255,0,0.2); }
+        h2 { color: #ccff00; text-align: center; margin-bottom: 2px; font-size: 2.2em; font-weight: 900; letter-spacing: 1px; text-shadow: 0 0 12px rgba(204,255,0,0.5); }
+        .subtitle { text-align: center; font-size: 0.9em; color: #ccc; margin-bottom: 15px; font-weight: bold; }
+        .nav-tabs { display: flex; justify-content: space-between; margin-bottom: 15px; border-bottom: 3px solid #ccff00; padding-bottom: 8px; overflow-x: auto; gap: 3px; }
+        .nav-tabs button { background: #1a1a1a; color: #aaa; border: 2px solid #444; padding: 8px 4px; border-radius: 0px; font-size: 0.52em; flex: 1; cursor: pointer; white-space: nowrap; text-align: center; font-weight: bold; }
+        .nav-tabs button.active { background-color: #ccff00; color: #080808; font-weight: 900; border-color: #ccff00; box-shadow: 0 0 8px rgba(204,255,0,0.5); }
+        
+        /* Forzar visibilidad absoluta de las pestañas */
+        .panel-zippy { display: none; }
+        .panel-zippy.activo { display: block; }
+
+        .card { background: #1a1a1a; border: 3.5px solid #ccff00; border-radius: 0px; padding: 14px; margin-bottom: 14px; font-size: 0.95em; box-shadow: 0 0 10px rgba(204,255,0,0.15); }
+        .card-title { color: #ccff00; font-weight: 900; border-bottom: 3px solid #ccff00; padding-bottom: 6px; margin-bottom: 10px; font-size: 1.2em; }
+        label { color: #ccff00; font-size: 0.92em; display: block; margin-top: 10px; font-weight: bold; }
+        input, select, textarea { width: 100%; padding: 12px; margin-top: 5px; background: #222; border: 2px solid #555; color: #fff; border-radius: 0px; box-sizing: border-box; font-size: 1em; font-weight: bold; }
+        input:focus, select:focus { border-color: #ccff00; outline: none; }
+        .btn-neon { width: 100%; background-color: #ccff00; color: #080808; padding: 14px; border: none; font-weight: 900; border-radius: 0px; cursor: pointer; margin-top: 12px; font-size: 1.05em; box-shadow: 0 0 12px rgba(204,255,0,0.3); }
+        .btn-upload { width: 100%; background-color: #1a1a1a; color: #ccff00; border: 3px dashed #ccff00; padding: 10px; font-weight: bold; border-radius: 0px; cursor: pointer; margin-top: 6px; font-size: 0.88em; text-align: center; display: block; box-sizing: border-box; }
+        .btn-danger { width: 100%; background-color: #8b0000; color: #fff; padding: 12px; border: none; font-weight: bold; border-radius: 0px; cursor: pointer; margin-top: 10px; font-size: 1em; }
+        .stat-val { font-size: 1.4em; color: #ccff00; font-weight: 900; }
+        .status-badge { background-color: #004d00; color: #00ff00; padding: 3px 6px; border-radius: 0px; font-size: 0.85em; font-weight: bold; margin-left: 5px; }
+        .footer-text { text-align: center; font-size: 0.8em; color: #888; margin-top: 20px; font-weight: bold; }
+        .legal-box { background: #111; padding: 10px; border-radius: 0px; font-size: 0.82em; color: #ddd; margin-top: 10px; border-left: 5px solid #ccff00; border-right: 1px solid #444; border-top: 1px solid #444; border-bottom: 1px solid #444; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>ZIPPY, C.A.</h2>
+    <div class="subtitle">Plataforma Multimodal • Calabozo</div>
+
+    <!-- Navegación de Pestañas Global -->
+    <div class="nav-tabs">
+        <button id="bCotizador" class="active" onclick="irAPanel('pCotizador', this)">Cotizador</button>
+        <button id="bFiscal" onclick="irAPanel('pFiscal', this)">Fiscal Línea</button>
+        <button id="bDueno" onclick="irAPanel('pDueno', this)">Dueños Buses</button>
+        <button id="bWallet" onclick="irAPanel('pWallet', this)">Wallets</button>
+        <button id="bFlota" onclick="irAPanel('pFlota', this)">Afiliaciones</button>
+        <button id="bCEO" onclick="irAPanel('pCEO', this)">Panel CEO</button>
+    </div>
+
+    <!-- 1. VISTA COTIZADOR URBANO Y MULTIMODAL -->
+    <div id="pCotizador" class="panel-zippy activo">
+        <div class="card">
+            <div class="card-title">🤖 Solicita tu Servicio ZIPPY</div>
+            <p style="font-size:0.82em; color:#ccc;">Indica tu ruta. La Torre de Control calculará la distancia y tarifa exacta por WhatsApp.</p>
+            
+            <label>Seleccione el Servicio:</label>
+            <select id="cotCategoria">
+                <option value="ZIPPY Moto - Mototaxi / Encomienda">ZIPPY Moto - Mototaxi / Encomienda</option>
+                <option value="ZIPPY Car - Taxi / Urbano">ZIPPY CAR - Taxi / Carrera Urbana</option>
+                <option value="ZIPPY Kids - Escolar Seguro">ZIPPY KIDS - Escolar Seguro</option>
+                <option value="ZIPPY Carga / Flete">ZIPPY Carga / Flete</option>
+            </select>
+
+            <label>Punto de Origen (¿Dónde te buscamos?):</label>
+            <input type="text" id="origenCliente" placeholder="Ej: Vicario 3, Sector 5 de Julio...">
+
+            <label>Punto de Destino (¿A dónde vas?):</label>
+            <input type="text" id="destinoCliente" placeholder="Ej: Centro Carrera 12...">
+
+            <button class="btn-neon" onclick="calcularYEnviarWhatsApp()">Enviar Ruta a Torre de Control</button>
+            <div id="cotResult" style="margin-top:12px; display:none; background:#111; padding:12px; border-radius:0px; border:3px solid #ccff00;"></div>
+        </div>
+    </div>
+
+    <!-- 2. PANEL EXCLUSIVO DEL FISCAL DE LÍNEA / TERMINAL -->
+    <div id="pFiscal" class="panel-zippy">
+        <div class="card">
+            <div class="card-title">🛡️ Panel del Fiscal de Línea / Terminal</div>
+            <p style="font-size:0.82em; color:#ccc;">Verificación en sistema de unidades registradas, control de andén y despacho.</p>
+
+            <label>Buscar Unidad Registrada (Placa o N° Control):</label>
+            <input type="text" placeholder="Ej: Control #12 / Placa A12">
+            <button class="btn-neon" style="background-color:#1a1a1a; color:#ccff00; border:3px solid #ccff00; margin-top:8px;" onclick="alert('Unidad encontrada en el sistema. Expediente y fotos validadas.')">🔍 Verificar Unidad en Base de Datos</button>
+
+            <div style="background:#111; padding:10px; border-radius:0px; border:2px solid #555; margin-top:10px;">
+                <div style="color:#ccff00; font-weight:900; font-size:0.9em; margin-bottom:4px;">📊 Estado de la Unidad en Pista:</div>
+                <p style="font-size:0.8em; color:#ddd; margin:0;">• Propietario: Carlos Mendoza<br>• Chófer Asignado: Juan Pérez (V-12345678)<br>• Estatus Expediente: <span style="color:#00ff00; font-weight:bold;">✓ Aprobado (5/5 Fotos OK)</span></p>
+            </div>
+
+            <label style="margin-top:10px;">Asignar Estatus Operativo en Andén:</label>
+            <select>
+                <option value="en_anden">🟢 Disponible / En Andén (Cargando)</option>
+                <option value="despachado">🟡 Despachado / En Ruta</option>
+                <option value="fuera">🔴 Retirado / Fuera de Servicio</option>
+            </select>
+
+            <button class="btn-neon" style="margin-top:12px;" onclick="alert('Estatus del autobús actualizado en el andén con éxito.')">Actualizar Despacho en Andén</button>
+        </div>
+
+        <div class="card">
+            <div class="card-title">📱 Control de Abordaje & Avances</div>
+            <button class="btn-neon" style="background-color:#1a1a1a; border:3px solid #ccff00; color:#ccff00;" onclick="alert('Escaneando QR de pasajero para validar boleto de andén...')">📷 Escanear QR de Pasajero</button>
+            <button class="btn-neon" style="margin-top:10px;" onclick="alert('¡Autobús extra o avance habilitado en pista por el fiscal!')">🚌 Habilitar Unidad Extra / Avance</button>
+        </div>
+    </div>
+
+    <!-- 3. PANEL EXCLUSIVO PARA DUEÑOS DE AUTOBUSES Y LÍNEAS -->
+    <div id="pDueno" class="panel-zippy">
+        <div class="card">
+            <div class="card-title">🚌 Panel de Dueños de Autobuses & Flotas</div>
+            <p style="font-size:0.82em; color:#ccc;">Registro oficial de unidades, afiliar choferes y cargar expediente digital.</p>
+
+            <label>Nombre del Propietario / Representante de la Línea:</label>
+            <input type="text" placeholder="Ej: Carlos Mendoza (Socio / Dueño)">
+
+            <label>Placa / N° de Control del Autobús:</label>
+            <input type="text" placeholder="Ej: Control #12 - Encava 32 Puestos">
+
+            <div style="background:#111; padding:10px; border-radius:0px; border:2px solid #555; margin-top:10px;">
+                <div style="color:#ccff00; font-weight:900; font-size:0.9em; margin-bottom:6px;">👤 Datos de la Tripulación (Afiliar Chófer)</div>
+                <label>Nombre y Cédula del Chófer:</label>
+                <input type="text" placeholder="Ej: Juan Pérez V-12345678">
+                <label>Nombre y Cédula del Colector / Ayudante:</label>
+                <input type="text" placeholder="Ej: Pedro Gómez V-87654321" style="margin-top:5px;">
+            </div>
+
+            <div class="legal-box" style="margin-top:10px;">
+                <strong>📋 Requisitos Indispensables del Chófer & Unidad:</strong><br>
+                • Cédula, RIF, Licencia de 5ta. y Certificado Médico vial.<br>
+                • Título de la unidad, Póliza RCV y Carta de Residencia.<br>
+                • Pago de Afiliación de Unidad ($60 USD).
+            </div>
+
+            <label style="margin-top:12px; color:#ccff00;">📸 Carga de Registro Fotográfico de Rigor:</label>
+            <button class="btn-upload" onclick="alert('Cámara abierta: Fe de Vida del Chófer.')">📷 1. Fe de Vida (Rostro del Chófer)</button>
+            <button class="btn-upload" onclick="alert('Cámara abierta: Foto Frontal del Autobús.')">📷 2. Foto Frontal del Autobús</button>
+            <button class="btn-upload" onclick="alert('Cámara abierta: Foto Lateral Izquierda.')">📷 3. Foto Lateral Izquierda</button>
+            <button class="btn-upload" onclick="alert('Cámara abierta: Foto Lateral Derecha.')">📷 4. Foto Lateral Derecha</button>
+            <button class="btn-upload" onclick="alert('Cámara abierta: Foto Parte Trasera.')">📷 5. Foto Parte Trasera del Autobús</button>
+
+            <div style="background:#111; padding:10px; border-radius:0px; border:3px solid #ccff00; margin-top:12px;">
+                <div style="color:#ccff00; font-weight:900; font-size:0.9em; margin-bottom:6px;">🏦 Pago Móvil Dueño (Liquidación 90%)</div>
+                <label>Banco:</label>
+                <select>
+                    <option value="0102">0102 - Banco de Venezuela (BDV)</option>
+                    <option value="0105">0105 - Banco Mercantil</option>
+                    <option value="0108">0108 - Banco Provincial</option>
+                    <option value="0134">0134 - Banesco</option>
+                </select>
+                <label>Cédula Titular:</label>
+                <input type="text" placeholder="Ej: V-12345678">
+                <label>Teléfono:</label>
+                <input type="text" placeholder="Ej: 0414-1234567">
+            </div>
+
+            <button class="btn-neon" style="margin-top:15px;" onclick="alert('Autobús y chófer afiliados exitosamente. Expediente digital guardado.')">Afiliar Chófer y Guardar Autobús ($60)</button>
+        </div>
+    </div>
+
+    <!-- 4. VISTA WALLETS CON DISEÑO GPS Y RETIRO -->
+    <div id="pWallet" class="panel-zippy">
+        <div class="card">
+            <div class="card-title">🚗 Estatus Conductor / GPS</div>
+            <div style="margin-top:8px; margin-bottom:10px; font-size:0.92em;">
+                Estatus: <span id="lblEstatus" style="color:#aaa; font-weight:bold;">Fuera de Servicio</span> <span style="display:inline-block; width:10px; height:10px; background:#777; border-radius:0px; margin-left:4px;" id="dotEstatus"></span>
+            </div>
+            <button class="btn-neon" id="btnEstatusGPS" onclick="toggleEstatusGPS()">Ponerse EN LÍNEA</button>
+        </div>
+
+        <div class="card">
+            <div class="card-title">💳 ZIPPY Wallet (80% Líquido)</div>
+            <p style="font-size:0.82em; color:#ccc; margin:0 0 5px 0;">Saldo disponible para retiro:</p>
+            <div class="stat-val">$58.00 USD</div>
+            <button class="btn-neon" style="margin-top:15px; background-color:#ccff00; color:#080808;" onclick="alert('Solicitud de retiro enviada vía Pago Móvil con éxito.')">Retirar vía Pago Móvil</button>
+        </div>
+    </div>
+
+    <!-- 5. VISTA AFILIACIONES GENERALES -->
+    <div id="pFlota" class="panel-zippy">
+        <div class="card">
+            <div class="card-title">🚐 Módulo de Afiliaciones Urbano & Carga</div>
+            <p style="font-size:0.82em; color:#ccc;">Registro para Motos (80/20), Taxis, ZIPPY Kids ($30) y Gandolas ($60).</p>
+
+            <label>Tipo de Afiliación:</label>
+            <select>
+                <option value="moto_taxi">ZIPPY Moto / Mototaxi / Encomienda (Urbano)</option>
+                <option value="carro_taxi">ZIPPY Car / Taxi / Urbano</option>
+                <option value="zippy_kids">ZIPPY Kids - Escolar (Motos/Furgones) - $30</option>
+                <option value="carga_pesada">Carga Pesada / Gandolas / Camiones - $60 (Dotación)</option>
+            </select>
+
+            <label>Nombre del Conductor:</label>
+            <input type="text" placeholder="Ej: José Rodríguez">
+
+            <label>Placa / N° de Registro:</label>
+            <input type="text" placeholder="Ej: Placa o ID">
+
+            <div class="legal-box" style="margin-top:10px;">
+                <strong>📋 Requisitos Obligatorios del Expediente:</strong><br>
+                • Cédula, RIF, Licencia y Certificado Médico.<br>
+                • Documentos del Vehículo y Carta de Residencia.<br>
+                • Pago de Afiliación ($30 / $60).
+            </div>
+
+            <label style="margin-top:12px; color:#ccff00;">📸 Registro Fotográfico & Inspección:</label>
+            <button class="btn-upload" onclick="alert('Cámara abierta: Foto Fe de Vida.')">📷 1. Foto Fe de Vida</button>
+            <button class="btn-upload" onclick="alert('Cámara abierta: Foto Frontal.')">📷 2. Foto Frontal</button>
+            <button class="btn-upload" onclick="alert('Cámara abierta: Foto Lateral Izquierda.')">📷 3. Foto Lateral Izquierda</button>
+            <button class="btn-upload" onclick="alert('Cámara abierta: Foto Lateral Derecha.')">📷 4. Foto Lateral Derecha</button>
+            <button class="btn-upload" onclick="alert('Cámara abierta: Foto Trasera.')">📷 5. Foto Parte Trasera</button>
+
+            <label style="margin-top:10px;">Estatus del Conductor:</label>
+            <select>
+                <option value="activo">🟢 Activo / Disponible para Servicios</option>
+                <option value="inactivo">🔴 Inactivo / Fuera de Línea</option>
+            </select>
+
+            <button class="btn-neon" style="margin-top:15px;" onclick="alert('Afiliación completada con éxito.')">Completar Afiliación</button>
+        </div>
+    </div>
+
+    <!-- 6. PANEL CEO - TORRE DE CONTROL MAESTRA -->
+    <div id="pCEO" class="panel-zippy">
+        <div id="ceoAuth" class="card">
+            <div class="card-title">🔒 Panel Central de Control CEO</div>
+            <p style="font-size:0.9em;">Introduce tu clave de Administrador Master (Cédula):</p>
+            <input type="password" id="ceoKey" placeholder="Clave de Acceso Master">
+            <button class="btn-neon" onclick="loginCEO()">Acceder a la Torre de Control</button>
+        </div>
+
+        <div id="ceoDashboard" style="display:none;">
+            <div class="card">
+                <div class="card-title">🏛️ Torre de Control & Telemetría Global</div>
+                
+                <div style="margin-bottom:10px; border-bottom:3px solid #ccff00; padding-bottom:8px;">
+                    <strong style="color:#ccff00; font-size:1.05em;">📊 Estatus de Flotas Activas:</strong><br>
+                    • ZIPPY Motos (80/20): <strong>35 Unidades</strong> (🟢 Activos)<br>
+                    • ZIPPY Taxis / Autos: <strong>15 Unidades</strong> (🟢 Activos)<br>
+                    • ZIPPY Kids (Escolar): <strong>8 Unidades</strong> (🟢 Activos)<br>
+                    • Autobuses / Encavas (10%): <strong>18 Unidades</strong> (🟢 En Terminal)<br>
+                    • Carga Pesada / Gandolas (20%): <strong>8 Unidades</strong> (🟢 En Ruta)
+                </div>
+
+                <div style="margin-bottom:10px; border-bottom:3px solid #ccff00; padding-bottom:8px;">
+                    <strong style="color:#ccff00; font-size:1.05em;">💰 Consolidado Financiero:</strong><br>
+                    • Comisiones Recaudadas (Motos 20%): <span class="stat-val">$210.00 USD</span><br>
+                    • Comisiones Recaudadas (Buses 10%): <span class="stat-val">$320.00 USD</span><br>
+                    • Comisiones Recaudadas (Carga 20%): <span class="stat-val">$310.00 USD</span><br>
+                    • Ingresos por Afiliaciones ($30 / $60): <span class="stat-val">$4,120.00 USD</span>
+                </div>
+                
+                <div style="margin-bottom:10px; display:flex; align-items:center; font-weight:bold;">
+                    • Estado Fiscal BDV / SENIAT: <span class="status-badge">Sincronizado</span>
+                </div>
+
+                <button class="btn-neon" style="margin-top:12px;" onclick="exportarReportePDF()">Exportar Consolidado Financiero (PDF)</button>
+            </div>
+
+            <div class="card">
+                <div class="card-title">⚙️ Control Operativo & Sistema</div>
+                <button class="btn-danger" onclick="logoutCEO()">Cerrar Sesión Master</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-text">
+        © 2026 ZIPPY, C.A. • CEO: José Luis Rodríguez Rivero<br>Todos los derechos reservados.
+    </div>
+</div>
+
+<script>
+    const CLAVES_VALIDAS = ["1947", "19476093"]; 
+    let enLinea = false;
+
+    function irAPanel(idPanel, btnObj) {
+        // Ocultar todos los paneles
+        let listaPaneles = document.querySelectorAll('.panel-zippy');
+        listaPaneles.forEach(function(p) {
+            p.classList.remove('activo');
+        });
+
+        // Quitar estatus activo a los botones
+        let listaBotones = document.querySelectorAll('.nav-tabs button');
+        listaBotones.forEach(function(b) {
+            b.classList.remove('active');
+        });
+
+        // Mostrar el panel seleccionado
+        let destino = document.getElementById(idPanel);
+        if (destino) {
+            destino.classList.add('activo');
+        }
+
+        // Iluminar el botón presionado
+        if (btnObj) {
+            btnObj.classList.add('active');
+        }
+    }
+
+    function toggleEstatusGPS() {
+        enLinea = !enLinea;
+        let lbl = document.getElementById('lblEstatus');
+        let dot = document.getElementById('dotEstatus');
+        let btn = document.getElementById('btnEstatusGPS');
+
+        if(enLinea) {
+            lbl.innerText = "EN LÍNEA (GPS Activo)";
+            lbl.style.color = "#00ff00";
+            dot.style.background = "#00ff00";
+            btn.innerText = "Ponerse Fuera de Servicio";
+            btn.style.backgroundColor = "#8b0000";
+            btn.style.color = "#fff";
+        } else {
+            lbl.innerText = "Fuera de Servicio";
+            lbl.style.color = "#aaa";
+            dot.style.background = "#777";
+            btn.innerText = "Ponerse EN LÍNEA";
+            btn.style.backgroundColor = "#ccff00";
+            btn.style.color = "#080808";
+        }
+    }
+
+    function calcularYEnviarWhatsApp() {
+        let servicio = document.getElementById('cotCategoria').value;
+        let origen = document.getElementById('origenCliente').value.trim();
+        let destino = document.getElementById('destinoCliente').value.trim();
+        let resDiv = document.getElementById('cotResult');
+
+        if(!origen || !destino) {
+            alert('Por favor, ingresa el origen y el destino de tu carrera.');
+            return;
+        }
+
+        resDiv.style.display = 'block';
+        resDiv.innerHTML = `
+            <div style="color:#ccff00; font-weight:900; margin-bottom:6px; font-size:1.05em;">📋 Solicitud Enviada a Torre de Control</div>
+            • <strong>Servicio:</strong> ${servicio}<br>
+            • <strong>Origen:</strong> ${origen}<br>
+            • <strong>Destino:</strong> ${destino}<br>
+            • <strong>Tarifa:</strong> <span style="color:#00ff00; font-weight:bold;">A cotizar por Torre de Control (WhatsApp)</span><br><br>
+
+            <div style="background:#121212; padding:10px; border-radius:0px; border:2px solid #ccff00; margin-bottom:10px;">
+                <div style="color:#ccff00; font-weight:900; font-size:0.9em;">💳 Pago Móvil BDV (ZIPPY):</div>
+                • Banco: Banco de Venezuela (0102)<br>
+                • Teléfono: 0426-4343732<br>
+                • Cédula: V-19476093
+            </div>
+
+            <a href="https://wa.me/584264343732?text=Hola%20Torre%20de%20Control,%20necesito%20una%20unidad.%0A%0A*Servicio:*%20${encodeURIComponent(servicio)}%0A*Origen:*%20${encodeURIComponent(origen)}%0A*Destino:*%20${encodeURIComponent(destino)}%0A*Referencia%20Pago%20Móvil:*%20[Escribe%20aquí%20tu%20referencia]" target="_blank" style="display: block; width: 100%; background-color: #25d366; color: #fff; text-align: center; padding: 14px; border-radius: 0px; text-decoration: none; font-weight: 900; font-size: 1.05em; box-sizing: border-box;">
+              💬 Enviar Solicitud a WhatsApp
+            </a>
+        `;
+    }
+
+    function loginCEO() {
+        let key = document.getElementById('ceoKey').value;
+        if(CLAVES_VALIDAS.includes(key)) {
+            document.getElementById('ceoAuth').style.display = 'none';
+            document.getElementById('ceoDashboard').style.display = 'block';
+        } else {
+            alert('Clave de acceso incorrecta.');
+        }
+    }
+
+    function logoutCEO() {
+        document.getElementById('ceoKey').value = '';
+        document.getElementById('ceoDashboard').style.display = 'none';
+        document.getElementById('ceoAuth').style.display = 'block';
+    }
+
+    function exportarReportePDF() {
+        alert('Generando PDF consolidado de ingresos, comisiones y flotas activas...');
+    }
+</script>
+
+</body>
+</html>

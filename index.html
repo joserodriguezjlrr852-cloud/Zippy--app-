@@ -202,12 +202,42 @@
                 • Pago de Afiliación ($30 / $60).
             </div>
 
-            <label style="margin-top:12px; color:#ccff00;">📸 Registro Fotográfico & Inspección:</label>
-            <button class="btn-upload" onclick="alert('Cámara abierta: Foto Fe de Vida.')">📷 1. Foto Fe de Vida</button>
-            <button class="btn-upload" onclick="alert('Cámara abierta: Foto Frontal.')">📷 2. Foto Frontal</button>
-            <button class="btn-upload" onclick="alert('Cámara abierta: Foto Lateral Izquierda.')">📷 3. Foto Lateral Izquierda</button>
-            <button class="btn-upload" onclick="alert('Cámara abierta: Foto Lateral Derecha.')">📷 4. Foto Lateral Derecha</button>
-            <button class="btn-upload" onclick="alert('Cámara abierta: Foto Trasera.')">📷 5. Foto Parte Trasera</button>
+                <!-- AQUÍ ESTÁ TU TEXTO INFORMATIVO ACTUAL DE REQUISITOS -->
+    <div class="requisitos-box">
+        <p>📋 Requisitos Obligatorios del Expediente: Cédula, RIF, Licencia y Certificado Médico. Documentos del Vehículo y Carta de Residencia.</p>
+    </div>
+
+    <!-- 🟢 PEGAS EL NUEVO CÓDIGO DE DOCUMENTOS AQUÍ EXACTAMENTE: -->
+    <div class="form-section">
+        <h3>📁 Carga de Documentos</h3>
+        
+        <label>Cédula de Identidad:</label>
+        <input type="file" name="cedula" accept="image/*,.pdf" required>
+
+        <label>RIF Vigente:</label>
+        <input type="file" name="rif" accept="image/*,.pdf" required>
+
+        <label>Licencia de Conducir:</label>
+        <input type="file" name="licencia" accept="image/*,.pdf" required>
+
+        <label>Certificado Médico:</label>
+        <input type="file" name="certificado_medico" accept="image/*,.pdf" required>
+
+        <label>Documentos del Vehículo:</label>
+        <input type="file" name="documentos_vehiculo" accept="image/*,.pdf" required>
+
+        <label>Carta de Residencia:</label>
+        <input type="file" name="carta_residencia" accept="image/*,.pdf" required>
+    </div>
+
+    <!-- AQUÍ CONTINÚA TU SECCIÓN QUE YA TIENES HECHA DE FOTOS -->
+    <div class="form-section">
+        <h3>📸 Registro Fotográfico & Inspección:</h3>
+        <label>1. Foto Fe de Vida</label>
+        <input type="file" name="foto_fe_vida" accept="image/*" capture="environment">
+        <!-- (las demás fotos...) -->
+    </div>
+
 
             <label style="margin-top:10px;">Estatus del Conductor:</label>
             <select>

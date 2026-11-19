@@ -131,12 +131,110 @@
                 • Pago de Afiliación de Unidad ($60 USD).
             </div>
 
-            <label style="margin-top:12px; color:#ccff00;">📸 Carga de Registro Fotográfico de Rigor:</label>
-            <button class="btn-upload" onclick="alert('Cámara abierta: Fe de Vida del Chófer.')">📷 1. Fe de Vida (Rostro del Chófer)</button>
-            <button class="btn-upload" onclick="alert('Cámara abierta: Foto Frontal del Autobús.')">📷 2. Foto Frontal del Autobús</button>
-            <button class="btn-upload" onclick="alert('Cámara abierta: Foto Lateral Izquierda.')">📷 3. Foto Lateral Izquierda</button>
-            <button class="btn-upload" onclick="alert('Cámara abierta: Foto Lateral Derecha.')">📷 4. Foto Lateral Derecha</button>
-            <button class="btn-upload" onclick="alert('Cámara abierta: Foto Parte Trasera.')">📷 5. Foto Parte Trasera del Autobús</button>
+ <style>
+  .zippy-card {
+    background: #141414;
+    border: 1px solid #2e2e2e;
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 16px;
+    color: #f5f5f5;
+    font-family: Arial, sans-serif;
+  }
+  .zippy-card h3 {
+    margin-top: 0;
+    color: #a3e635;
+    font-size: 16px;
+  }
+  .doc-item {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    background: #1e1e1e;
+    border: 1px dashed #65a30d;
+    border-radius: 8px;
+    padding: 10px 12px;
+    margin-bottom: 10px;
+  }
+  .doc-label {
+    font-size: 14px;
+    font-weight: bold;
+    color: #ffffff;
+  }
+  .doc-status {
+    font-size: 12px;
+    color: #bef264;
+    word-break: break-all;
+  }
+  .doc-input {
+    color: #e5e7eb;
+    font-size: 13px;
+  }
+</style>
+
+<div class="zippy-card">
+  <h3>Carga de Documentos (Moto y Carro - ZIPPY)</h3>
+
+  <div class="doc-item">
+    <span class="doc-label">1. Cédula de Identidad (V / E)</span>
+    <input class="doc-input" type="file" name="doc_cedula" accept="image/*,.pdf" onchange="mostrarArchivo(this, 'st-cedula')" />
+    <span class="doc-status" id="st-cedula">Sin archivo seleccionado</span>
+  </div>
+
+  <div class="doc-item">
+    <span class="doc-label">2. RIF Vigente</span>
+    <input class="doc-input" type="file" name="doc_rif" accept="image/*,.pdf" onchange="mostrarArchivo(this, 'st-rif')" />
+    <span class="doc-status" id="st-rif">Sin archivo seleccionado</span>
+  </div>
+
+  <div class="doc-item">
+    <span class="doc-label">3. Licencia de Conducir (Moto / Carro)</span>
+    <input class="doc-input" type="file" name="doc_licencia" accept="image/*,.pdf" onchange="mostrarArchivo(this, 'st-licencia')" />
+    <span class="doc-status" id="st-licencia">Sin archivo seleccionado</span>
+  </div>
+
+  <div class="doc-item">
+    <span class="doc-label">4. Certificado Médico Vial</span>
+    <input class="doc-input" type="file" name="doc_medico" accept="image/*,.pdf" onchange="mostrarArchivo(this, 'st-medico')" />
+    <span class="doc-status" id="st-medico">Sin archivo seleccionado</span>
+  </div>
+
+  <div class="doc-item">
+    <span class="doc-label">5. Título de la Unidad o Carnet de Circulación</span>
+    <input class="doc-input" type="file" name="doc_titulo" accept="image/*,.pdf" onchange="mostrarArchivo(this, 'st-titulo')" />
+    <span class="doc-status" id="st-titulo">Sin archivo seleccionado</span>
+  </div>
+
+  <div class="doc-item">
+    <span class="doc-label">6. Póliza RCV Vigente</span>
+    <input class="doc-input" type="file" name="doc_rcv" accept="image/*,.pdf" onchange="mostrarArchivo(this, 'st-rcv')" />
+    <span class="doc-status" id="st-rcv">Sin archivo seleccionado</span>
+  </div>
+
+  <div class="doc-item">
+    <span class="doc-label">7. Carta de Residencia (Calabozo / Vicario)</span>
+    <input class="doc-input" type="file" name="doc_residencia" accept="image/*,.pdf" onchange="mostrarArchivo(this, 'st-residencia')" />
+    <span class="doc-status" id="st-residencia">Sin archivo seleccionado</span>
+  </div>
+
+  <div class="doc-item">
+    <span class="doc-label">8. Capture de Pago de Afiliación / Referencia</span>
+    <input class="doc-input" type="file" name="doc_pago" accept="image/*,.pdf" onchange="mostrarArchivo(this, 'st-pago')" />
+    <span class="doc-status" id="st-pago">Sin archivo seleccionado</span>
+  </div>
+</div>
+
+<script>
+  function mostrarArchivo(input, targetId) {
+    const label = document.getElementById(targetId);
+    if (input.files && input.files.length > 0) {
+      label.textContent = "Cargado: " + input.files[0].name;
+    } else {
+      label.textContent = "Sin archivo seleccionado";
+    }
+  }
+</script>
+
 
             <div style="background:#111; padding:10px; border-radius:0px; border:3px solid #ccff00; margin-top:12px;">
                 <div style="color:#ccff00; font-weight:900; font-size:0.9em; margin-bottom:6px;">🏦 Pago Móvil Dueño (Liquidación 90%)</div>

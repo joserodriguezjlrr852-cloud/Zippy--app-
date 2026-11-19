@@ -97,11 +97,37 @@
             <button class="btn-neon" style="margin-top:12px;" onclick="alert('Estatus del autobús actualizado en el andén con éxito.')">Actualizar Despacho en Andén</button>
         </div>
 
-        <div class="card">
-            <div class="card-title">📱 Control de Abordaje & Avances</div>
-            <button class="btn-neon" style="background-color:#1a1a1a; border:3px solid #ccff00; color:#ccff00;" onclick="alert('Escaneando QR de pasajero para validar boleto de andén...')">📷 Escanear QR de Pasajero</button>
-            <button class="btn-neon" style="margin-top:10px;" onclick="alert('¡Autobús extra o avance habilitado en pista por el fiscal!')">🚌 Habilitar Unidad Extra / Avance</button>
-        </div>
+      <button type="button" onclick="iniciarLectorQR()">Escanear QR de Pasajero</button>
+<div id="lector-qr" style="width: 100%; max-width: 340px; margin-top: 10px;"></div>
+<p id="resultado-qr" style="color: #bef264; font-size: 13px;"></p>
+
+<script src="https://unpkg.com/html5-qrcode"></script>
+<script>
+  let html5QrCode = null;
+
+  function iniciarLectorQR() {
+    const salida = document.getElementById("resultado-qr");
+    salida.textContent = "Solicitando acceso a la cámara...";
+
+    if (!html5QrCode) {
+      html5QrCode = new Html5Qrcode("lector-qr");
+    }
+
+    html5QrCode.start(
+      { facingMode: "environment" },
+      { fps: 10, qrbox: { width: 220, height: 220 } },
+      (decodedText) => {
+        salida.textContent = "QR detectado: " + decodedText;
+        html5QrCode.stop().catch(() => {});
+      },
+      () => {}
+    ).catch((err) => {
+      salida.textContent = "No se pudo abrir la cámara. Revisa los permisos del navegador.";
+      console.error(err);
+    });
+  }
+</script>
+
     </div>
 
     <!-- 3. PANEL EXCLUSIVO PARA DUEÑOS DE AUTOBUSES Y LÍNEAS -->

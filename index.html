@@ -105,6 +105,37 @@
 <script>
   let html5QrCode = null;
 
+  <button type="button" class="btn-qr-zippy" onclick="iniciarLectorQR()">
+  📷 Escanear QR de Pasajero
+</button>
+<div id="lector-qr" style="width: 100%; max-width: 340px; margin: 12px auto 0 auto;"></div>
+<p id="resultado-qr" style="color: #bef264; font-size: 13px; text-align: center; margin-top: 8px;"></p>
+
+<style>
+  .btn-qr-zippy {
+    display: block;
+    width: 100%;
+    padding: 14px 16px;
+    margin-top: 12px;
+    background-color: #a3e635;
+    color: #0b0b0b;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    text-align: center;
+    box-sizing: border-box;
+  }
+  .btn-qr-zippy:active {
+    opacity: 0.85;
+  }
+</style>
+
+<script src="https://unpkg.com/html5-qrcode"></script>
+<script>
+  let html5QrCode = null;
+
   function iniciarLectorQR() {
     const salida = document.getElementById("resultado-qr");
     salida.textContent = "Solicitando acceso a la cámara...";
@@ -121,12 +152,15 @@
         html5QrCode.stop().catch(() => {});
       },
       () => {}
-    ).catch((err) => {
+    ).then(() => {
+      salida.textContent = "Cámara activa. Apunta al código QR...";
+    }).catch((err) => {
       salida.textContent = "No se pudo abrir la cámara. Revisa los permisos del navegador.";
       console.error(err);
     });
   }
 </script>
+
 
     </div>
 
